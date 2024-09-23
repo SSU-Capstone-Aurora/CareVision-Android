@@ -2,10 +2,18 @@ package com.aurora.carevision.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+// Gray Scale
+val Gray100 = Color(0xFFF7F7F7)
+val Gray200 = Color(0xFFE3E5E7)
+val Gray300 = Color(0xFFAFAFB6)
+val Gray400 = Color(0xFF7F7F86)
+val Gray500 = Color(0xFF62626C)
+val Black = Color(0xFF1A1A1B)
+val White = Color(0xFFFFFFFF)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+// Primary
+val Green100 = Color(0xFFD8F6F4)
+val Green200 = Color(0xFFC0F5EF)
+val Green300 = Color(0xFF96E9E1)
+val Green400 = Color(0xFF74DDCF)
+val Green500 = Color(0xFF2FC4B1)
