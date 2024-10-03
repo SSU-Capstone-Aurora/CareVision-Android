@@ -1,4 +1,4 @@
-package com.aurora.carevision.ui.theme
+package com.aurora.carevision.app.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

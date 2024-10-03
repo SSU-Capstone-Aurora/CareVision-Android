@@ -7,24 +7,24 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.aurora.carevision.ui.theme.CVTheme
-import com.aurora.carevision.ui.theme.White
+import com.aurora.carevision.app.ui.theme.CVTheme
+import com.aurora.carevision.app.ui.theme.White
 
 @Composable
-fun PatientManagementScreen(){
-    Text(text = "Patient Management")
+fun MgrSignInCompletionScreen(){
+    Text(text = "Sign Up Completion")
 }
 
 @Composable
 @Preview
-fun PatientManagementScreenPreview(){
+fun MgrSignInCompletionScreenPreview(){
     CVTheme{
         Column(
             modifier = Modifier
                 .background(White)
                 .fillMaxSize()
         ){
-            PatientManagementScreen()
+            MgrSignInCompletionScreen()
         }
     }
 }
