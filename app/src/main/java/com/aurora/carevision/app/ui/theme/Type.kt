@@ -1,6 +1,5 @@
-package com.aurora.carevision.ui.theme
+package com.aurora.carevision.app.ui.theme
 
-import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
