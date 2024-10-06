@@ -142,7 +142,7 @@ fun CVLongButtonPreview() {
             CVRedButton(text = "회원탈퇴", onClick = {}, enabled = true, backgroundColor = Red200)
 
             Row {
-                CVShortButton(text = "확인", onClick = {})
+                CVShortButton(text = "확인인", onClick = {})
                 CVShortButton(
                     text = "취소",
                     onClick = {},
@@ -151,6 +151,6 @@ fun CVLongButtonPreview() {
                 )
             }
         }
-        // 한글test
     }
 }
+// 한글
