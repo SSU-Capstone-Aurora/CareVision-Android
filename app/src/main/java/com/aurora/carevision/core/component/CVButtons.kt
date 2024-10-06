@@ -48,7 +48,7 @@ fun CVBasicButton(
         modifier = modifier
             .padding(paddingValues)
             .height(58.dp)
-            .clip(RoundedCornerShape(8.dp)) // This defines the shape of the button
+            .clip(RoundedCornerShape(8.dp))
             .background(if (enabled) backgroundColor else Gray300)
             .fillMaxWidth()
             .clickable(
