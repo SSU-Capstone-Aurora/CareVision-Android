@@ -61,7 +61,7 @@ fun CVHeadIconSearchBar(
                 }
             },
         singleLine = true,
-        textStyle = CVTheme.typography.body1.copy(color = Gray500),
+        textStyle = CVTheme.typography.textBody1Medium.copy(color = Gray500),
         decorationBox = { innerTextField ->
             Row(
                 verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
@@ -84,7 +84,7 @@ fun CVHeadIconSearchBar(
                         Text(
                             text = placeholder,
                             color = Gray500,
-                            style = CVTheme.typography.body1,
+                            style = CVTheme.typography.textBody1Medium,
                         )
                     }
                 }
@@ -121,7 +121,7 @@ fun CVTailIconSearchBar(
                 }
             },
         singleLine = true,
-        textStyle = CVTheme.typography.body1.copy(color = Gray500),
+        textStyle = CVTheme.typography.textBody1Medium.copy(color = Gray500),
         decorationBox = { innerTextField ->
             Row(
                 verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
@@ -136,7 +136,7 @@ fun CVTailIconSearchBar(
                         Text(
                             text = placeholder,
                             color = Gray500,
-                            style = CVTheme.typography.body1,
+                            style = CVTheme.typography.textBody1Medium,
                         )
                     }
                 }
