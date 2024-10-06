@@ -1,10 +1,8 @@
 package com.aurora.carevision.core.component
 
 
-import androidx.compose.foundation.Indication
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.indication
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,8 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -100,7 +96,9 @@ fun CVShortButton(
     CVBasicButton(
         text = text,
         onClick = onClick,
-        modifier = modifier.width(130.dp).height(50.dp),
+        modifier = modifier
+            .width(130.dp)
+            .height(50.dp),
         enabled = enabled,
         backgroundColor = backgroundColor,
         textColor = textColor,
@@ -123,7 +121,7 @@ fun CVRedButton(
         modifier = modifier,
         enabled = enabled,
         backgroundColor = backgroundColor,
-        textColor = if(enabled) Red700 else White,
+        textColor = if (enabled) Red700 else White,
         paddingValues = paddingValues
     )
 }
@@ -145,7 +143,12 @@ fun CVLongButtonPreview() {
 
             Row {
                 CVShortButton(text = "확인", onClick = {})
-                CVShortButton(text = "취소", onClick = {}, backgroundColor = Gray200, textColor = Gray500)
+                CVShortButton(
+                    text = "취소",
+                    onClick = {},
+                    backgroundColor = Gray200,
+                    textColor = Gray500
+                )
             }
         }
     }
