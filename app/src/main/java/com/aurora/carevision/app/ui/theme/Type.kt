@@ -14,87 +14,82 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import com.aurora.carevision.R
 
-
+val pretendardBold = FontFamily(Font(R.font.pretendard_bold, FontWeight.Bold))
+val pretendardMedium = FontFamily(Font(R.font.pretendard_medium, FontWeight.Medium))
 val pretendardSemiBold = FontFamily(Font(R.font.pretendard_semibold, FontWeight.SemiBold))
 val pretendardRegular = FontFamily(Font(R.font.pretendard_regular, FontWeight.Normal))
 
 
 @Stable
 class CVTypography internal constructor(
-    head1: TextStyle,
-    head2: TextStyle,
-    head3: TextStyle,
-    body1: TextStyle,
-    body2: TextStyle,
-    body3: TextStyle,
-    body4: TextStyle,
-    caption1: TextStyle,
-    caption2: TextStyle,
-    caption3: TextStyle,
-    caption4: TextStyle,
+    button: TextStyle,
+    headingDisplay: TextStyle,
+    headingPrimary: TextStyle,
+    headingSecondary: TextStyle,
+    textBody1Medium: TextStyle,
+    textBody1Importance: TextStyle,
+    textBody2Medium: TextStyle,
+    textBody2Importance: TextStyle,
+    captionRegular: TextStyle,
+    captionImportance: TextStyle,
 ) {
-    var head1: TextStyle by mutableStateOf(head1)
+    var button: TextStyle by mutableStateOf(button)
         private set
-    var head2: TextStyle by mutableStateOf(head2)
+    var headingDisplay: TextStyle by mutableStateOf(headingDisplay)
         private set
-    var head3: TextStyle by mutableStateOf(head3)
+    var headingPrimary: TextStyle by mutableStateOf(headingPrimary)
         private set
-    var body1: TextStyle by mutableStateOf(body1)
+    var headingSecondary: TextStyle by mutableStateOf(headingSecondary)
         private set
-    var body3: TextStyle by mutableStateOf(body3)
+    var textBody1Medium: TextStyle by mutableStateOf(textBody1Medium)
         private set
-    var body2: TextStyle by mutableStateOf(body2)
+    var textBody1Importance: TextStyle by mutableStateOf(textBody1Importance)
         private set
-    var body4: TextStyle by mutableStateOf(body4)
+    var textBody2Medium: TextStyle by mutableStateOf(textBody2Medium)
         private set
-    var caption1: TextStyle by mutableStateOf(caption1)
+    var textBody2Importance: TextStyle by mutableStateOf(textBody2Importance)
         private set
-    var caption2: TextStyle by mutableStateOf(caption2)
+    var captionRegular: TextStyle by mutableStateOf(captionRegular)
         private set
-    var caption3: TextStyle by mutableStateOf(caption3)
-        private set
-    var caption4: TextStyle by mutableStateOf(caption4)
+    var captionImportance: TextStyle by mutableStateOf(captionImportance)
         private set
 
     // Used when changing required properties
     fun copy(
-        head1: TextStyle = this.head1,
-        head2: TextStyle = this.head2,
-        head3: TextStyle = this.head3,
-        body1: TextStyle = this.body1,
-        body2: TextStyle = this.body2,
-        body3: TextStyle = this.body3,
-        body4: TextStyle = this.body4,
-        caption1: TextStyle = this.caption1,
-        caption2: TextStyle = this.caption2,
-        caption3: TextStyle = this.caption3,
-        caption4: TextStyle = this.caption4,
+        button: TextStyle = this.button,
+        headingDisplay: TextStyle = this.headingDisplay,
+        headingPrimary: TextStyle = this.headingPrimary,
+        headingSecondary: TextStyle = this.headingSecondary,
+        textBody1Medium: TextStyle = this.textBody1Medium,
+        textBody1Importance: TextStyle = this.textBody1Importance,
+        textBody2Medium: TextStyle = this.textBody2Medium,
+        textBody2Importance: TextStyle = this.textBody2Importance,
+        captionRegular: TextStyle = this.captionRegular,
+        captionImportance: TextStyle = this.captionImportance,
     ): CVTypography = CVTypography(
-        head1,
-        head2,
-        head3,
-        body1,
-        body2,
-        body3,
-        body4,
-        caption1,
-        caption2,
-        caption3,
-        caption4
+        button,
+        headingDisplay,
+        headingPrimary,
+        headingSecondary,
+        textBody1Medium,
+        textBody1Importance,
+        textBody2Medium,
+        textBody2Importance,
+        captionRegular,
+        captionImportance
     )
 
     fun update(other: CVTypography) {
-        head1 = other.head1
-        head2 = other.head2
-        head3 = other.head3
-        body1 = other.body1
-        body2 = other.body2
-        body3 = other.body3
-        body4 = other.body4
-        caption1 = other.caption1
-        caption2 = other.caption2
-        caption3 = other.caption3
-        caption4 = other.caption4
+        button = other.button
+        headingDisplay = other.headingDisplay
+        headingPrimary = other.headingPrimary
+        headingSecondary = other.headingSecondary
+        textBody1Medium = other.textBody1Medium
+        textBody1Importance = other.textBody1Importance
+        textBody2Medium = other.textBody2Medium
+        textBody2Importance = other.textBody2Importance
+        captionRegular = other.captionRegular
+        captionImportance = other.captionImportance
     }
 }
 
@@ -117,60 +112,55 @@ fun careVisionTextStyle(
 @Composable
 fun careVisionTypography(): CVTypography {
     return CVTypography(
-        head1 = careVisionTextStyle(
-            fontFamily = pretendardSemiBold,
-            fontSize = 22.sp,
-            lineHeight = 33.sp
+        button = careVisionTextStyle(
+            fontFamily = pretendardBold,
+            fontSize = 16.sp,
+            lineHeight = 26.sp
         ),
-        head2 = careVisionTextStyle(
-            fontFamily = pretendardSemiBold,
+        headingDisplay = careVisionTextStyle(
+            fontFamily = pretendardBold,
+            fontSize = 28.sp,
+            lineHeight = 56.sp
+        ),
+        headingPrimary = careVisionTextStyle(
+            fontFamily = pretendardBold,
+            fontSize = 24.sp,
+            lineHeight = 34.sp
+        ),
+        headingSecondary = careVisionTextStyle(
+            fontFamily = pretendardBold,
             fontSize = 20.sp,
             lineHeight = 30.sp
         ),
-        head3 = careVisionTextStyle(
-            fontFamily = pretendardSemiBold,
-            fontSize = 18.sp,
-            lineHeight = 27.sp
-        ),
-        body1 = careVisionTextStyle(
-            fontFamily = pretendardSemiBold,
-            fontSize = 16.sp,
-            lineHeight = 24.sp
-        ),
-        body2 = careVisionTextStyle(
+        textBody1Medium = careVisionTextStyle(
             fontFamily = pretendardRegular,
             fontSize = 16.sp,
             lineHeight = 24.sp
         ),
-        body3 = careVisionTextStyle(
-            fontFamily = pretendardSemiBold,
-            fontSize = 14.sp,
-            lineHeight = 21.sp
+        textBody1Importance = careVisionTextStyle(
+            fontFamily = pretendardBold,
+            fontSize = 16.sp,
+            lineHeight = 24.sp
         ),
-        body4 = careVisionTextStyle(
+        textBody2Medium = careVisionTextStyle(
             fontFamily = pretendardRegular,
             fontSize = 14.sp,
-            lineHeight = 21.sp
+            lineHeight = 20.sp
         ),
-        caption1 = careVisionTextStyle(
-            fontFamily = pretendardSemiBold,
-            fontSize = 12.sp,
-            lineHeight = 18.sp
+        textBody2Importance = careVisionTextStyle(
+            fontFamily = pretendardBold,
+            fontSize = 14.sp,
+            lineHeight = 20.sp
         ),
-        caption2 = careVisionTextStyle(
+        captionRegular = careVisionTextStyle(
             fontFamily = pretendardRegular,
             fontSize = 12.sp,
-            lineHeight = 18.sp
+            lineHeight = 16.sp
         ),
-        caption3 = careVisionTextStyle(
-            fontFamily = pretendardSemiBold,
-            fontSize = 10.sp,
-            lineHeight = 15.sp
+        captionImportance = careVisionTextStyle(
+            fontFamily = pretendardBold,
+            fontSize = 12.sp,
+            lineHeight = 16.sp
         ),
-        caption4 = careVisionTextStyle(
-            fontFamily = pretendardRegular,
-            fontSize = 10.sp,
-            lineHeight = 15.sp
-        )
     )
 }

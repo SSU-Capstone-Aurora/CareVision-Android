@@ -74,25 +74,3 @@ fun CVTheme(
         )
     }
 }
-
-@Preview
-@Composable
-fun CVThemePreview() {
-    CVTheme {
-        Column(modifier = Modifier.background(White)) {
-            Text(text = "BooTheme", style = CVTheme.typography.head1)
-            Text(text = "BooTheme", style = CVTheme.typography.head2)
-            Text(text = "BooTheme", style = CVTheme.typography.head3)
-            Text(text = "BooTheme", style = CVTheme.typography.body1)
-            Text(text = "BooTheme", style = CVTheme.typography.body2)
-            Text(text = "BooTheme", style = CVTheme.typography.body3)
-            Text(text = "BooTheme", style = CVTheme.typography.body4)
-            Text(text = "BooTheme", style = CVTheme.typography.caption1)
-            Text(text = "BooTheme", style = CVTheme.typography.caption2)
-            Text(text = "BooTheme", style = CVTheme.typography.caption3)
-            Text(text = "BooTheme", style = CVTheme.typography.caption4)
-
-            Text(text = "BooTheme", style = CVTheme.typography.head1.copy(color = Gray300))
-        }
-    }
-}
