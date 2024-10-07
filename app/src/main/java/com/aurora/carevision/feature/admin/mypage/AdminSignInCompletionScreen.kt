@@ -1,4 +1,4 @@
-package com.aurora.carevision.feature.manager.auth
+package com.aurora.carevision.manager.auth
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -11,20 +11,20 @@ import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.White
 
 @Composable
-fun MgrInfoEntryScreen(){
-    Text(text = "Manager Information")
+fun AdminSignInCompletionScreen(){
+    Text(text = "Sign Up Completion")
 }
 
 @Composable
 @Preview
-fun MgrInfoEntryScreenPreview(){
+fun AdminSignInCompletionScreenPreview(){
     CVTheme{
         Column(
             modifier = Modifier
                 .background(White)
                 .fillMaxSize()
         ){
-            MgrInfoEntryScreen()
+            AdminSignInCompletionScreen()
         }
     }
 }
