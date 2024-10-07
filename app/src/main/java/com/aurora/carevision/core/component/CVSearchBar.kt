@@ -38,7 +38,7 @@ fun CVHeadIconSearchBar(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    placeholder: String = "ÅØ½ºÆ®¸¦ ÀÔ·ÂÇÏ¼¼¿ä",
+    placeholder: String = "í…ìŠ¤íŠ¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”",
     backgroundColor: Color = White,
     headIcon: Int = R.drawable.ic_search_gray_24,
     borderVisible: Boolean = false
@@ -98,7 +98,7 @@ fun CVTailIconSearchBar(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    placeholder: String = "ÅØ½ºÆ®¸¦ ÀÔ·ÂÇÏ¼¼¿ä",
+    placeholder: String = "í…ìŠ¤íŠ¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”",
     backgroundColor: Color = White,
     tailIcon: Int = R.drawable.ic_search_gray_24,
     borderVisible: Boolean = false,
@@ -166,7 +166,7 @@ fun PreviewCVSearchBar() {
                 modifier = Modifier,
                 backgroundColor = Gray200
             )
-            CVTailIconSearchBar(value = "", onValueChange = {}, placeholder = "º´¿ø ÀÌ¸§À» ÀÔ·ÂÇØÁÖ¼¼¿ä")
+            CVTailIconSearchBar(value = "", onValueChange = {}, placeholder = "ë³‘ì› ì´ë¦„ì„ ì…ë ¥í•˜ì„¸ìš”")
         }
     }
 }
