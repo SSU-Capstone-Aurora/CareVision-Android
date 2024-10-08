@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.aurora.carevision.app.ui.theme.CVTheme
+import com.aurora.carevision.app.ui.theme.Gray500
 import com.aurora.carevision.app.ui.theme.Primary700
 import com.aurora.carevision.app.ui.theme.White
 
@@ -76,6 +77,7 @@ fun CVTabs(
                             text = tabItemTitle[index],
                             style = CVTheme.typography.textBody1Importance,
                             modifier = Modifier.padding(vertical = 14.dp),
+                            color = if(selectedIndex == index) Primary700 else Gray500
                         )
                     }
                 }
