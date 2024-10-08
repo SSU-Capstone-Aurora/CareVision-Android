@@ -17,7 +17,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -26,29 +28,26 @@ import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.White
 
 @Composable
-fun TopAppBarBackLeft(
-    title: String,
-    LeftBackIcon: Int = R.drawable.ic_topappbar_leftbutton_24,
+fun TopAppBarLeft(
+    title: String = "",
     onBackClick: () -> Unit = {}
 ) {
-    Row {
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(White)
+            .padding(vertical = 16.dp)
+    ) {
         Box(
-            modifier = Modifier
-                .fillMaxWidth(),
-            //contentAlignment = Alignment.Center,
-            //horizontalArrangement = Arrangement.SpaceBetween
-        ){
-            IconButton(
-                onClick = { /*TODO*/ }
-            ) {
-                Image(
-                    painter = painterResource(id = LeftBackIcon),
-                    contentDescription = "LeftBack Icon",
-                    modifier = Modifier
-                        .size(36.dp)
-                        .padding(end = 12.dp)
-                )
-            }
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.ic_topappbar_leftbutton_24),
+                contentDescription = "LeftBack Icon",
+                modifier = Modifier
+            )
             Text(
                 text = title,
                 color = Color.Black,
@@ -56,63 +55,35 @@ fun TopAppBarBackLeft(
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 12.dp)
-            ) // 이 친구를 상하로도 가운데 배치시키고 싶습니다 ->12.dp말고 가운데.. 어떻게 하나요ㅠ
+                    .padding(start = 16.dp)
+            )
         }
     }
 }
 
 @Composable
-fun TopAppBarBackRight(
-    title: String,
-    RightBackIcon: Int = R.drawable.ic_topappbar_rightbutton_24,
+fun TopAppBarRight(
+    title: String = "",
+    //rightBackIcon: Int = R.drawable.ic_topappbar_rightbutton_24,
     onBackClick: () -> Unit = {}
 ) {
-    Row {
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(White)
+            .padding(vertical = 16.dp)
+    ) {
         Box(
-            modifier = Modifier
-                .fillMaxWidth(),
-        ){
-            Text(
-                text = title,
-                color = Color.Black,
-                style = CVTheme.typography.textBody1Importance,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 12.dp)
-            )
-            IconButton(
-                onClick = { /*TODO*/ },
+            modifier = Modifier.fillMaxWidth(),
+            ) {
+            Image(
+                painter = painterResource(id = R.drawable.ic_topappbar_rightbutton_24),
+                contentDescription = "RightBack Icon",
                 modifier = Modifier
                     .align(Alignment.CenterEnd)
-            ) {
-                Image(
-                    painter = painterResource(id = RightBackIcon),
-                    contentDescription = "RightBack Icon",
-                    modifier = Modifier
-                        .size(36.dp)
-                        .padding(start = 12.dp)
-                )
-            }
-
-        }
-
-    }
-}
-
-
-@Composable
-fun TopAppBarNoBack( // 이 친구는 이번엔 밑에 붙어있네요..
-    title: String,
-) {
-    Row {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 10.dp, vertical = 10.dp)
-
-        ){
+            )
             Text(
                 text = title,
                 color = Color.Black,
@@ -120,11 +91,39 @@ fun TopAppBarNoBack( // 이 친구는 이번엔 밑에 붙어있네요..
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 12.dp)
+                    .padding(start = 16.dp)
             )
-
         }
+    }
+}
 
+
+
+@Composable
+fun CVTopAppBar( // 이 친구는 이번엔 밑에 붙어있네요..
+    title: String = "",
+) {
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(White)
+            .padding(vertical = 16.dp)
+    ) {
+        Box(
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            Text(
+                text = title,
+                color = Color.Black,
+                style = CVTheme.typography.textBody1Importance,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 16.dp)
+            )
+        }
     }
 }
 
@@ -136,15 +135,15 @@ fun PreviewCenteredTitleTopAppBar() {
             modifier = Modifier.background(White),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            TopAppBarBackLeft(
+            TopAppBarLeft(
                 title = "Header",
                 onBackClick = { /* Handle back click */ }
             )
-          TopAppBarBackRight(
+          TopAppBarRight(
               title = "Header",
               onBackClick = {}
           )
-          TopAppBarNoBack(
+          CVTopAppBar(
               title = "Header",
           )
         }
