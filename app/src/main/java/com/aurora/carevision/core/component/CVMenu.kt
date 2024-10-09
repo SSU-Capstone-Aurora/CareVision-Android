@@ -50,23 +50,26 @@ import com.aurora.carevision.app.ui.theme.Green300
 import com.aurora.carevision.app.ui.theme.White
 
 @Composable
-fun ReviewDropdownMenu(menuItems: List<String>, onMenuItemClick: (String) -> Unit) {
-    var isDropDownMenuExpanded by remember { mutableStateOf(false) }
+fun ReviewDropdownMenu(
+    menuItems: List<String>,
+    onMenuItemClick: (String) -> Unit)
+{
+    var isDropDownMenuExpanded by remember { mutableStateOf(true) }
 
     // Trigger to open the dropdown menu
-    IconButton(onClick = { isDropDownMenuExpanded = true }) {
-        Image(
-            painter = painterResource(id = R.drawable.ic_profile_frame_32),
-            contentDescription = "menu icon",
-            modifier = Modifier
-                .size(36.dp)
-        )
-    }
+//    IconButton(onClick = { isDropDownMenuExpanded = true }) {
+//        Image(
+//            painter = painterResource(id = R.drawable.ic_profile_frame_32),
+//            contentDescription = "menu icon",
+//            modifier = Modifier
+//                .size(36.dp)
+//        )
+//    }
 
     // Dropdown Menu
     DropdownMenu(
         expanded = isDropDownMenuExpanded,
-        onDismissRequest = { isDropDownMenuExpanded = false },
+        onDismissRequest = { isDropDownMenuExpanded = true },
         modifier = Modifier
             .background(White)
             .border(1.dp, Green300)
@@ -76,7 +79,7 @@ fun ReviewDropdownMenu(menuItems: List<String>, onMenuItemClick: (String) -> Uni
             DropdownMenuItem(
                 onClick = {
                     onMenuItemClick(menuItem)
-                    isDropDownMenuExpanded = false
+                    isDropDownMenuExpanded = true
                 },
                 text = {
                     Text(text = menuItem)
