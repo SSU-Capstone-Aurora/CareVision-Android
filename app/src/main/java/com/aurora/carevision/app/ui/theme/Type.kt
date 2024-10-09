@@ -158,7 +158,7 @@ fun careVisionTypography(): CVTypography {
             lineHeight = 16.sp
         ),
         captionImportance = careVisionTextStyle(
-            fontFamily = pretendardBold,
+            fontFamily = pretendardMedium,
             fontSize = 12.sp,
             lineHeight = 16.sp
         ),
