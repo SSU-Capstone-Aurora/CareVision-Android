@@ -103,7 +103,7 @@ fun AdminNurseListItem(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 12.dp, horizontal = 16.dp)
+            .padding(vertical = 12.dp, horizontal = 12.dp)
             .clip(RoundedCornerShape(5.dp))
             .background(White),
         verticalAlignment = Alignment.CenterVertically,
@@ -171,7 +171,7 @@ fun AdminCameraListItem(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 12.dp, horizontal = 16.dp)
+            .padding(vertical = 12.dp, horizontal = 12.dp)
             .clip(RoundedCornerShape(5.dp))
             .background(White),
         verticalAlignment = Alignment.CenterVertically,
