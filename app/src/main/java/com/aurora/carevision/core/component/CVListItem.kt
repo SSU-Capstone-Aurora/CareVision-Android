@@ -2,21 +2,14 @@ package com.aurora.carevision.core.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,12 +17,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -38,10 +27,10 @@ import androidx.compose.ui.unit.dp
 import com.aurora.carevision.R
 import com.aurora.carevision.app.ui.theme.Black
 import com.aurora.carevision.app.ui.theme.CVTheme
-import com.aurora.carevision.app.ui.theme.Gray300
 import com.aurora.carevision.app.ui.theme.Gray400
-import com.aurora.carevision.app.ui.theme.Green500
+import com.aurora.carevision.app.ui.theme.Primary500
 import com.aurora.carevision.app.ui.theme.White
+
 @Composable
 fun AdminPatientListItem(
     patientName: String,
@@ -62,7 +51,7 @@ fun AdminPatientListItem(
             modifier = Modifier
                 .weight(1f)
                 .background(White),
-                //.padding(.dp),
+            //.padding(.dp),
             verticalArrangement = Arrangement.Center
         ) {
             // 환자 이름
@@ -88,7 +77,7 @@ fun AdminPatientListItem(
         Text(
             text = patientId,
             style = CVTheme.typography.captionRegular,
-            color = Green500,
+            color = Primary500,
             textAlign = TextAlign.End,
             modifier = Modifier
                 .align(Alignment.CenterVertically)
@@ -96,6 +85,7 @@ fun AdminPatientListItem(
         )
     }
 }
+
 @Composable
 fun AdminNurseListItem(
     nurseName: String,
@@ -109,8 +99,9 @@ fun AdminNurseListItem(
             .padding(12.dp)
             .clip(RoundedCornerShape(5.dp))
             .background(White),
-        verticalAlignment = Alignment.CenterVertically,) {
-            // 프로필 사진
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        // 프로필 사진
         Image(
             painter = painterResource(id = profileIcon),
             contentDescription = "Profile Icon",
@@ -119,7 +110,7 @@ fun AdminNurseListItem(
                 .background(White)
                 .padding(start = 12.dp)
         )
-            // 이름 텍스트
+        // 이름 텍스트
         Text(
             text = nurseName,
             style = CVTheme.typography.textBody1Importance,
@@ -131,9 +122,10 @@ fun AdminNurseListItem(
         )
 
         // 삭제 버튼
-        Box(modifier = Modifier
-            .align(Alignment.CenterVertically)
-            .background(White)
+        Box(
+            modifier = Modifier
+                .align(Alignment.CenterVertically)
+                .background(White)
         ) {
             Image(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_listdeletebutton_45x32),
@@ -143,10 +135,11 @@ fun AdminNurseListItem(
                     .background(White)
                     .padding(end = 12.dp)
                     .clickable(onClick = onDeleteClick),
-                )
+            )
         }
     }
 }
+
 @Composable
 fun AdminCameraListItem(
     cameraInfo: String,
@@ -162,13 +155,14 @@ fun AdminCameraListItem(
             .clip(RoundedCornerShape(5.dp))
             .background(White),
         verticalAlignment = Alignment.CenterVertically,
-    ) { Image(
-        painter = painterResource(id = cameraIcon),
-        contentDescription = "Camera Icon",
-        modifier = Modifier
-            .size(48.dp)
-            .padding(start = 12.dp)
-    )
+    ) {
+        Image(
+            painter = painterResource(id = cameraIcon),
+            contentDescription = "Camera Icon",
+            modifier = Modifier
+                .size(48.dp)
+                .padding(start = 12.dp)
+        )
         Column(
             modifier = Modifier
                 .weight(1f)
@@ -250,14 +244,16 @@ fun AdminRequestItem(
                 contentDescription = "Reject Icon",
                 modifier = Modifier
                     .size(36.dp)
-                    .padding(end = 12.dp))
+                    .padding(end = 12.dp)
+            )
             // 체크 버튼
             Image(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_nurserequest_accept_30x30),
                 contentDescription = "Accept Icon",
                 modifier = Modifier
                     .size(36.dp)
-                    .padding(end = 12.dp))
+                    .padding(end = 12.dp)
+            )
         }
     }
 }
@@ -286,14 +282,14 @@ fun AdminVideoListItem(
                 .size(96.dp)
                 .padding(start = 12.dp)
         )
-        Column (
+        Column(
             modifier = Modifier
                 .weight(1f)
                 .background(White)
                 .padding(end = 16.dp),
             verticalArrangement = Arrangement.Center
         )
-            {
+        {
             Text(
                 text = date,
                 style = CVTheme.typography.textBody1Importance,
@@ -318,12 +314,13 @@ fun AdminVideoListItem(
                 contentDescription = "Arrow Icon",
                 modifier = Modifier
                     .size(36.dp)
-                    .padding(end  =12.dp)
+                    .padding(end = 12.dp)
                     .clickable(onClick = onMoveClick),
             )
         }
     }
 }
+
 @Preview
 @Composable
 fun AdminPatientListItemPreview() {
@@ -350,8 +347,8 @@ fun AdminPatientListItemPreview() {
                 requestTime = "어제"
             )
             AdminVideoListItem(
-                date ="2024.10.08",
-                time ="10:08",
+                date = "2024.10.08",
+                time = "10:08",
                 onMoveClick = {}
             )
         }

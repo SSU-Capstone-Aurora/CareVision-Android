@@ -24,6 +24,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.aurora.carevision.R
+import com.aurora.carevision.app.ui.theme.Black
 import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.White
 
@@ -53,9 +54,8 @@ fun TopAppBarLeft(
                 color = Color.Black,
                 style = CVTheme.typography.textBody1Importance,
                 textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 16.dp)
+                modifier = Modifier.fillMaxWidth()
+
             )
         }
     }
@@ -91,7 +91,6 @@ fun TopAppBarRight(
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 16.dp)
             )
         }
     }
@@ -119,9 +118,7 @@ fun CVTopAppBar( // 이 친구는 이번엔 밑에 붙어있네요..
                 color = Color.Black,
                 style = CVTheme.typography.textBody1Importance,
                 textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 16.dp)
+                modifier = Modifier.fillMaxWidth()
             )
         }
     }
@@ -132,7 +129,7 @@ fun CVTopAppBar( // 이 친구는 이번엔 밑에 붙어있네요..
 fun PreviewCenteredTitleTopAppBar() {
     CVTheme {
         Column(
-            modifier = Modifier.background(White),
+            modifier = Modifier.background(Black),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             TopAppBarLeft(
