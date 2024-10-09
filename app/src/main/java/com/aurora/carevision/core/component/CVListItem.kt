@@ -166,7 +166,6 @@ fun AdminCameraListItem(
     cameraInfo: String,
     cameraId: String,
     modifier: Modifier = Modifier,
-    cameraIcon: Int = R.drawable.ic_cameralistitem_42x42, //이 친구는 figma에서 알려주신대로 사진 다운로드 받아서 사용해보니 url 오류가 나와서 일단 빈칸으로 해뒀습니다!
     onClick: () -> Unit = {}
 ) {
     Row(
@@ -178,7 +177,7 @@ fun AdminCameraListItem(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
-            painter = painterResource(id = cameraIcon),
+            painter = painterResource(id = R.drawable.image_ip_camera),
             contentDescription = "Camera Icon",
             modifier = Modifier
                 .size(48.dp)
