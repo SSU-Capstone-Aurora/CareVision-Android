@@ -4,4 +4,5 @@
     <string name="text_login">로그인</string>
     <string name="text_signup">회원가입</string>
     <string name="text_are_you_administrator">관리자이신가요?</string>
+    <string name="loading_default">로딩 중...</string>
 </resources>
