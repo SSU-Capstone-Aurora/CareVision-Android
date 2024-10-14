@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">CareVision</string>
+    <string name="start_login_description">믿을 수 있는 환자모니터링,\n케어비전과 함께 안심하세요.</string>
+    <string name="text_login">로그인</string>
+    <string name="text_signup">회원가입</string>
+    <string name="text_are_you_administrator">관리자이신가요?</string>
 </resources>

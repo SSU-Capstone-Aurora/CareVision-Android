@@ -54,7 +54,7 @@ fun CVBasicButton(
             .clickable(
                 onClick = onClick,
                 enabled = enabled,
-                indication = null, // ripple ÀÌ ¾ø´Â button
+                indication = null, // ripple ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ button
                 interactionSource = interactionSource
             ),
         contentAlignment = Alignment.Center
@@ -70,6 +70,7 @@ fun CVLongButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     backgroundColor: Color = Primary600,
+    textColor: Color = White,
     paddingValues: PaddingValues = PaddingValues(horizontal = 24.dp)
 ) {
     CVBasicButton(
@@ -78,7 +79,7 @@ fun CVLongButton(
         modifier = modifier,
         enabled = enabled,
         backgroundColor = backgroundColor,
-        textColor = White,
+        textColor = textColor,
         paddingValues = paddingValues
     )
 }
@@ -136,15 +137,15 @@ fun CVLongButtonPreview() {
                 .background(White),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            CVLongButton(text = "´ÙÀ½", onClick = {})
-            CVLongButton(text = "´ÙÀ½", onClick = {}, enabled = false)
-            CVRedButton(text = "È¸¿øÅ»Åð", onClick = {}, enabled = false, backgroundColor = Red200)
-            CVRedButton(text = "È¸¿øÅ»Åð", onClick = {}, enabled = true, backgroundColor = Red200)
+            CVLongButton(text = "ï¿½ï¿½ï¿½ï¿½", onClick = {})
+            CVLongButton(text = "ï¿½ï¿½ï¿½ï¿½", onClick = {}, enabled = false)
+            CVRedButton(text = "È¸ï¿½ï¿½Å»ï¿½ï¿½", onClick = {}, enabled = false, backgroundColor = Red200)
+            CVRedButton(text = "È¸ï¿½ï¿½Å»ï¿½ï¿½", onClick = {}, enabled = true, backgroundColor = Red200)
 
             Row {
-                CVShortButton(text = "È®ÀÎ", onClick = {})
+                CVShortButton(text = "È®ï¿½ï¿½", onClick = {})
                 CVShortButton(
-                    text = "Ãë¼Ò",
+                    text = "ï¿½ï¿½ï¿½",
                     onClick = {},
                     backgroundColor = Gray200,
                     textColor = Gray500
