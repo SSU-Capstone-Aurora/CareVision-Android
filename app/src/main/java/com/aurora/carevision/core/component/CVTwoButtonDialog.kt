@@ -70,7 +70,7 @@ fun CVTwoButtonDialog(
                         textAlign = TextAlign.Center,
                         style = CVTheme.typography.headingSecondary,
                         color = Black,
-                        modifier = Modifier.padding(horizontal = 30.dp)
+                        modifier = Modifier.padding(horizontal = 20.dp)
                     )
                     Spacer(modifier = Modifier.height(20.dp))
                 }
