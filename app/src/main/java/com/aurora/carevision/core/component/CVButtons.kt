@@ -54,7 +54,7 @@ fun CVBasicButton(
             .clickable(
                 onClick = onClick,
                 enabled = enabled,
-                indication = null, // ripple �� ���� button
+                indication = null, // ripple이 없는 button
                 interactionSource = interactionSource
             ),
         contentAlignment = Alignment.Center
