@@ -137,15 +137,15 @@ fun CVLongButtonPreview() {
                 .background(White),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            CVLongButton(text = "����", onClick = {})
-            CVLongButton(text = "����", onClick = {}, enabled = false)
-            CVRedButton(text = "ȸ��Ż��", onClick = {}, enabled = false, backgroundColor = Red200)
-            CVRedButton(text = "ȸ��Ż��", onClick = {}, enabled = true, backgroundColor = Red200)
+            CVLongButton(text = "다음", onClick = {})
+            CVLongButton(text = "다음", onClick = {}, enabled = false)
+            CVRedButton(text = "회원탈퇴", onClick = {}, enabled = false, backgroundColor = Red200)
+            CVRedButton(text = "회원탈퇴", onClick = {}, enabled = true, backgroundColor = Red200)
 
             Row {
-                CVShortButton(text = "Ȯ��", onClick = {})
+                CVShortButton(text = "확인", onClick = {})
                 CVShortButton(
-                    text = "���",
+                    text = "취소",
                     onClick = {},
                     backgroundColor = Gray200,
                     textColor = Gray500
