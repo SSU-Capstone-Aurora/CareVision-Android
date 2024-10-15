@@ -54,7 +54,7 @@ fun CVBasicButton(
             .clickable(
                 onClick = onClick,
                 enabled = enabled,
-                indication = null, // ripple ÀÌ ¾ø´Â button
+                indication = null, // rippleì´ ì—†ëŠ” button
                 interactionSource = interactionSource
             ),
         contentAlignment = Alignment.Center
@@ -70,6 +70,7 @@ fun CVLongButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     backgroundColor: Color = Primary600,
+    textColor: Color = White,
     paddingValues: PaddingValues = PaddingValues(horizontal = 24.dp)
 ) {
     CVBasicButton(
@@ -78,7 +79,7 @@ fun CVLongButton(
         modifier = modifier,
         enabled = enabled,
         backgroundColor = backgroundColor,
-        textColor = White,
+        textColor = textColor,
         paddingValues = paddingValues
     )
 }
@@ -136,15 +137,15 @@ fun CVLongButtonPreview() {
                 .background(White),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            CVLongButton(text = "´ÙÀ½", onClick = {})
-            CVLongButton(text = "´ÙÀ½", onClick = {}, enabled = false)
-            CVRedButton(text = "È¸¿øÅ»Åğ", onClick = {}, enabled = false, backgroundColor = Red200)
-            CVRedButton(text = "È¸¿øÅ»Åğ", onClick = {}, enabled = true, backgroundColor = Red200)
+            CVLongButton(text = "ë‹¤ìŒ", onClick = {})
+            CVLongButton(text = "ë‹¤ìŒ", onClick = {}, enabled = false)
+            CVRedButton(text = "íšŒì›íƒˆí‡´", onClick = {}, enabled = false, backgroundColor = Red200)
+            CVRedButton(text = "íšŒì›íƒˆí‡´", onClick = {}, enabled = true, backgroundColor = Red200)
 
             Row {
-                CVShortButton(text = "È®ÀÎ", onClick = {})
+                CVShortButton(text = "í™•ì¸", onClick = {})
                 CVShortButton(
-                    text = "Ãë¼Ò",
+                    text = "ì·¨ì†Œ",
                     onClick = {},
                     backgroundColor = Gray200,
                     textColor = Gray500
