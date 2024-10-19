@@ -94,7 +94,7 @@ fun TopAppBarRight(
 
 
 @Composable
-fun CVTopAppBar( // 이 친구는 이번엔 밑에 붙어있네요..
+fun CVTopAppBar(
     title: String = "",
 ) {
     Row(

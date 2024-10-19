@@ -2,6 +2,8 @@ package com.aurora.carevision.core.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,10 +12,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
@@ -52,7 +60,7 @@ fun CVHeadIconSearchBar(
             .clip(shape = RoundedCornerShape(10.dp))
             .background(backgroundColor)
             .fillMaxWidth()
-            .border(if(borderVisible) 1.dp else 0.dp, Gray300, RoundedCornerShape(10.dp))
+            .border(if (borderVisible) 1.dp else 0.dp, Gray300, RoundedCornerShape(10.dp))
             .padding(16.dp)
             .focusRequester(focusRequester)
             .onFocusChanged { focusState ->
@@ -102,8 +110,13 @@ fun CVTailIconSearchBar(
     backgroundColor: Color = White,
     tailIcon: Int = R.drawable.ic_search_gray_24,
     borderVisible: Boolean = false,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
+    onTextChanged: (String) -> Unit,
+    onFocusChanged: (Boolean) -> Unit,
 ) {
     val focusRequester = remember { FocusRequester() }
+    val focusManager = LocalFocusManager.current
 
     BasicTextField(
         value = value,
@@ -112,14 +125,12 @@ fun CVTailIconSearchBar(
             .clip(shape = RoundedCornerShape(10.dp))
             .background(backgroundColor)
             .fillMaxWidth()
-            .border(if(borderVisible) 1.dp else 0.dp, Gray300, RoundedCornerShape(10.dp))
+
+            .border(1.dp, Gray300, RoundedCornerShape(10.dp))
             .padding(16.dp)
             .focusRequester(focusRequester)
-            .onFocusChanged { focusState ->
-                if (focusState.isFocused) {
-                    focusRequester.requestFocus()
-                }
-            },
+            .onFocusChanged { focusState ->focusState.isFocused},
+
         singleLine = true,
         textStyle = CVTheme.typography.textBody1Medium.copy(color = Gray500),
         decorationBox = { innerTextField ->
@@ -155,8 +166,11 @@ fun CVTailIconSearchBar(
 @Composable
 fun PreviewCVSearchBar() {
     CVTheme {
+        var searchBarText by rememberSaveable { mutableStateOf("") }
         Column(
-            modifier = Modifier.background(White).padding(15.dp),
+            modifier = Modifier
+                .background(White)
+                .padding(15.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             CVHeadIconSearchBar(value = "", onValueChange = {}, modifier = Modifier)
@@ -166,7 +180,13 @@ fun PreviewCVSearchBar() {
                 modifier = Modifier,
                 backgroundColor = Gray200
             )
-            CVTailIconSearchBar(value = "", onValueChange = {}, placeholder = "병원 이름을 입력하세요")
+            CVTailIconSearchBar(
+                value = "",
+                onValueChange = {},
+                placeholder = "병원 이름을 입력하세요",
+                onTextChanged = {},
+                onFocusChanged = {},
+            )
         }
     }
 }
