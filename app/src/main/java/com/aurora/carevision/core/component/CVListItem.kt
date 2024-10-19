@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,6 +15,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,14 +30,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.aurora.carevision.R
 import com.aurora.carevision.app.ui.theme.Black
 import com.aurora.carevision.app.ui.theme.CVTheme
+import com.aurora.carevision.app.ui.theme.Gray100
 import com.aurora.carevision.app.ui.theme.Gray200
 import com.aurora.carevision.app.ui.theme.Gray400
 import com.aurora.carevision.app.ui.theme.Gray500
 import com.aurora.carevision.app.ui.theme.Gray600
+import com.aurora.carevision.app.ui.theme.Primary200
 import com.aurora.carevision.app.ui.theme.Primary500
+import com.aurora.carevision.app.ui.theme.Primary700
 import com.aurora.carevision.app.ui.theme.White
 
 @Composable
@@ -45,52 +52,54 @@ fun AdminPatientListItem(
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {}
 ) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(12.dp)
-            .clip(RoundedCornerShape(5.dp))
-            .background(White),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Column(
-            modifier = Modifier
-                .weight(1f)
-                .background(White)
-                .padding(vertical = 12.dp, horizontal = 16.dp),
-            verticalArrangement = Arrangement.Center
+        Row(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(12.dp)
+                .clip(RoundedCornerShape(5.dp))
+                .background(White),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            // 환자 이름
-            Text(
-                text = patientName,
-                style = CVTheme.typography.textBody1Importance,
-                color = Color.Black,
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 12.dp, top = 5.dp)
-            )
-            // 환자 정보
+                    .weight(1f)
+                    .background(White)
+                    .padding(vertical = 12.dp, horizontal = 16.dp),
+                verticalArrangement = Arrangement.Center
+            ) {
+                // 환자 이름
+                Text(
+                    text = patientName,
+                    style = CVTheme.typography.textBody1Importance,
+                    color = Color.Black,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 12.dp, top = 5.dp)
+                )
+                // 환자 정보
+                Text(
+                    text = patientInfo,
+                    style = CVTheme.typography.captionImportance,
+                    color = Gray400,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier
+                        .padding(start = 12.dp, bottom = 5.dp)
+                )
+            }
             Text(
-                text = patientInfo,
+                text = patientId,
                 style = CVTheme.typography.captionImportance,
-                color = Gray400,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
+                color = Primary500,
+                textAlign = TextAlign.End,
                 modifier = Modifier
-                    .padding(start = 12.dp, bottom = 5.dp)
+                    .align(Alignment.Top)
+                    .padding(end = 12.dp, top = 16.dp)
             )
         }
-        Text(
-            text = patientId,
-            style = CVTheme.typography.captionImportance,
-            color = Primary500,
-            textAlign = TextAlign.End,
-            modifier = Modifier
-                .align(Alignment.Top)
-                .padding(end = 12.dp, top = 16.dp)
-        )
+
     }
-}
+
 
 @Composable
 fun AdminNurseListItem(
@@ -108,7 +117,7 @@ fun AdminNurseListItem(
             .background(White),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        // 프로필 사진
+
         Image(
             painter = painterResource(id = profileIcon),
             contentDescription = "Profile Icon",
@@ -116,9 +125,7 @@ fun AdminNurseListItem(
                 .width(48.dp) // 사진 크기 조절
                 .background(White)
                 .padding(start = 12.dp)
-                .weight(1f)
         )
-        // 이름 텍스트
 
         Column(
             modifier = Modifier
@@ -133,28 +140,27 @@ fun AdminNurseListItem(
                 text = nurseName,
                 style = CVTheme.typography.textBody1Importance,
                 color = Color.Black,
-                modifier = Modifier.padding(start = 12.dp)
+                modifier = Modifier.padding(top = 12.dp, bottom = 6.dp, start = 12.dp)
             )
 
             Text(
                 text = nurseId,
                 style = CVTheme.typography.captionImportance,
                 color = Gray500,
-                modifier = Modifier.padding(start = 12.dp)
+                modifier = Modifier.padding(bottom = 12.dp, start = 12.dp)
             )
         }
 
-        // 삭제 버튼
         Box(
-            modifier = Modifier.weight(1f)
+            modifier = Modifier
         ) {
             Image(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_listdeletebutton_45x32),
                 contentDescription = "Delete Icon",
                 modifier = Modifier
-                    .size(48.dp)
+                    .size(58.dp)
+                    .padding(end = 16.dp)
                     .background(White)
-                    .padding(end = 12.dp)
                     .clickable(onClick = onDeleteClick),
             )
         }
@@ -177,7 +183,7 @@ fun AdminCameraListItem(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
-            painter = painterResource(id = R.drawable.image_ip_camera),
+            painter = painterResource(id = R.drawable.ic_ip_camera),
             contentDescription = "Camera Icon",
             modifier = Modifier
                 .size(48.dp)
@@ -235,7 +241,9 @@ fun AdminRequestItem(
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Column(
-            modifier = Modifier.weight(1f).padding(horizontal = 20.dp, vertical = 16.dp),
+            modifier = Modifier
+                .weight(1f)
+                .padding(horizontal = 20.dp, vertical = 16.dp),
             verticalArrangement = Arrangement.Center
         ) {
             Text(
@@ -369,6 +377,77 @@ fun AdminVideoListItem(
     }
 }
 
+@Composable
+fun AdminHospitalListItem(
+    hospitalName: String,
+    hospitalId: String,
+    modifier: Modifier = Modifier,
+    profileIcon: Int = R.drawable.ic_hopital_icon,
+    onDeleteClick: () -> Unit = {}
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(vertical = 12.dp, horizontal = 12.dp)
+            .clip(RoundedCornerShape(5.dp))
+            .background(White),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Image(
+            painter = painterResource(id = profileIcon),
+            contentDescription = "Profile Icon",
+            modifier = Modifier
+                .background(White)
+                .size(72.dp)
+                .padding(top = 12.dp, bottom = 12.dp)
+        )
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(White)
+                .padding(end = 16.dp)
+                .weight(1f),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.Start
+        ) {
+            Text(
+                text = hospitalName,
+                style = CVTheme.typography.textBody1Importance,
+                color = Color.Black,
+                modifier = Modifier.padding(start = 12.dp)
+            )
+
+            Text(
+                text = hospitalId,
+                style = CVTheme.typography.captionImportance,
+                color = Gray500,
+                modifier = Modifier.padding(start = 12.dp)
+            )
+        }
+        Box() {
+            Button(
+                onClick = {},
+                modifier = Modifier
+                    .width(76.dp)
+                    .height(24.dp)
+                    .padding(end = 12.dp),
+
+                colors = ButtonDefaults.buttonColors(Gray100),
+                shape = RoundedCornerShape(16.dp),
+                contentPadding = PaddingValues(0.dp)
+            ){
+                Text(text = "로그아웃",
+                    fontSize = 10.sp,
+                    color = Gray500,
+                    modifier=Modifier.padding(0.dp)
+                    
+                )
+            }
+        }
+    }
+}
+
+
 @Preview
 @Composable
 fun AdminPatientListItemPreview() {
@@ -400,6 +479,11 @@ fun AdminPatientListItemPreview() {
                 date = "2024.10.08",
                 time = "10:08",
                 onMoveClick = {}
+            )
+            AdminHospitalListItem(
+                hospitalName = "서울대병원",
+                hospitalId = "정형외과"
+
             )
         }
 
