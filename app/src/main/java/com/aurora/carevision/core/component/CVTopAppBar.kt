@@ -35,15 +35,16 @@ fun TopAppBarLeft(
         modifier = Modifier
             .fillMaxWidth()
             .background(White)
-            .padding(vertical = 16.dp)
     ) {
         Box(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
         ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_topappbar_leftbutton_24),
                 contentDescription = "LeftBack Icon",
-                modifier = Modifier.clickable{onClick()}
+                modifier = Modifier.clickable { onClick() }
             )
             Text(
                 text = title,
@@ -68,16 +69,18 @@ fun TopAppBarRight(
         modifier = Modifier
             .fillMaxWidth()
             .background(White)
-            .padding(vertical = 16.dp)
     ) {
         Box(
-            modifier = Modifier.fillMaxWidth(),
-            ) {
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+        ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_topappbar_rightbutton_24),
                 contentDescription = "RightBack Icon",
                 modifier = Modifier
-                    .align(Alignment.CenterEnd).clickable { onClick() }
+                    .align(Alignment.CenterEnd)
+                    .clickable { onClick() }
             )
             Text(
                 text = title,
@@ -92,9 +95,9 @@ fun TopAppBarRight(
 }
 
 
-
 @Composable
-fun CVTopAppBar( // 이 친구는 이번엔 밑에 붙어있네요..
+fun CVTopAppBar(
+    // 이 친구는 이번엔 밑에 붙어있네요..
     title: String = "",
 ) {
     Row(
@@ -105,17 +108,13 @@ fun CVTopAppBar( // 이 친구는 이번엔 밑에 붙어있네요..
             .background(White)
             .padding(vertical = 16.dp)
     ) {
-        Box(
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-            Text(
-                text = title,
-                color = Color.Black,
-                style = CVTheme.typography.textBody1Importance,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth()
-            )
-        }
+        Text(
+            text = title,
+            color = Color.Black,
+            style = CVTheme.typography.textBody1Importance,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth()
+        )
     }
 }
 
@@ -131,13 +130,13 @@ fun PreviewCenteredTitleTopAppBar() {
                 title = "Header",
                 onClick = { /* Handle back click */ }
             )
-          TopAppBarRight(
-              title = "Header",
-              onClick = {}
-          )
-          CVTopAppBar(
-              title = "Header",
-          )
+            TopAppBarRight(
+                title = "Header",
+                onClick = {}
+            )
+            CVTopAppBar(
+                title = "Header",
+            )
         }
     }
 }
