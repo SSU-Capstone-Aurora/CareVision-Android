@@ -1,4 +1,4 @@
-package com.aurora.carevision.domain.nurse
+package com.aurora.carevision.domain.nurse.notification
 
 data class Notification(
     val roomBedInfo: String,
