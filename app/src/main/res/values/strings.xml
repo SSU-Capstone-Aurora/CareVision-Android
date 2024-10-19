@@ -5,4 +5,7 @@
     <string name="text_signup">회원가입</string>
     <string name="text_are_you_administrator">관리자이신가요?</string>
     <string name="loading_default">로딩 중...</string>
+    <string name="tv_notification">알림</string>
+    <string name="tv_has_no_alarm">알림이 없습니다</string>
+    <string name="tv_my_patient_list">담당 환자 목록</string>
 </resources>
