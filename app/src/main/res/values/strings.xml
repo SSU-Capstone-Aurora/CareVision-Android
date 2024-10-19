@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">CareVision</string>
+    <string name="start_login_description">믿을 수 있는 환자모니터링,\n케어비전과 함께 안심하세요.</string>
+    <string name="text_login">로그인</string>
+    <string name="text_signup">회원가입</string>
+    <string name="text_are_you_administrator">관리자이신가요?</string>
+    <string name="loading_default">로딩 중...</string>
     <string name="tv_notification">알림</string>
     <string name="tv_has_no_alarm">알림이 없습니다</string>
     <string name="tv_my_patient_list">담당 환자 목록</string>
