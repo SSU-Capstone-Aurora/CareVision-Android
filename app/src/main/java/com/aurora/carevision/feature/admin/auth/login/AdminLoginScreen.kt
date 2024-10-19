@@ -38,9 +38,6 @@ import com.aurora.carevision.core.component.TopAppBarLeft
 
 @Composable
 fun AdminLoginScreen(){
-    //Text(text = "Login")
-    val correctUserID = "admin"
-    val correctPassword = "password"
     var userID by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     var isError by remember{ mutableStateOf(false) }
@@ -61,7 +58,7 @@ fun AdminLoginScreen(){
         )
         CVBasicTextField(
             value = userID,
-            isError = isError && userID != correctUserID, // correctUserID는 잘 작동되나 테스트용으로 변수 선언해둠
+            //isError = isError && userID != correctUserID,
             placeholder = "아이디를 입력해주세요",
             label = "아이디",
             onTextChanged = {userID = it},
@@ -72,7 +69,7 @@ fun AdminLoginScreen(){
         )
         CVPasswordTextField(
             value = password,
-            isError = isError && password!= correctPassword, // ID와 마찬가지
+            //isError = isError && password!= correctPassword,
             placeholder = "비밀번호를 입력해주세요",
             label = "비밀번호",
             onTextChanged = {password = it},
@@ -95,23 +92,22 @@ fun AdminLoginScreen(){
         CVLongButton(
             text = "로그인",
             onClick = {
-                if(userID == correctUserID && password == correctPassword){
-                    isError = false
-                    println("login successed")
-                    //navController.navigate("admin_login_loading_screen")
-                }
-                else {
-                    isError = true
-                    errorMessage ="*아이디 또는 비밀번호가 잘못되었습니다"
-                    println("login failed")
-                }
+//                if(userID == correctUserID && password == correctPassword){
+//                    isError = false
+//                    println("login successed")
+//                }
+//                else {
+//                    isError = true
+//                    errorMessage ="*아이디 또는 비밀번호가 잘못되었습니다"
+//                    println("login failed")
+//                }
 
             },
             enabled = userID.isNotEmpty() && password.isNotEmpty(),
             modifier = Modifier
                 .padding(top = 24.dp)
         )
-        Text( //button 형식으로 바꿔야함
+        Text( //TODO 버튼 형식으로 변형
             textDecoration = TextDecoration.Underline,
             text = "혹시 회원이 아니신가요?",
             style = CVTheme.typography.textBody2Medium,
@@ -126,13 +122,14 @@ fun AdminLoginScreen(){
 @Composable
 @Preview
 fun LoginScreenPreview(){
+    val correctUserID = "admin"
+    val correctPassword = "password"
     CVTheme{
         Column(
             modifier = Modifier
                 .background(Black)
                 .fillMaxSize()
         ){
-            //val navController = rememberNavController()
             AdminLoginScreen()
         }
     }

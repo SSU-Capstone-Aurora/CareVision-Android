@@ -256,17 +256,7 @@ fun CVSignInPasswordTextField(
         onValueChange = onTextChanged,
         singleLine = true,
         trailingIcon = {
-//            val icon = if (value.isEmpty()) {
-//                painterResource(id = R.drawable.ic_passwordvisible_black_icon_24)
-//            }
-//            else {
-//                if (isVisiblePassword) {
-//                    painterResource(id = R.drawable.ic_passwordinvisible_icon_24)
-//                } else {
-//                    painterResource(id = R.drawable.ic_passwordvisible_icon_24)
-//                    }
-//                }
-//            }
+
             val icon = when {
                 value.isEmpty() -> painterResource(id = R.drawable.ic_passwordvisible_black_icon_24)
                 isError -> painterResource(id = R.drawable.ic_profile_frame_32)
@@ -409,9 +399,6 @@ fun CVDuplicateCheckTextField(
             Button(
                 onClick = {onDuplicateCheck()},
                 modifier = Modifier
-//                    .border(1.dp, Gray300, RoundedCornerShape(10.dp))
-                    //.width(92.dp)
-                    //.height(42.67.dp)
                     .padding(end = 12.dp),
                 colors = ButtonDefaults.buttonColors(Primary200),
                 shape = RoundedCornerShape(8.dp)

@@ -125,7 +125,7 @@ fun ReviewDropdownMenu(
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(backgroundcolor)
-                        .padding(8.dp) // 메뉴 아이템들 사이 패딩
+                        .padding(8.dp)
 
                         .pointerInput(Unit){
                             awaitPointerEventScope {
@@ -149,7 +149,7 @@ fun ReviewDropdownMenu(
 @Preview
 fun ReviewDropdownMenuPreview() {
     CVTheme {
-        var selectedItem by rememberSaveable { mutableStateOf("과를 선택해주세요") }  // 선택된 항목 저장
+        var selectedItem by rememberSaveable { mutableStateOf("과를 선택해주세요") }
         Column(
             modifier = Modifier
                 .background(White)
@@ -159,7 +159,6 @@ fun ReviewDropdownMenuPreview() {
             val menuItems = listOf("신고하기", "차단하기", "기타")
             ReviewDropdownMenu(menuItems = menuItems, selectedText = "", onMenuItemClick = { selected ->
                 selectedItem= selected
-                //println("Selected item: $selectedItem")
                 })
         }
     }

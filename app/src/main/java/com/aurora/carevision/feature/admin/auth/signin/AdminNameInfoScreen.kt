@@ -27,12 +27,9 @@ import com.aurora.carevision.core.component.TopAppBarLeft
 
 @Composable
 fun AdminNameInfoScreen(){
-    //Text(text = "Signin")
     var isError by remember{ mutableStateOf(false) }
     var isTyping by remember { mutableStateOf(false) }
     var isFieldVisible by remember { mutableStateOf(false) }
-    val correctUserID = "admin"
-    val correctPassword = "password"
     var userName by rememberSaveable { mutableStateOf("") }
 
     Column (
@@ -74,7 +71,7 @@ fun AdminNameInfoScreen(){
             onClick = {isFieldVisible = true},
             enabled = userName.isNotEmpty(),
             modifier = Modifier
-                .fillMaxWidth() // 완료 버튼 크기 조절 필요
+                .fillMaxWidth()
                 .padding(top = 24.dp)
         )
     }
@@ -83,6 +80,8 @@ fun AdminNameInfoScreen(){
 @Composable
 @Preview
 fun AdminHospitalCreationScreenPreview(){
+    val correctUserID = "admin"
+    val correctPassword = "password"
     CVTheme{
         Column(
             modifier = Modifier

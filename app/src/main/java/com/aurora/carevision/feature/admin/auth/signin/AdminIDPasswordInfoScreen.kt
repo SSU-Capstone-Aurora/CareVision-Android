@@ -33,22 +33,19 @@ import com.aurora.carevision.core.component.TopAppBarLeft
 
 @Composable
 fun AdminIDPasswordInfoScreen(){
-    //Text(text = "Signin")
     var isError by remember{ mutableStateOf(false) }
     var isTyping by remember { mutableStateOf(false) }
     var isFieldVisible by remember { mutableStateOf(false) }
-    val correctUserID = "admin"
-    val correctPassword = "password"
     var userID by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     var errorMessageCount by remember { mutableStateOf(false)}
     var errorMessageNoInt by remember { mutableStateOf(false)}
 
-    fun validatePassword(password: String) {
-        errorMessageCount = password.length < 8
-        errorMessageNoInt = !password.any { it.isDigit() }
-        isError = errorMessageCount || errorMessageNoInt
-    }
+//    fun validatePassword(password: String) {
+//        errorMessageCount = password.length < 8
+//        errorMessageNoInt = !password.any { it.isDigit() }
+//        isError = errorMessageCount || errorMessageNoInt
+//    }
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -77,7 +74,7 @@ fun AdminIDPasswordInfoScreen(){
                 if(!focused) {
                     isTyping = false}
             },
-            onDuplicateCheck = {}, // 구현해야함
+            onDuplicateCheck = {},
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 24.dp)
@@ -85,7 +82,7 @@ fun AdminIDPasswordInfoScreen(){
         Spacer(modifier = Modifier.padding())
         CVSignInPasswordTextField(
             value = password,
-            isError = errorMessageCount || errorMessageNoInt ,
+            //isError = errorMessageCount || errorMessageNoInt ,
             placeholder = "비밀번호를 입력해주세요",
             label = "비밀번호",
             onTextChanged = {
@@ -95,33 +92,33 @@ fun AdminIDPasswordInfoScreen(){
             modifier = Modifier
                 .fillMaxWidth()
         )
-        if(errorMessageCount){
-            Text(
-                text = "* 8글자 이상이어야 합니다",
-                color = Red600,
-                style = CVTheme.typography.captionRegular,
-                modifier = Modifier.padding(top = 4.dp, start = 12.dp)
-            )
-        }
-        if(errorMessageNoInt){
-            Text(
-                text = "* 숫자가 들어가야 합니다",
-                color = Red600,
-                style = CVTheme.typography.captionRegular,
-                modifier = Modifier.padding(top = 4.dp, start = 12.dp)
-            )
-        }
+//        if(errorMessageCount){
+//            Text(
+//                text = "* 8글자 이상이어야 합니다",
+//                color = Red600,
+//                style = CVTheme.typography.captionRegular,
+//                modifier = Modifier.padding(top = 4.dp, start = 12.dp)
+//            )
+//        }
+//        if(errorMessageNoInt){
+//            Text(
+//                text = "* 숫자가 들어가야 합니다",
+//                color = Red600,
+//                style = CVTheme.typography.captionRegular,
+//                modifier = Modifier.padding(top = 4.dp, start = 12.dp)
+//            )
+//        }
         CVLongButton(
             text = "완료",
-            onClick = {
-                validatePassword(password)
-                if (password.isNotEmpty() && !errorMessageCount && !errorMessageNoInt) {
-                    isFieldVisible = true
-                }
-                      },
-            enabled = password.isNotEmpty() && userID.isNotEmpty(),
+           onClick = {},
+//                validatePassword(password)
+//                if (password.isNotEmpty() && !errorMessageCount && !errorMessageNoInt) {
+//                    isFieldVisible = true
+//                }
+//                      },
+//            enabled = password.isNotEmpty() && userID.isNotEmpty(),
             modifier = Modifier
-                .fillMaxWidth() // 완료 버튼 크기 조절 필요
+                .fillMaxWidth() //TODO 완료 버튼 크기 조절 필요
                 .padding(top = 24.dp)
         )
     }
@@ -132,6 +129,8 @@ fun AdminIDPasswordInfoScreen(){
 @Composable
 @Preview
 fun AdminIDPasswordInfoScreenPreview(){
+    val correctUserID = "admin"
+    val correctPassword = "password"
     CVTheme{
         Column(
             modifier = Modifier

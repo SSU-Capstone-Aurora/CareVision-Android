@@ -26,7 +26,7 @@ import com.aurora.carevision.core.component.TopAppBarLeft
 
 @Composable
 fun AdminSignInHospitalEntryScreen(){
-    //Text(text = "Signin")
+
     var hospitalName by rememberSaveable { mutableStateOf("") }
     var isError by remember{ mutableStateOf(false) }
     var isTyping by remember { mutableStateOf(false) }
@@ -47,7 +47,7 @@ fun AdminSignInHospitalEntryScreen(){
             modifier = Modifier
                 .padding(top=16.dp, bottom = 24.dp)
         )
-        CVTailIconSearchBar( //검색 기능 아직 구현 안함
+        CVTailIconSearchBar(
             value = hospitalName,
             onValueChange = {hospitalName = it},
             placeholder = "병원 이름을 입력하세요",
@@ -60,32 +60,29 @@ fun AdminSignInHospitalEntryScreen(){
                 }
             }
         )
-        if(!isTyping){
-            if(isFieldVisible){ // Menu버튼이랑 menu 간격 띄워야함
-                Spacer(modifier = Modifier.padding(top = 24.dp))
-                val menuItems = listOf("내과", "산부인과", "안과", "정형외과") //메뉴 목록 들어갈 곳
-                ReviewDropdownMenu(
-                    menuItems = menuItems,
-                    selectedText = selectedItem,
-                    onMenuItemClick = {department ->
-                        selectedItem = department
-                    }
-                )
-//                { selectedItem ->
-//                    println("Selected item: $selectedItem")
-//                }
-            }
+//        if(!isTyping){
+//            if(isFieldVisible){
+//                Spacer(modifier = Modifier.padding(top = 24.dp))
+//                val menuItems = listOf("내과", "산부인과", "안과", "정형외과")
+//                ReviewDropdownMenu(
+//                    menuItems = menuItems,
+//                    selectedText = selectedItem,
+//                    onMenuItemClick = {department ->
+//                        selectedItem = department
+//                    }
+//                )
+//            }
             CVLongButton(
                 text = "다음",
                 onClick = {isFieldVisible = true},
-                enabled = hospitalName.isNotEmpty() && ((isFieldVisible && selectedItem.isNotEmpty()) || (!isFieldVisible)), // hospitalName이 isNotempty()가 아니라 매치되는 병원이 있는지 없는지로 변경해야함
+                enabled = hospitalName.isNotEmpty() && ((isFieldVisible && selectedItem.isNotEmpty()) || (!isFieldVisible)),
                 modifier = Modifier
-                    .fillMaxWidth() // 버튼 크기 조절 필요
+                    .fillMaxWidth()
                     .padding(top = 24.dp)
             )
         }
     }
-}
+//}
 
 @Composable
 @Preview

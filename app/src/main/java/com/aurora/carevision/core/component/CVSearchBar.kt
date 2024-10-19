@@ -110,13 +110,13 @@ fun CVTailIconSearchBar(
     backgroundColor: Color = White,
     tailIcon: Int = R.drawable.ic_search_gray_24,
     borderVisible: Boolean = false,
-    keyboardOptions: KeyboardOptions = KeyboardOptions.Default, //2024/10/12 추가
-    keyboardActions: KeyboardActions = KeyboardActions.Default, //2024/10/12 추가
-    onTextChanged: (String) -> Unit, //2024/10/12 추가
-    onFocusChanged: (Boolean) -> Unit, //2024/10/12 추가
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
+    onTextChanged: (String) -> Unit,
+    onFocusChanged: (Boolean) -> Unit,
 ) {
     val focusRequester = remember { FocusRequester() }
-    val focusManager = LocalFocusManager.current //2024/10/12 추가
+    val focusManager = LocalFocusManager.current
 
     BasicTextField(
         value = value,
@@ -125,15 +125,12 @@ fun CVTailIconSearchBar(
             .clip(shape = RoundedCornerShape(10.dp))
             .background(backgroundColor)
             .fillMaxWidth()
-            //.border(if (borderVisible) 1.dp else 0.dp, Gray300, RoundedCornerShape(10.dp))
+
             .border(1.dp, Gray300, RoundedCornerShape(10.dp))
             .padding(16.dp)
             .focusRequester(focusRequester)
             .onFocusChanged { focusState ->focusState.isFocused},
-//                if (focusState.isFocused) {
-//                    focusRequester.requestFocus()
-//                }
-//            },
+
         singleLine = true,
         textStyle = CVTheme.typography.textBody1Medium.copy(color = Gray500),
         decorationBox = { innerTextField ->
@@ -169,7 +166,7 @@ fun CVTailIconSearchBar(
 @Composable
 fun PreviewCVSearchBar() {
     CVTheme {
-        var searchBarText by rememberSaveable { mutableStateOf("") } // 10/13 추가
+        var searchBarText by rememberSaveable { mutableStateOf("") }
         Column(
             modifier = Modifier
                 .background(White)

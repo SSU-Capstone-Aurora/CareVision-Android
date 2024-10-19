@@ -21,7 +21,6 @@ import com.aurora.carevision.app.ui.theme.White
 
 @Composable
 fun AdminSignInCompletionScreen(){
-    //Text(text = "Sign Up Completion")
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -34,11 +33,9 @@ fun AdminSignInCompletionScreen(){
             painter = painterResource(id = R.drawable.ic_signin_complete_icon),
             contentDescription = "Login Loading Image",
             modifier = Modifier
-                .size(150.dp) // 이미지 크기 설정 다시 해야 함
-            //contentScale = ContentScale.Fit
+                .size(150.dp) //TODO 이미지 크기 설정 다시 해야 함
         )
 
-        // 간단한 텍스트 추가 (옵션)
         Text(
             text = "회원가입이 완료되었습니다",
             style = CVTheme.typography.headingPrimary,
