@@ -21,7 +21,7 @@ import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.CVLongButton
 import com.aurora.carevision.core.component.CVTailIconSearchBar
-import com.aurora.carevision.core.component.ReviewDropdownMenu
+import com.aurora.carevision.core.component.CVDropdownMenu
 import com.aurora.carevision.core.component.TopAppBarLeft
 
 @Composable

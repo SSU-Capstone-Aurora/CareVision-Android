@@ -1,12 +1,14 @@
-package com.aurora.carevision.feature.admin.auth.login
+package com.aurora.carevision.feature.admin.auth.list
 
 import android.service.controls.Control
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -25,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import com.aurora.carevision.app.ui.theme.Black
 import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.Gray100
+import com.aurora.carevision.app.ui.theme.Gray200
 import com.aurora.carevision.app.ui.theme.Gray300
 import com.aurora.carevision.app.ui.theme.Primary700
 import com.aurora.carevision.app.ui.theme.Red600
@@ -41,32 +44,39 @@ import com.aurora.carevision.core.component.CVTabs
 
 
 @Composable
-fun AdminListScreen(){
+fun AdminListScreen() {
     var selectedTab by rememberSaveable {
         mutableStateOf("Nurse")
     }
-    Column (
+
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(White)
-            .padding(top = 52.dp, start = 24.dp, end = 24.dp)
+            .background(Gray100)
     ) {
-        AdminHospitalListItem(hospitalId = "정형외과", hospitalName = "서울대병원")
-        CVTabs(
-            tabItemTitle = listOf("간호사", "환자", "카메라"),
-            onClickTabItem = { tabIndex ->
-                when(tabIndex){
-                    0 -> selectedTab = "Nurse"
-                    1 -> selectedTab = "Patient"
-                    2 -> selectedTab = "Camera"
-                }
-            }
-        )
-        Spacer(modifier = Modifier.height(12.dp))
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .background(Gray100)
+                .background(White)
+                .padding(top = 52.dp, start = 24.dp, end = 24.dp)
+        ) {
+            AdminHospitalListItem(hospitalId = "정형외과", hospitalName = "서울대병원")
+            CVTabs(
+                tabItemTitle = listOf("간호사", "환자", "카메라"),
+                onClickTabItem = { tabIndex ->
+                    when (tabIndex) {
+                        0 -> selectedTab = "Nurse"
+                        1 -> selectedTab = "Patient"
+                        2 -> selectedTab = "Camera"
+                    }
+                }
+            )
+
+        }
+        Column(
+            modifier = Modifier
+                //.fillMaxSize()
+                .background(Color.Transparent)
+                .padding(top = 220.dp,start = 24.dp, end=24.dp)
         ) {
             when (selectedTab) {
                 "Nurse" -> {
@@ -74,38 +84,41 @@ fun AdminListScreen(){
                         value = "",
                         onValueChange = {},
                         placeholder = "간호사 이름을 검색해주세요",
-                        modifier = Modifier
-
+                        modifier = Modifier.fillMaxWidth()
                     )
                     AdminNurseListItem(
                         nurseName = "안셰프",
                         nurseId = "aurora1128",
-                        modifier = Modifier
+                        modifier = Modifier.fillMaxWidth()
                     )
                 }
-                "Patient" ->{
+                "Patient" -> {
                     CVHeadIconSearchBar(
                         value = "",
                         onValueChange = {},
                         placeholder = "환자 이름을 검색해주세요",
-                        modifier = Modifier
+                        modifier = Modifier.fillMaxWidth()
                     )
                     AdminPatientListItem(
                         patientName = "강레오",
                         patientInfo = "2동 301호 3번 베드",
-                        patientId = "7C0AA49")
+                        patientId = "7C0AA49",
+                        modifier = Modifier.fillMaxWidth()
+                    )
                 }
                 "Camera" -> {
                     AdminCameraListItem(
                         cameraInfo = "2동 301호 3번 베드",
-                        cameraId = "7C0AA49AAZ116FC"
+                        cameraId = "7C0AA49AAZ116FC",
+                        modifier = Modifier.fillMaxWidth()
                     )
-
                 }
             }
         }
     }
 }
+
+
 
 
 @Composable
@@ -122,7 +135,4 @@ fun ListScreenPreview(){
         }
     }
 }
-
-
-
 
