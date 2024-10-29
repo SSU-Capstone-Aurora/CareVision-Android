@@ -37,7 +37,6 @@ fun AdminSignInHospitalEntryScreen(){
         modifier = Modifier
             .fillMaxSize()
             .background(White)
-            .padding(top = 52.dp, start = 24.dp, end = 24.dp),
     ){
         TopAppBarLeft()
         Text(
@@ -45,9 +44,11 @@ fun AdminSignInHospitalEntryScreen(){
             style = CVTheme.typography.headingPrimary,
             color = Color.Black,
             modifier = Modifier
-                .padding(top=16.dp, bottom = 24.dp)
+                .padding(top=16.dp, start = 24.dp, end = 24.dp, bottom = 24.dp)
         )
         CVTailIconSearchBar(
+            modifier = Modifier
+                .padding(start=24.dp, end=24.dp),
             value = hospitalName,
             onValueChange = {hospitalName = it},
             placeholder = "병원 이름을 입력하세요",
@@ -58,7 +59,9 @@ fun AdminSignInHospitalEntryScreen(){
                 if(!focused) {
                     isTyping = false
                 }
-            }
+            },
+
+
         )
 //        if(!isTyping){
 //            if(isFieldVisible){

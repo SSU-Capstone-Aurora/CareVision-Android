@@ -41,7 +41,6 @@ fun AdminLoginScreen(){
         modifier = Modifier
             .fillMaxSize()
             .background(White)
-            .padding(top = 52.dp, start = 24.dp, end = 24.dp)
     ){
         TopAppBarLeft()
         Text(
@@ -49,7 +48,7 @@ fun AdminLoginScreen(){
             style = CVTheme.typography.headingPrimary,
             color = Color.Black,
             modifier = Modifier
-                .padding(top=16.dp, bottom = 24.dp)
+                .padding(top=16.dp, start = 24.dp, bottom = 24.dp)
         )
         CVBasicTextField(
             value = userID,
@@ -60,6 +59,7 @@ fun AdminLoginScreen(){
             onFocusChanged = {},
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(start = 24.dp, end = 24.dp)
 
         )
         CVPasswordTextField(
@@ -70,7 +70,7 @@ fun AdminLoginScreen(){
             onTextChanged = {password = it},
             onFocusChanged = {},
             modifier = Modifier
-                .padding(top = 24.dp)
+                .padding(top = 24.dp, start = 24.dp, end = 24.dp)
                 .fillMaxWidth()
         )
 
