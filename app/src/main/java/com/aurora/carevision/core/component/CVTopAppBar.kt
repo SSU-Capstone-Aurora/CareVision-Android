@@ -35,10 +35,9 @@ fun TopAppBarLeft(
         modifier = Modifier
             .fillMaxWidth()
             .background(White)
-            .padding(vertical = 16.dp)
     ) {
         Box(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
         ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_topappbar_leftbutton_24),
@@ -68,10 +67,9 @@ fun TopAppBarRight(
         modifier = Modifier
             .fillMaxWidth()
             .background(White)
-            .padding(vertical = 16.dp)
     ) {
         Box(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
             ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_topappbar_rightbutton_24),

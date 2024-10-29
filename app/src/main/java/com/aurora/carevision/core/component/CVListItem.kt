@@ -1,5 +1,6 @@
 package com.aurora.carevision.core.component
 
+import android.provider.CalendarContract.Colors
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -31,6 +32,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil3.compose.AsyncImage
 import com.aurora.carevision.R
 import com.aurora.carevision.app.ui.theme.Black
 import com.aurora.carevision.app.ui.theme.CVTheme
@@ -42,6 +44,7 @@ import com.aurora.carevision.app.ui.theme.Gray600
 import com.aurora.carevision.app.ui.theme.Primary200
 import com.aurora.carevision.app.ui.theme.Primary500
 import com.aurora.carevision.app.ui.theme.Primary700
+import com.aurora.carevision.app.ui.theme.Red100
 import com.aurora.carevision.app.ui.theme.White
 
 @Composable
@@ -151,20 +154,41 @@ fun AdminNurseListItem(
             )
         }
 
+//        Box(
+//            modifier = Modifier
+//                .padding( end=16.dp)
+//                .background(Color.Red)
+//        ) {
+//            Image(
+//                imageVector = ImageVector.vectorResource(id = R.drawable.ic_listdeletebutton_45x32),
+//                contentDescription = "Delete Icon",
+//                modifier = Modifier
+//                    .size(58.dp)
+//                    .padding(end = 16.dp)
+//                    .background(White)
+//                    .clickable(onClick = onDeleteClick),
+//            )
+//        }
         Box(
+            contentAlignment = Alignment.Center,
             modifier = Modifier
+                .width(68.dp)
+                .height(32.dp)
+                .padding(end = 16.dp)
+                .background(Red100, shape = RoundedCornerShape(8.dp))
+                .clickable(onClick = onDeleteClick)
         ) {
-            Image(
-                imageVector = ImageVector.vectorResource(id = R.drawable.ic_listdeletebutton_45x32),
-                contentDescription = "Delete Icon",
+            Text(
+                text = "삭제",
+                color = Color.Red,
+                fontSize = 12.sp,
                 modifier = Modifier
-                    .size(58.dp)
-                    .padding(end = 16.dp)
-                    .background(White)
-                    .clickable(onClick = onDeleteClick),
+                    .padding(4.dp)
             )
         }
+
     }
+
 }
 
 @Composable
@@ -220,6 +244,96 @@ fun AdminCameraListItem(
     }
 }
 
+//@Composable
+//fun AdminRequestItem(
+//    nurseRequestName: String,
+//    nurseId: String,
+//    requestTime: String,
+//    onAcceptClick: () -> Unit = {},
+//    onRejectClick: () -> Unit = {},
+//    modifier: Modifier = Modifier
+//) {
+//    Row(
+//        modifier = modifier
+//            .fillMaxWidth()
+//            .padding(12.dp)
+//            .clip(RoundedCornerShape(5.dp))
+//            .background(White),
+//        verticalAlignment = Alignment.CenterVertically,
+//        horizontalArrangement = Arrangement.SpaceBetween
+//    ) {
+//        Column(
+//            modifier = Modifier
+//                .weight(1f)
+//                .padding(horizontal = 20.dp, vertical = 16.dp),
+//            verticalArrangement = Arrangement.Center
+//        ) {
+//            Text(
+//                text = nurseRequestName,
+//                style = CVTheme.typography.headingSecondary,
+//                color = Gray600,
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(start = 12.dp, top = 5.dp)
+//            )
+//
+//            Text(
+//                text = nurseId,
+//                style = CVTheme.typography.captionImportance,
+//                color = Gray500,
+//                maxLines = 1,
+//                overflow = TextOverflow.Ellipsis,
+//                modifier = modifier
+//                    .padding(start = 12.dp, bottom = 5.dp)
+//            )
+//
+//            Spacer(modifier = Modifier
+//                .height(1.dp)
+//                .background(Gray200))
+//
+//            Row(
+//                modifier = Modifier.fillMaxWidth(),
+//                horizontalArrangement = Arrangement.SpaceBetween
+//            ) {
+//                Text(
+//                    text = "요청시간",
+//                    style = CVTheme.typography.captionImportance,
+//                    color = Gray500,
+//                    maxLines = 1,
+//                    overflow = TextOverflow.Ellipsis,
+//                    modifier = modifier
+//                        .padding(start = 12.dp, bottom = 5.dp)
+//                )
+//
+//                Text(
+//                    text = requestTime,
+//                    style = CVTheme.typography.captionImportance,
+//                    color = Gray500,
+//                    maxLines = 1,
+//                    overflow = TextOverflow.Ellipsis,
+//                    modifier = modifier
+//                        .padding(start = 12.dp, bottom = 5.dp)
+//                )
+//            }
+//
+//        }
+//
+//        Row(
+//            modifier = Modifier.padding(end = 20.dp)
+//        ) {
+//            Image(
+//                imageVector = ImageVector.vectorResource(id = R.drawable.ic_nurserequest_reject_30x30),
+//                contentDescription = "Reject Icon",
+//                modifier = Modifier.padding(end = 12.dp)
+//            )
+//            Image(
+//                imageVector = ImageVector.vectorResource(id = R.drawable.ic_nurserequest_accept_30x30),
+//                contentDescription = "Accept Icon",
+//                modifier = Modifier.padding(end = 12.dp)
+//            )
+//        }
+//    }
+//}
 @Composable
 fun AdminRequestItem(
     nurseRequestName: String,
@@ -227,88 +341,92 @@ fun AdminRequestItem(
     requestTime: String,
     onAcceptClick: () -> Unit = {},
     onRejectClick: () -> Unit = {},
-//    rejectIcon: Int = R.drawable.ic_nurserequest_reject_30x30,
-//    acceptIcon: Int = R.drawable.ic_nurserequest_accept_30x30,
     modifier: Modifier = Modifier
 ) {
-    Row(
+    Column(
         modifier = modifier
             .fillMaxWidth()
             .padding(12.dp)
             .clip(RoundedCornerShape(5.dp))
-            .background(White),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
+            .background(White)
     ) {
-        Column(
+        Row(
             modifier = Modifier
-                .weight(1f)
-                .padding(horizontal = 20.dp, vertical = 16.dp),
-            verticalArrangement = Arrangement.Center
+                .fillMaxWidth()
+                //.padding(horizontal = 20.dp, vertical = 8.dp),
+                .padding(top = 16.dp, start = 20.dp, end = 20.dp, bottom = 5.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(
-                text = nurseRequestName,
-                style = CVTheme.typography.headingSecondary,
-                color = Gray600,
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = nurseRequestName,
+                    style = CVTheme.typography.headingSecondary,
+                    color = Gray600,
+                    modifier = Modifier.padding(start = 12.dp, top = 0.dp)
+                )
+                Text(
+                    text = nurseId,
+                    style = CVTheme.typography.captionImportance,
+                    color = Gray500,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.padding(top = 5.dp, start = 12.dp, bottom = 5.dp)
+                )
+            }
+
+            Row(
+                modifier = Modifier.padding(end = 12.dp)
+            ) {
+                Image(
+                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_nurserequest_reject_30x30),
+                    contentDescription = "Reject Icon",
+                    modifier = Modifier
+                        .padding(end = 12.dp)
+                        .clickable(onClick = onRejectClick)
+                )
+                Image(
+                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_nurserequest_accept_30x30),
+                    contentDescription = "Accept Icon",
+                    modifier = Modifier
+                        .padding(end = 0.dp)
+                        .clickable(onClick = onAcceptClick)
+                )
+            }
+        }
+        Box(
+            modifier= Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 24.dp)
+        ) {
+            Spacer(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 12.dp, top = 5.dp)
+                    .height(1.dp)
+                    .background(Gray200)
             )
-
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp, vertical = 8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
             Text(
-                text = nurseId,
+                text = "요청시간",
                 style = CVTheme.typography.captionImportance,
                 color = Gray500,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                modifier = modifier
-                    .padding(start = 12.dp, bottom = 5.dp)
+                modifier = Modifier.padding(start = 12.dp)
             )
 
-            Spacer(modifier = Modifier
-                .height(1.dp)
-                .background(Gray200))
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = "요청시간",
-                    style = CVTheme.typography.captionImportance,
-                    color = Gray500,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = modifier
-                        .padding(start = 12.dp, bottom = 5.dp)
-                )
-
-                Text(
-                    text = requestTime,
-                    style = CVTheme.typography.captionImportance,
-                    color = Gray500,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = modifier
-                        .padding(start = 12.dp, bottom = 5.dp)
-                )
-            }
-
-        }
-
-        Row(
-            modifier = Modifier.padding(end = 20.dp)
-        ) {
-            // x버튼
-            Image(
-                imageVector = ImageVector.vectorResource(id = R.drawable.ic_nurserequest_reject_30x30),
-                contentDescription = "Reject Icon",
-                modifier = Modifier.padding(end = 12.dp)
-            )
-            // 체크 버튼
-            Image(
-                imageVector = ImageVector.vectorResource(id = R.drawable.ic_nurserequest_accept_30x30),
-                contentDescription = "Accept Icon",
+            Text(
+                text = requestTime,
+                style = CVTheme.typography.captionImportance,
+                color = Gray500,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.padding(end = 12.dp)
             )
         }
@@ -331,13 +449,14 @@ fun AdminVideoListItem(
             .background(White),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.ic_profile_frame_32), //imageUrl
-            contentDescription = "Video Icon",
-            modifier = Modifier
-                .size(96.dp)
-                .padding(start = 12.dp)
+        AsyncImage(
+            model = imageUrl,
+            contentDescription = "Video Thumbnail",
+            modifier = Modifier.size(96.dp),
+            placeholder = painterResource(id = R.drawable.image_card_default), // 로딩 중에 보일 이미지
+            error = painterResource(id = R.drawable.image_card_default) // 로드 실패 시 보일 이미지
         )
+
         Column(
             modifier = Modifier
                 .weight(1f)
@@ -377,77 +496,6 @@ fun AdminVideoListItem(
     }
 }
 
-@Composable
-fun AdminHospitalListItem(
-    hospitalName: String,
-    hospitalId: String,
-    modifier: Modifier = Modifier,
-    profileIcon: Int = R.drawable.ic_hopital_icon,
-    onDeleteClick: () -> Unit = {}
-) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = 12.dp, horizontal = 12.dp)
-            .clip(RoundedCornerShape(5.dp))
-            .background(White),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Image(
-            painter = painterResource(id = profileIcon),
-            contentDescription = "Profile Icon",
-            modifier = Modifier
-                .background(White)
-                .size(72.dp)
-                .padding(top = 12.dp, bottom = 12.dp)
-        )
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(White)
-                .padding(end = 16.dp)
-                .weight(1f),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.Start
-        ) {
-            Text(
-                text = hospitalName,
-                style = CVTheme.typography.textBody1Importance,
-                color = Color.Black,
-                modifier = Modifier.padding(start = 12.dp)
-            )
-
-            Text(
-                text = hospitalId,
-                style = CVTheme.typography.captionImportance,
-                color = Gray500,
-                modifier = Modifier.padding(start = 12.dp)
-            )
-        }
-        Box() {
-            Button(
-                onClick = {},
-                modifier = Modifier
-                    .width(76.dp)
-                    .height(24.dp)
-                    .padding(end = 12.dp),
-
-                colors = ButtonDefaults.buttonColors(Gray100),
-                shape = RoundedCornerShape(16.dp),
-                contentPadding = PaddingValues(0.dp)
-            ){
-                Text(text = "로그아웃",
-                    fontSize = 10.sp,
-                    color = Gray500,
-                    modifier=Modifier.padding(0.dp)
-                    
-                )
-            }
-        }
-    }
-}
-
-
 @Preview
 @Composable
 fun AdminPatientListItemPreview() {
@@ -482,7 +530,7 @@ fun AdminPatientListItemPreview() {
             )
             AdminHospitalListItem(
                 hospitalName = "서울대병원",
-                hospitalId = "정형외과"
+                hospitalDepartment = "정형외과"
 
             )
         }
