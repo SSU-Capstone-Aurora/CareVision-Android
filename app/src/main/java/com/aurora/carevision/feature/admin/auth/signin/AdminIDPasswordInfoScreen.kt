@@ -50,7 +50,6 @@ fun AdminIDPasswordInfoScreen(){
         modifier = Modifier
             .fillMaxSize()
             .background(White)
-            .padding(top = 52.dp, start = 24.dp, end = 24.dp),
     ){
         TopAppBarLeft()
         Text(
@@ -58,7 +57,7 @@ fun AdminIDPasswordInfoScreen(){
             style = CVTheme.typography.headingPrimary,
             color = Black,
             modifier = Modifier
-                .padding(top=16.dp, bottom = 24.dp)
+                .padding(top=16.dp, start = 24.dp, end = 24.dp, bottom = 24.dp)
         )
         CVDuplicateCheckTextField(
             value = userID,
@@ -77,7 +76,7 @@ fun AdminIDPasswordInfoScreen(){
             onDuplicateCheck = {},
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 24.dp)
+                .padding(start = 24.dp, end = 24.dp , bottom = 24.dp)
         )
         Spacer(modifier = Modifier.padding())
         CVSignInPasswordTextField(
@@ -91,6 +90,7 @@ fun AdminIDPasswordInfoScreen(){
             onFocusChanged = {},
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(start = 24.dp, end = 24.dp)
         )
 //        if(errorMessageCount){
 //            Text(
@@ -118,7 +118,7 @@ fun AdminIDPasswordInfoScreen(){
 //                      },
 //            enabled = password.isNotEmpty() && userID.isNotEmpty(),
             modifier = Modifier
-                .fillMaxWidth() //TODO 완료 버튼 크기 조절 필요
+                .fillMaxWidth()
                 .padding(top = 24.dp)
         )
     }

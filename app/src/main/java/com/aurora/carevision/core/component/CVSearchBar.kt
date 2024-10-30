@@ -129,7 +129,11 @@ fun CVTailIconSearchBar(
             .border(1.dp, Gray300, RoundedCornerShape(10.dp))
             .padding(16.dp)
             .focusRequester(focusRequester)
-            .onFocusChanged { focusState ->focusState.isFocused},
+            .onFocusChanged { focusState ->
+                if (focusState.isFocused) {
+                    focusRequester.requestFocus()
+                }
+            },
 
         singleLine = true,
         textStyle = CVTheme.typography.textBody1Medium.copy(color = Gray500),
