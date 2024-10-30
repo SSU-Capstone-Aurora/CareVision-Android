@@ -27,6 +27,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import com.aurora.carevision.R
 import com.aurora.carevision.app.ui.theme.Black
 import com.aurora.carevision.app.ui.theme.CVTheme
@@ -115,8 +116,7 @@ fun AdminNurseListItem(
             modifier = Modifier
                 .width(48.dp) // 사진 크기 조절
                 .background(White)
-                .padding(start = 12.dp)
-                .weight(1f)
+                .padding(start = 16.dp)
         )
         // 이름 텍스트
 
@@ -145,19 +145,15 @@ fun AdminNurseListItem(
         }
 
         // 삭제 버튼
-        Box(
-            modifier = Modifier.weight(1f)
-        ) {
-            Image(
-                imageVector = ImageVector.vectorResource(id = R.drawable.ic_listdeletebutton_45x32),
-                contentDescription = "Delete Icon",
-                modifier = Modifier
-                    .size(48.dp)
-                    .background(White)
-                    .padding(end = 12.dp)
-                    .clickable(onClick = onDeleteClick),
-            )
-        }
+        Image(
+            imageVector = ImageVector.vectorResource(id = R.drawable.ic_listdeletebutton_45x32),
+            contentDescription = "Delete Icon",
+            modifier = Modifier
+                .size(48.dp)
+                .background(White)
+                .padding(end = 12.dp)
+                .clickable(onClick = onDeleteClick),
+        )
     }
 }
 
@@ -235,7 +231,9 @@ fun AdminRequestItem(
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Column(
-            modifier = Modifier.weight(1f).padding(horizontal = 20.dp, vertical = 16.dp),
+            modifier = Modifier
+                .weight(1f)
+                .padding(horizontal = 20.dp, vertical = 16.dp),
             verticalArrangement = Arrangement.Center
         ) {
             Text(
@@ -257,9 +255,11 @@ fun AdminRequestItem(
                     .padding(start = 12.dp, bottom = 5.dp)
             )
 
-            Spacer(modifier = Modifier
-                .height(1.dp)
-                .background(Gray200))
+            Spacer(
+                modifier = Modifier
+                    .height(1.dp)
+                    .background(Gray200)
+            )
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -309,26 +309,28 @@ fun AdminRequestItem(
 
 @Composable
 fun AdminVideoListItem(
-    date: String,
-    time: String,
+    recordedDate: String,
+    videoPlayTime: String,
     modifier: Modifier = Modifier,
     imageUrl: String? = null,
-    onMoveClick: () -> Unit = {}
+    onClick: () -> Unit = {}
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(12.dp)
             .clip(RoundedCornerShape(5.dp))
             .background(White),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.ic_profile_frame_32), //imageUrl
+        AsyncImage(
+            model = imageUrl,
+            placeholder = painterResource(id = R.drawable.image_card_default),
+            error = painterResource(id = R.drawable.image_card_default),
             contentDescription = "Video Icon",
             modifier = Modifier
-                .size(96.dp)
-                .padding(start = 12.dp)
+                .height(70.dp)
+                .width(90.dp)
+                .padding(start = 12.dp, top = 8.dp, bottom = 8.dp)
         )
         Column(
             modifier = Modifier
@@ -339,7 +341,7 @@ fun AdminVideoListItem(
         )
         {
             Text(
-                text = date,
+                text = recordedDate,
                 style = CVTheme.typography.textBody2Medium,
                 color = Gray600,
                 modifier = Modifier
@@ -347,7 +349,7 @@ fun AdminVideoListItem(
                     .padding(start = 12.dp)
             )
             Text(
-                text = time,
+                text = videoPlayTime,
                 style = CVTheme.typography.captionRegular,
                 color = Gray500,
                 maxLines = 1,
@@ -363,7 +365,7 @@ fun AdminVideoListItem(
                 modifier = Modifier
                     .size(36.dp)
                     .padding(end = 12.dp)
-                    .clickable(onClick = onMoveClick),
+                    .clickable(onClick = onClick),
             )
         }
     }
@@ -397,9 +399,9 @@ fun AdminPatientListItemPreview() {
                 nurseId = "간호사 번호",
             )
             AdminVideoListItem(
-                date = "2024.10.08",
-                time = "10:08",
-                onMoveClick = {}
+                recordedDate = "2024.10.08",
+                videoPlayTime = "10:08",
+                onClick = {}
             )
         }
 

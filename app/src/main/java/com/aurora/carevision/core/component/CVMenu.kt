@@ -79,7 +79,7 @@ fun ReviewDropdownMenu(
                 verticalAlignment =  Alignment.CenterVertically
             ){
                 Text(
-                    text = if(selectedText.isEmpty()) "°ú¸¦ ¼±ÅÃÇØÁÖ¼¼¿ä" else selectedText,
+                    text = if(selectedText.isEmpty()) "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½" else selectedText,
                     style = CVTheme.typography.textBody1Medium,
                     color = Gray500,
                     modifier = Modifier
@@ -149,14 +149,14 @@ fun ReviewDropdownMenu(
 @Preview
 fun ReviewDropdownMenuPreview() {
     CVTheme {
-        var selectedItem by rememberSaveable { mutableStateOf("°ú¸¦ ¼±ÅÃÇØÁÖ¼¼¿ä") }
+        var selectedItem by rememberSaveable { mutableStateOf("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½") }
         Column(
             modifier = Modifier
                 .background(White)
                 .fillMaxSize(),
             horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally,
         ) {
-            val menuItems = listOf("½Å°íÇÏ±â", "Â÷´ÜÇÏ±â", "±âÅ¸")
+            val menuItems = listOf("ï¿½Å°ï¿½ï¿½Ï±ï¿½", "ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½", "ï¿½ï¿½Å¸")
             ReviewDropdownMenu(menuItems = menuItems, selectedText = "", onMenuItemClick = { selected ->
                 selectedItem= selected
                 })

@@ -43,7 +43,7 @@ fun TopAppBarLeft(
             Image(
                 painter = painterResource(id = R.drawable.ic_topappbar_leftbutton_24),
                 contentDescription = "LeftBack Icon",
-                modifier = Modifier.clickable{onClick()}
+                modifier = Modifier.clickable { onClick() }
             )
             Text(
                 text = title,
@@ -77,7 +77,8 @@ fun TopAppBarRight(
                 painter = painterResource(id = R.drawable.ic_topappbar_rightbutton_24),
                 contentDescription = "RightBack Icon",
                 modifier = Modifier
-                    .align(Alignment.CenterEnd).clickable { onClick() }
+                    .align(Alignment.CenterEnd)
+                    .clickable { onClick() }
             )
             Text(
                 text = title,
@@ -105,17 +106,13 @@ fun CVTopAppBar(
             .background(White)
             .padding(vertical = 16.dp)
     ) {
-        Box(
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-            Text(
-                text = title,
-                color = Color.Black,
-                style = CVTheme.typography.textBody1Importance,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth()
-            )
-        }
+        Text(
+            text = title,
+            color = Color.Black,
+            style = CVTheme.typography.textBody1Importance,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth()
+        )
     }
 }
 
@@ -131,13 +128,13 @@ fun PreviewCenteredTitleTopAppBar() {
                 title = "Header",
                 onClick = { /* Handle back click */ }
             )
-          TopAppBarRight(
-              title = "Header",
-              onClick = {}
-          )
-          CVTopAppBar(
-              title = "Header",
-          )
+            TopAppBarRight(
+                title = "Header",
+                onClick = {}
+            )
+            CVTopAppBar(
+                title = "Header",
+            )
         }
     }
 }
