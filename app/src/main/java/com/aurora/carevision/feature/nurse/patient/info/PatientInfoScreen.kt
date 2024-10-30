@@ -12,11 +12,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,16 +27,15 @@ import androidx.compose.ui.unit.dp
 import com.aurora.carevision.R
 import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.Gray100
-import com.aurora.carevision.app.ui.theme.Gray200
 import com.aurora.carevision.app.ui.theme.Gray500
 import com.aurora.carevision.app.ui.theme.Gray600
 import com.aurora.carevision.app.ui.theme.Primary700
 import com.aurora.carevision.app.ui.theme.White
-import com.aurora.carevision.core.component.CVDropdownMenu
+import com.aurora.carevision.core.component.CVShortDropDownMenu
 import com.aurora.carevision.domain.nurse.Patient
 
 @Composable
-fun PatientInfoScreen(){
+fun PatientInfoScreen() {
 
     val userName = "오로라"
     val dummyList = listOf(
@@ -70,7 +67,7 @@ fun PatientInfoScreen(){
             patientRoom = "2동 101호 4번 베드",
             registrationDate = "2021.10.01"
         ),
-        )
+    )
 
     Column(
         modifier = Modifier
@@ -78,14 +75,16 @@ fun PatientInfoScreen(){
             .background(Gray100),
     ) {
         Spacer(modifier = Modifier.height(20.dp))
-        Text(text = userName,
+        Text(
+            text = userName,
             color = Gray500,
             style = CVTheme.typography.textBody2Importance,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 24.dp, vertical = 4.dp)
         )
-        Text(text = stringResource(R.string.tv_my_patient_list),
+        Text(
+            text = stringResource(R.string.tv_my_patient_list),
             color = Gray600,
             style = CVTheme.typography.headingSecondary,
             modifier = Modifier
@@ -120,7 +119,7 @@ fun MyPatientListItem(
     registrationDate: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
-){
+) {
     Column(
         modifier = Modifier
             .background(White)
@@ -133,7 +132,11 @@ fun MyPatientListItem(
                 .padding(end = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Image(painter = painterResource(id = R.drawable.ic_video_default), contentDescription = "default", modifier = Modifier.padding(16.dp))
+            Image(
+                painter = painterResource(id = R.drawable.ic_video_default),
+                contentDescription = "default",
+                modifier = Modifier.padding(16.dp)
+            )
             Column(
                 modifier = Modifier.weight(2f)
             ) {
@@ -168,14 +171,17 @@ fun MyPatientListItem(
                         .background(Gray100)
                 )
             }
-            CVDropdownMenu(
+            CVShortDropDownMenu(
                 menuItems = listOf("퇴원"),
                 onMenuItemClick = { selectedItem ->
                     println("Selected item: $selectedItem")
                 }
             )
         }
-        Spacer(modifier = Modifier.height(1.dp).fillMaxWidth().background(Gray100))
+        Spacer(modifier = Modifier
+            .height(1.dp)
+            .fillMaxWidth()
+            .background(Gray100))
 
         Row(
             modifier = Modifier
@@ -201,7 +207,7 @@ fun MyPatientListItem(
 
 @Composable
 @Preview
-fun PatientInfoScreenPreview(){
+fun PatientInfoScreenPreview() {
     CVTheme {
         PatientInfoScreen()
     }
@@ -209,7 +215,7 @@ fun PatientInfoScreenPreview(){
 
 @Composable
 @Preview
-fun MyPatientListItemPreview(){
+fun MyPatientListItemPreview() {
     CVTheme {
         MyPatientListItem(
             patientName = "오로라",
