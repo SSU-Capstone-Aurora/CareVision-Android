@@ -35,11 +35,10 @@ fun TopAppBarLeft(
         modifier = Modifier
             .fillMaxWidth()
             .background(White)
+            .padding(vertical = 16.dp)
     ) {
         Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+            modifier = Modifier.fillMaxWidth(),
         ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_topappbar_leftbutton_24),
@@ -69,12 +68,11 @@ fun TopAppBarRight(
         modifier = Modifier
             .fillMaxWidth()
             .background(White)
+            .padding(vertical = 16.dp)
     ) {
         Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-        ) {
+            modifier = Modifier.fillMaxWidth(),
+            ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_topappbar_rightbutton_24),
                 contentDescription = "RightBack Icon",
@@ -95,9 +93,9 @@ fun TopAppBarRight(
 }
 
 
+
 @Composable
 fun CVTopAppBar(
-    // 이 친구는 이번엔 밑에 붙어있네요..
     title: String = "",
 ) {
     Row(
