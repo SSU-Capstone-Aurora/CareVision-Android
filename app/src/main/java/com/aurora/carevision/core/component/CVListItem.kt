@@ -1,13 +1,11 @@
 package com.aurora.carevision.core.component
 
-import android.provider.CalendarContract.Colors
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,8 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -36,14 +32,11 @@ import coil3.compose.AsyncImage
 import com.aurora.carevision.R
 import com.aurora.carevision.app.ui.theme.Black
 import com.aurora.carevision.app.ui.theme.CVTheme
-import com.aurora.carevision.app.ui.theme.Gray100
 import com.aurora.carevision.app.ui.theme.Gray200
 import com.aurora.carevision.app.ui.theme.Gray400
 import com.aurora.carevision.app.ui.theme.Gray500
 import com.aurora.carevision.app.ui.theme.Gray600
-import com.aurora.carevision.app.ui.theme.Primary200
 import com.aurora.carevision.app.ui.theme.Primary500
-import com.aurora.carevision.app.ui.theme.Primary700
 import com.aurora.carevision.app.ui.theme.Red100
 import com.aurora.carevision.app.ui.theme.White
 
@@ -435,11 +428,11 @@ fun AdminRequestItem(
 
 @Composable
 fun AdminVideoListItem(
-    date: String,
-    time: String,
+    recordedDate: String,
+    videoPlayTime: String,
     modifier: Modifier = Modifier,
     imageUrl: String? = null,
-    onMoveClick: () -> Unit = {}
+    onClick: () -> Unit = {}
 ) {
     Row(
         modifier = modifier
@@ -466,7 +459,7 @@ fun AdminVideoListItem(
         )
         {
             Text(
-                text = date,
+                text = recordedDate,
                 style = CVTheme.typography.textBody2Medium,
                 color = Gray600,
                 modifier = Modifier
@@ -474,7 +467,7 @@ fun AdminVideoListItem(
                     .padding(start = 12.dp)
             )
             Text(
-                text = time,
+                text = videoPlayTime,
                 style = CVTheme.typography.captionRegular,
                 color = Gray500,
                 maxLines = 1,
@@ -490,7 +483,7 @@ fun AdminVideoListItem(
                 modifier = Modifier
                     .size(36.dp)
                     .padding(end = 12.dp)
-                    .clickable(onClick = onMoveClick),
+                    .clickable(onClick = onClick),
             )
         }
     }
@@ -524,9 +517,9 @@ fun AdminPatientListItemPreview() {
                 nurseId = "간호사 번호",
             )
             AdminVideoListItem(
-                date = "2024.10.08",
-                time = "10:08",
-                onMoveClick = {}
+                recordedDate = "2024.10.08",
+                videoPlayTime = "10:08",
+                onClick = {}
             )
             AdminHospitalListItem(
                 hospitalName = "서울대병원",
