@@ -1,4 +1,4 @@
-package com.aurora.carevision.feature.admin.auth.signin
+package com.aurora.carevision.feature.admin.auth.signup
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -20,7 +20,7 @@ import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.White
 
 @Composable
-fun AdminSignInCompletionScreen(){
+fun AdminSignUpCompletionScreen(){
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -30,7 +30,7 @@ fun AdminSignInCompletionScreen(){
 
     ) {
         Image(
-            painter = painterResource(id = R.drawable.ic_signin_complete_icon),
+            painter = painterResource(id = R.drawable.ic_signup_complete_icon),
             contentDescription = "Login Loading Image",
             modifier = Modifier
                 .size(150.dp) //TODO 이미지 크기 설정 다시 해야 함
@@ -47,14 +47,14 @@ fun AdminSignInCompletionScreen(){
 
 @Composable
 @Preview
-fun AdminSignInCompletionScreenPreview(){
+fun AdminSignUpCompletionScreenPreview(){
     CVTheme{
         Column(
             modifier = Modifier
                 .background(White)
                 .fillMaxSize()
         ){
-            AdminSignInCompletionScreen()
+            AdminSignUpCompletionScreen()
         }
     }
 }

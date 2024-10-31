@@ -23,7 +23,6 @@ import com.aurora.carevision.core.component.CVBasicTextField
 import com.aurora.carevision.core.component.CVLongButton
 import com.aurora.carevision.core.component.CVPasswordTextField
 import com.aurora.carevision.core.component.TopAppBarLeft
-import com.aurora.carevision.feature.admin.auth.login.AdminLoginScreen
 
 @Composable
 fun NurseLoginScreen(){
