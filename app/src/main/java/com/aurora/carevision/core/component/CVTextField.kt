@@ -424,8 +424,8 @@ fun CVTextFieldPreview() {
         ) {
             CVBasicTextField(
                 value = "",
-                placeholder = "���̵� �Է��ϼ���",
-                label = "���̵�",
+                placeholder = "아이디를 입력해주세요",
+                label = "아이디",
                 onTextChanged = {},
                 onFocusChanged = {},
                 isError = true,
@@ -436,8 +436,8 @@ fun CVTextFieldPreview() {
 
             CVBasicTextField(
                 value = "Text Entered",
-                placeholder = "���̵� �Է��ϼ���",
-                label = "���̵�",
+                placeholder = "아이디를 입력하세요",
+                label = "아이디",
                 onTextChanged = {},
                 onFocusChanged = {},
                 isError = true
@@ -446,8 +446,8 @@ fun CVTextFieldPreview() {
 
             CVPasswordTextField(
                 value = "",
-                placeholder = "��й�ȣ�� �Է��ϼ���",
-                label = "��й�ȣ",
+                placeholder = "비밀번호를 입력하세요",
+                label = "비밀번호",
                 onTextChanged = {},
                 onFocusChanged = {},
                 isError = true
@@ -456,8 +456,8 @@ fun CVTextFieldPreview() {
 
             CVDuplicateCheckTextField(
                 value = "",
-                placeholder = "���̵� �Է��ϼ���",
-                label = "���̵�",
+                placeholder = "아이디를 입력하세요",
+                label = "아이디",
                 onTextChanged = {},
                 onDuplicateCheck = {},
                 onFocusChanged = {},
@@ -467,8 +467,8 @@ fun CVTextFieldPreview() {
 
             CVSignInPasswordTextField(
                 value = "",
-                placeholder = "��й�ȣ�� �Է��ϼ���",
-                label = "��й�ȣ",
+                placeholder = "비밀번호를 입력하세요",
+                label = "비밀번호",
                 onTextChanged = {},
                 onFocusChanged = {},
                 isError = true
