@@ -1,17 +1,13 @@
-package com.aurora.carevision.feature.admin.auth.login
+package com.aurora.carevision.feature.nurse.auth.login
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,19 +23,18 @@ import com.aurora.carevision.core.component.CVBasicTextField
 import com.aurora.carevision.core.component.CVLongButton
 import com.aurora.carevision.core.component.CVPasswordTextField
 import com.aurora.carevision.core.component.TopAppBarLeft
+import com.aurora.carevision.feature.admin.auth.login.AdminLoginScreen
 
 @Composable
-fun AdminLoginScreen() {
-    var userID by rememberSaveable { mutableStateOf("") }
-    var password by rememberSaveable { mutableStateOf("") }
-    var isError by remember { mutableStateOf(false) }
-    var errorMessage by remember { mutableStateOf("") }
+fun NurseLoginScreen(){
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(White)
     ){
+
         TopAppBarLeft()
+
         Text(
             text = "안녕하세요 :) \n케어비전입니다",
             style = CVTheme.typography.headingPrimary,
@@ -48,11 +43,10 @@ fun AdminLoginScreen() {
                 .padding(top=16.dp, start = 24.dp, bottom = 24.dp)
         )
         CVBasicTextField(
-            value = userID,
-            //isError = isError && userID != correctUserID,
+            value = "",
             placeholder = "아이디를 입력해주세요",
             label = "아이디",
-            onTextChanged = { userID = it },
+            onTextChanged = { },
             onFocusChanged = {},
             modifier = Modifier
                 .fillMaxWidth()
@@ -60,46 +54,35 @@ fun AdminLoginScreen() {
 
         )
         CVPasswordTextField(
-            value = password,
-            //isError = isError && password!= correctPassword,
+            value = "",
+            //isError = ,
             placeholder = "비밀번호를 입력해주세요",
             label = "비밀번호",
-            onTextChanged = { password = it },
+            onTextChanged = { },
             onFocusChanged = {},
             modifier = Modifier
                 .padding(top = 24.dp, start = 24.dp, end = 24.dp)
                 .fillMaxWidth()
         )
 
-        if (isError) {
+
             Text(
-                text = errorMessage,
+                text = "*아이디 또는 비밀번호가 잘못되었습니다",
                 color = Red600,
                 style = CVTheme.typography.captionRegular,
                 modifier = Modifier
-                    .padding(top = 8.dp, start = 12.dp)
+                    .padding(horizontal = 24.dp, vertical = 8.dp)
                     .fillMaxWidth()
             )
-        }
+
         CVLongButton(
             text = "로그인",
-            onClick = {
-//                if(userID == correctUserID && password == correctPassword){
-//                    isError = false
-//                    println("login successed")
-//                }
-//                else {
-//                    isError = true
-//                    errorMessage ="*아이디 또는 비밀번호가 잘못되었습니다"
-//                    println("login failed")
-//                }
-
-            },
-            enabled = userID.isNotEmpty() && password.isNotEmpty(),
+            onClick = {},
+            enabled = true,
             modifier = Modifier
                 .padding(top = 24.dp)
         )
-        Text( //TODO 버튼 형식으로 변형
+        Text(
             textDecoration = TextDecoration.Underline,
             text = "혹시 회원이 아니신가요?",
             style = CVTheme.typography.textBody2Importance,
@@ -107,6 +90,7 @@ fun AdminLoginScreen() {
             modifier = Modifier
                 .padding(top = 24.dp)
                 .align(Alignment.CenterHorizontally)
+                .clickable {  }
         )
     }
 }
@@ -114,17 +98,13 @@ fun AdminLoginScreen() {
 @Composable
 @Preview
 fun LoginScreenPreview() {
-    val correctUserID = "admin"
-    val correctPassword = "password"
     CVTheme {
         Column(
             modifier = Modifier
                 .background(Black)
                 .fillMaxSize()
         ) {
-            AdminLoginScreen()
+            NurseLoginScreen()
         }
     }
 }
-
-
