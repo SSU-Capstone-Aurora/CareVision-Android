@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.dagger.hilt.android)
+    alias(libs.plugins.kotlinx.serialization)
     id("org.jetbrains.kotlin.kapt")
     id("kotlin-kapt")
 }
@@ -78,4 +79,8 @@ dependencies {
     kapt(libs.hilt.android.compiler)
     implementation(libs.hilt.core)
     implementation(libs.hilt.navigation.compose)
+
+    // navigation
+    implementation(libs.compose.navigation)
+    implementation(libs.kotlinx.serialization.json)
 }
