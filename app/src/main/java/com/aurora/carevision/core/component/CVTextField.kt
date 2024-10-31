@@ -404,7 +404,7 @@ fun CVDuplicateCheckTextField(
                 shape = RoundedCornerShape(8.dp)
 
             ){
-                Text(text = "�ߺ� Ȯ��",
+                Text(text = "중복확인",
                     color = Primary700
                 )
             }
