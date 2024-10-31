@@ -1,4 +1,4 @@
-package com.aurora.carevision.feature.splash
+package com.aurora.carevision.feature.intro
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -26,8 +26,11 @@ import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.CVLongButton
 
 @Composable
-fun InitialLoginScreen() {
-
+fun InitialLoginScreen(
+    onLoginClick: () -> Unit = {},
+    onSignUpClick: () -> Unit = {},
+    onAdminLoginClick: () -> Unit = {}
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -78,7 +81,6 @@ fun InitialLoginScreen() {
             )
         }
     }
-
 }
 
 @Composable
