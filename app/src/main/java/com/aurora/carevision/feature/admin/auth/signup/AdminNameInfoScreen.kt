@@ -1,8 +1,7 @@
-package com.aurora.carevision.feature.admin.auth.signin
+package com.aurora.carevision.feature.admin.auth.signup
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,9 +21,6 @@ import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.CVBasicButton
 import com.aurora.carevision.core.component.CVBasicTextField
-import com.aurora.carevision.core.component.CVDuplicateCheckTextField
-import com.aurora.carevision.core.component.CVLongButton
-import com.aurora.carevision.core.component.CVPasswordTextField
 import com.aurora.carevision.core.component.TopAppBarLeft
 
 @Composable

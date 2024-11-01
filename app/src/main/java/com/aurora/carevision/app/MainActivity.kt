@@ -4,12 +4,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Scaffold
-import androidx.compose.ui.Modifier
+import androidx.navigation.compose.rememberNavController
 import com.aurora.carevision.app.ui.theme.CVTheme
-import com.aurora.carevision.core.screen.LoadingScreen
-import com.aurora.carevision.feature.splash.SplashScreen
+import com.aurora.carevision.feature.intro.Intro
+import com.aurora.carevision.navigation.CVNavHost
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,9 +15,14 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             CVTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    SplashScreen()
-                }
+                // navController를 생성하고, 이를 NavHost에 전달
+                val navController = rememberNavController()
+
+                // NavHost는 여러개의 composable을 가지고 있는데, 이 composable들을 관리하는 역할
+                CVNavHost(
+                    navController = navController,
+                    startDestination = Intro,
+                )
             }
         }
     }

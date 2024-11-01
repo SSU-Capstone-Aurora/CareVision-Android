@@ -1,8 +1,7 @@
-package com.aurora.carevision.feature.admin.auth.signin
+package com.aurora.carevision.feature.admin.auth.signup
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -21,11 +20,10 @@ import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.CVLongButton
 import com.aurora.carevision.core.component.CVTailIconSearchBar
-import com.aurora.carevision.core.component.CVDropdownMenu
 import com.aurora.carevision.core.component.TopAppBarLeft
 
 @Composable
-fun AdminSignInHospitalEntryScreen(){
+fun AdminSignUpHospitalEntryScreen(){
 
     var hospitalName by rememberSaveable { mutableStateOf("") }
     var isError by remember{ mutableStateOf(false) }
@@ -89,14 +87,14 @@ fun AdminSignInHospitalEntryScreen(){
 
 @Composable
 @Preview
-fun AdminSignInScreenPreview(){
+fun AdminSignUpScreenPreview(){
     CVTheme{
         Column(
             modifier = Modifier
                 .background(White)
                 .fillMaxSize()
         ){
-            AdminSignInHospitalEntryScreen()
+            AdminSignUpHospitalEntryScreen()
         }
     }
 }

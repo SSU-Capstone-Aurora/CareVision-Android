@@ -99,13 +99,13 @@ fun CVBasicTextField(
         textStyle = CVTheme.typography.textBody2Medium.copy(color = Black),
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = if (isError) Red600 else Primary500,
-            unfocusedBorderColor = if (isError) Red600 else Gray500,
+            unfocusedBorderColor = if (isError) Red600 else Gray300,
             focusedLabelColor = if (isError) Red600 else Primary600,
             focusedLeadingIconColor = if (isError) Red600 else Primary600,
             focusedTrailingIconColor = if (isError) Red600 else Primary600,
-            unfocusedLabelColor = if (isError) Red600 else Gray500,
-            unfocusedLeadingIconColor = if (isError) Red600 else Gray500,
-            unfocusedTrailingIconColor = if (isError) Red600 else Gray500,
+            unfocusedLabelColor = if (isError) Red600 else Gray300,
+            unfocusedLeadingIconColor = if (isError) Red600 else Gray300,
+            unfocusedTrailingIconColor = if (isError) Red600 else Gray300,
             errorLabelColor = Red600,
             errorBorderColor = Red600,
             cursorColor = Primary600,
@@ -202,13 +202,13 @@ fun CVPasswordTextField(
         textStyle = CVTheme.typography.textBody2Medium.copy(color = Black),
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = if (isError) Red600 else Primary500,
-            unfocusedBorderColor = if (isError) Red600 else Gray500,
+            unfocusedBorderColor = if (isError) Red600 else Gray300,
             focusedLabelColor = if (isError) Red600 else Primary600,
             focusedLeadingIconColor = if (isError) Red600 else Primary600,
             focusedTrailingIconColor = if (isError) Red600 else Primary600,
-            unfocusedLabelColor = if (isError) Red600 else Gray500,
-            unfocusedLeadingIconColor = if (isError) Red600 else Gray500,
-            unfocusedTrailingIconColor = if (isError) Red600 else Gray500,
+            unfocusedLabelColor = if (isError) Red600 else Gray300,
+            unfocusedLeadingIconColor = if (isError) Red600 else Gray300,
+            unfocusedTrailingIconColor = if (isError) Red600 else Gray300,
             errorLabelColor = Red600,
             errorBorderColor = Red600,
             cursorColor = Primary600,
@@ -404,7 +404,7 @@ fun CVDuplicateCheckTextField(
                 shape = RoundedCornerShape(8.dp)
 
             ){
-                Text(text = "Áßº¹ È®ÀÎ",
+                Text(text = "ì¤‘ë³µí™•ì¸",
                     color = Primary700
                 )
             }
@@ -424,8 +424,8 @@ fun CVTextFieldPreview() {
         ) {
             CVBasicTextField(
                 value = "",
-                placeholder = "¾ÆÀÌµğ¸¦ ÀÔ·ÂÇÏ¼¼¿ä",
-                label = "¾ÆÀÌµğ",
+                placeholder = "ì•„ì´ë””ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”",
+                label = "ì•„ì´ë””",
                 onTextChanged = {},
                 onFocusChanged = {},
                 isError = true,
@@ -436,8 +436,8 @@ fun CVTextFieldPreview() {
 
             CVBasicTextField(
                 value = "Text Entered",
-                placeholder = "¾ÆÀÌµğ¸¦ ÀÔ·ÂÇÏ¼¼¿ä",
-                label = "¾ÆÀÌµğ",
+                placeholder = "ì•„ì´ë””ë¥¼ ì…ë ¥í•˜ì„¸ìš”",
+                label = "ì•„ì´ë””",
                 onTextChanged = {},
                 onFocusChanged = {},
                 isError = true
@@ -446,8 +446,8 @@ fun CVTextFieldPreview() {
 
             CVPasswordTextField(
                 value = "",
-                placeholder = "ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä",
-                label = "ºñ¹Ğ¹øÈ£",
+                placeholder = "ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”",
+                label = "ë¹„ë°€ë²ˆí˜¸",
                 onTextChanged = {},
                 onFocusChanged = {},
                 isError = true
@@ -456,8 +456,8 @@ fun CVTextFieldPreview() {
 
             CVDuplicateCheckTextField(
                 value = "",
-                placeholder = "¾ÆÀÌµğ¸¦ ÀÔ·ÂÇÏ¼¼¿ä",
-                label = "¾ÆÀÌµğ",
+                placeholder = "ì•„ì´ë””ë¥¼ ì…ë ¥í•˜ì„¸ìš”",
+                label = "ì•„ì´ë””",
                 onTextChanged = {},
                 onDuplicateCheck = {},
                 onFocusChanged = {},
@@ -467,8 +467,8 @@ fun CVTextFieldPreview() {
 
             CVSignInPasswordTextField(
                 value = "",
-                placeholder = "ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä",
-                label = "ºñ¹Ğ¹øÈ£",
+                placeholder = "ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”",
+                label = "ë¹„ë°€ë²ˆí˜¸",
                 onTextChanged = {},
                 onFocusChanged = {},
                 isError = true

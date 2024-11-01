@@ -58,9 +58,10 @@ fun CVHeadIconSearchBar(
         onValueChange = onValueChange,
         modifier = Modifier
             .clip(shape = RoundedCornerShape(10.dp))
-            .background(backgroundColor)
             .fillMaxWidth()
+            .padding(horizontal = 24.dp)
             .border(if (borderVisible) 1.dp else 0.dp, Gray300, RoundedCornerShape(10.dp))
+            .background(backgroundColor)
             .padding(16.dp)
             .focusRequester(focusRequester)
             .onFocusChanged { focusState ->
@@ -122,10 +123,10 @@ fun CVTailIconSearchBar(
         value = value,
         onValueChange = onValueChange,
         modifier = Modifier
+            .fillMaxWidth()
             .clip(shape = RoundedCornerShape(10.dp))
             .background(backgroundColor)
-            .fillMaxWidth()
-
+            .padding(horizontal = 24.dp)
             .border(1.dp, Gray300, RoundedCornerShape(10.dp))
             .padding(16.dp)
             .focusRequester(focusRequester)
@@ -172,9 +173,7 @@ fun PreviewCVSearchBar() {
     CVTheme {
         var searchBarText by rememberSaveable { mutableStateOf("") }
         Column(
-            modifier = Modifier
-                .background(White)
-                .padding(15.dp),
+            modifier = Modifier.background(White),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             CVHeadIconSearchBar(value = "", onValueChange = {}, modifier = Modifier)

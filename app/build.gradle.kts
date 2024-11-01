@@ -1,6 +1,10 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.dagger.hilt.android)
+    alias(libs.plugins.kotlinx.serialization)
+    id("org.jetbrains.kotlin.kapt")
+    id("kotlin-kapt")
 }
 
 android {
@@ -25,7 +29,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -70,4 +74,13 @@ dependencies {
     // coil
     implementation(libs.coil.compose)
 
+    // hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
+    implementation(libs.hilt.core)
+    implementation(libs.hilt.navigation.compose)
+
+    // navigation
+    implementation(libs.compose.navigation)
+    implementation(libs.kotlinx.serialization.json)
 }
