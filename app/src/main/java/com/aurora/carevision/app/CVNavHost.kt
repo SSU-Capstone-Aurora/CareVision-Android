@@ -33,8 +33,8 @@ fun CVNavHost(
         )
 
         nurseLoginScreen(
-            //navigateToHome = { navController.navigateToNurseHome() },
-            //navigateToSignUp = { navController.navigateToNurseSignUp() },
+            navigateToHome = { navController.navigateToNurseHome() },
+            navigateToSignUp = { navController.navigateToNurseSignUp() },
             navigateToBack = { navController.popBackStack() }
         )
 

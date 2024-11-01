@@ -12,10 +12,14 @@ data object NurseLogin
 fun NavHostController.navigateToNurseLogin(navOptions: NavOptions? = null) = navigate(NurseLogin, navOptions)
 
 fun NavGraphBuilder.nurseLoginScreen(
+    navigateToHome: () -> Unit,
+    navigateToSignUp: () -> Unit,
     navigateToBack: () -> Unit,
 ) {
     composable<NurseLogin> {
         NurseLoginScreen(
+            navigateToHome = navigateToHome,
+            navigateToSignUp = navigateToSignUp,
             navigateToBack = navigateToBack,
         )
     }
