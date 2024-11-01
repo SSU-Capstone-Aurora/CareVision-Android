@@ -65,11 +65,11 @@ fun CameraRegistScreen(){
             .background(Gray100)
     ) {
         TopAppBarLeft(
-            title = "��ġ �߰�",
+            title = "장치 추가",
         )
 
         Text(
-            text = "      �ش� ��⸦\n����Ͻðڽ��ϱ�?",
+            text = "해당 기기를\n등록하시겠습니까?",
             style = CVTheme.typography.headingPrimary,
             color = Black,
             modifier = Modifier
@@ -90,7 +90,7 @@ fun CameraRegistScreen(){
                 contentAlignment = Alignment.Center
                 ){
                 Text(
-                    text = "�Ϸ� ��ȣ     7C0AA49AAZ116FC", //TODO �Ϸ� ��ȣ, string style �ٸ��� �ؾ���
+                    text = "일련 번호 7C0AA49AAZ116FC", //TODO
                     style = CVTheme.typography.textBody1Medium,
                     color = Gray600
                 )
@@ -104,7 +104,7 @@ fun CameraRegistScreen(){
             )
         }
         CVLongButton(
-            text = "����",
+            text = "다음",
             onClick = {},
             modifier = Modifier
                 .padding(top = 100.dp)
