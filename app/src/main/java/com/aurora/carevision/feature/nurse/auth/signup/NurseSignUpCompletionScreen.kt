@@ -1,4 +1,4 @@
-package com.aurora.carevision.feature.nurse.auth.login
+package com.aurora.carevision.feature.nurse.auth.signup
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,7 +26,7 @@ import com.aurora.carevision.app.ui.theme.White
 @Composable
 fun NurseSignUpCompletionScreen(){
     Column (
-        modifier = Modifier.fillMaxSize().background(White),
+        modifier = Modifier.fillMaxSize().background(White).systemBarsPadding().statusBarsPadding(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
 

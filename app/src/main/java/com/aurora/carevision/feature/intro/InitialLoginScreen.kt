@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -34,7 +36,9 @@ fun InitialLoginScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(White),
+            .background(White)
+            .systemBarsPadding()
+            .statusBarsPadding(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
@@ -61,13 +65,13 @@ fun InitialLoginScreen(
             modifier = Modifier.weight(1f),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            CVLongButton(text = stringResource(R.string.text_login), onClick = { /*TODO*/ })
+            CVLongButton(text = stringResource(R.string.text_login), onClick = onLoginClick)
             Spacer(Modifier.height(16.dp))
             CVLongButton(
                 text = stringResource(R.string.text_signup),
-                onClick = { /*TODO*/ },
+                onClick = onSignUpClick,
                 backgroundColor = Primary200,
-                textColor = Primary700
+                textColor = Primary700,
             )
             Spacer(Modifier.height(16.dp))
             Text(
@@ -76,7 +80,7 @@ fun InitialLoginScreen(
                 color = Primary700,
                 modifier = Modifier
                     .padding(horizontal = 24.dp)
-                    .clickable { /*TODO*/ },
+                    .clickable { onAdminLoginClick() },
                 textDecoration = TextDecoration.Underline
             )
         }

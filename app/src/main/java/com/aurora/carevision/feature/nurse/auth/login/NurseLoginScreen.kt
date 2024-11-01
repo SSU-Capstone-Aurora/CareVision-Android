@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,14 +27,22 @@ import com.aurora.carevision.core.component.CVPasswordTextField
 import com.aurora.carevision.core.component.TopAppBarLeft
 
 @Composable
-fun NurseLoginScreen(){
+fun NurseLoginScreen(
+    navigateToHome: () -> Unit = {},
+    navigateToSignUp: () -> Unit = {},
+    navigateToBack: () -> Unit = {}
+){
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(White)
+            .systemBarsPadding()
+            .statusBarsPadding()
     ){
 
-        TopAppBarLeft()
+        TopAppBarLeft(
+            onClick = navigateToBack
+        )
 
         Text(
             text = "안녕하세요 :) \n케어비전입니다",
@@ -76,7 +86,7 @@ fun NurseLoginScreen(){
 
         CVLongButton(
             text = "로그인",
-            onClick = {},
+            onClick = { navigateToHome() },
             enabled = true,
             modifier = Modifier
                 .padding(top = 24.dp)
@@ -89,7 +99,7 @@ fun NurseLoginScreen(){
             modifier = Modifier
                 .padding(top = 24.dp)
                 .align(Alignment.CenterHorizontally)
-                .clickable {  }
+                .clickable { navigateToSignUp() }
         )
     }
 }
