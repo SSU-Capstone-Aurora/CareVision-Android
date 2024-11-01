@@ -1,4 +1,4 @@
-package com.aurora.carevision.feature.admin.auth.list
+package com.aurora.carevision.feature.admin.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*

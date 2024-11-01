@@ -1,4 +1,4 @@
-package com.aurora.carevision.feature.admin.auth.registration.camera
+package com.aurora.carevision.feature.admin.registration.camera
 
 import android.graphics.Paint.Align
 import android.graphics.drawable.PaintDrawable
@@ -65,11 +65,11 @@ fun CameraRegistScreen(){
             .background(Gray100)
     ) {
         TopAppBarLeft(
-            title = "ÀåÄ¡ Ãß°¡",
+            title = "ï¿½ï¿½Ä¡ ï¿½ß°ï¿½",
         )
 
         Text(
-            text = "      ÇØ´ç ±â±â¸¦\nµî·ÏÇÏ½Ã°Ú½À´Ï±î?",
+            text = "      ï¿½Ø´ï¿½ ï¿½ï¿½â¸¦\nï¿½ï¿½ï¿½ï¿½Ï½Ã°Ú½ï¿½ï¿½Ï±ï¿½?",
             style = CVTheme.typography.headingPrimary,
             color = Black,
             modifier = Modifier
@@ -90,7 +90,7 @@ fun CameraRegistScreen(){
                 contentAlignment = Alignment.Center
                 ){
                 Text(
-                    text = "ÀÏ·Ã ¹øÈ£     7C0AA49AAZ116FC", //TODO ÀÏ·Ã ¹øÈ£, string style ´Ù¸£°Ô ÇØ¾ßÇÔ
+                    text = "ï¿½Ï·ï¿½ ï¿½ï¿½È£     7C0AA49AAZ116FC", //TODO ï¿½Ï·ï¿½ ï¿½ï¿½È£, string style ï¿½Ù¸ï¿½ï¿½ï¿½ ï¿½Ø¾ï¿½ï¿½ï¿½
                     style = CVTheme.typography.textBody1Medium,
                     color = Gray600
                 )
@@ -104,7 +104,7 @@ fun CameraRegistScreen(){
             )
         }
         CVLongButton(
-            text = "´ÙÀ½",
+            text = "ï¿½ï¿½ï¿½ï¿½",
             onClick = {},
             modifier = Modifier
                 .padding(top = 100.dp)
