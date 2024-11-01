@@ -1,4 +1,4 @@
-package com.aurora.carevision.feature.admin.auth.list
+package com.aurora.carevision.feature.admin.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -10,17 +10,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.aurora.carevision.app.ui.theme.Black
 import com.aurora.carevision.app.ui.theme.CVTheme
-import com.aurora.carevision.core.component.AdminCameraListItem
+import com.aurora.carevision.core.component.AdminPatientListItem
 import com.aurora.carevision.core.component.CVHeadIconSearchBar
 
 @Composable
-fun CameraListScreen() {
-    val dummyCameraList = listOf("2동 301호 3번 베드")
+fun PatientListScreen() {
+    val dummyPatientList = listOf("강레오" to "2동 301호 3번 베드")
 
     CVHeadIconSearchBar(
         value = "",
         onValueChange = {},
-        placeholder = "카메라 위치를 검색해주세요",
+        placeholder = "환자 이름을 검색해주세요",
         modifier = Modifier.fillMaxWidth()
     )
     Spacer(modifier = Modifier.height(8.dp))
@@ -28,19 +28,21 @@ fun CameraListScreen() {
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
-        items(dummyCameraList) { info ->
-            AdminCameraListItem(
-                cameraInfo = info,
-                cameraId = "7C0AA49AAZ116FC",
+        items(dummyPatientList) { (name, info) ->
+            AdminPatientListItem(
+                patientName = name,
+                patientInfo = info,
+                patientId = "7C0AA49",
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(8.dp))
         }
     }
 }
+
 @Composable
 @Preview
-fun CameraListScreenPreview(){
+fun PatientListScreenPreview(){
 
     CVTheme{
         Column(
@@ -48,7 +50,7 @@ fun CameraListScreenPreview(){
                 .background(Black)
                 .fillMaxSize()
         ){
-            CameraListScreen()
+            PatientListScreen()
         }
     }
 }

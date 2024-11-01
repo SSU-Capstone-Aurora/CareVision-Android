@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -20,13 +22,19 @@ import com.aurora.carevision.core.component.CVTailIconSearchBar
 import com.aurora.carevision.core.component.TopAppBarLeft
 
 @Composable
-fun NurseSignUpScreen(){
+fun NurseSignUpScreen(
+    navigateToBack: () -> Unit = {},
+){
     Column (
         modifier = Modifier
             .fillMaxSize()
             .background(White)
+            .statusBarsPadding()
+            .systemBarsPadding()
     ){
-        TopAppBarLeft()
+        TopAppBarLeft(
+            onClick =  navigateToBack
+        )
         Text(
             text = "환영합니다!\n어디에서 근무 중이신가요?",
             style = CVTheme.typography.headingPrimary,
