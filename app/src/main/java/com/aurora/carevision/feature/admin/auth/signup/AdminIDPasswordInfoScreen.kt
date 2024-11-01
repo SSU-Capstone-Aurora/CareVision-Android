@@ -1,4 +1,4 @@
-package com.aurora.carevision.feature.admin.auth.signin
+package com.aurora.carevision.feature.admin.auth.signup
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -14,20 +14,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.aurora.carevision.app.ui.theme.Black
 import com.aurora.carevision.app.ui.theme.CVTheme
-import com.aurora.carevision.app.ui.theme.Gray300
 import com.aurora.carevision.app.ui.theme.White
-import com.aurora.carevision.app.ui.theme.Gray500
-import com.aurora.carevision.app.ui.theme.Red600
-import com.aurora.carevision.core.component.CVBasicTextField
 import com.aurora.carevision.core.component.CVDuplicateCheckTextField
 import com.aurora.carevision.core.component.CVLongButton
-import com.aurora.carevision.core.component.CVPasswordTextField
 import com.aurora.carevision.core.component.CVSignInPasswordTextField
 import com.aurora.carevision.core.component.TopAppBarLeft
 

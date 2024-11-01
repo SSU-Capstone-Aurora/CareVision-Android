@@ -35,7 +35,7 @@ fun TopAppBarLeft(
         modifier = Modifier
             .fillMaxWidth()
             .background(White)
-            .padding(vertical = 16.dp)
+            .padding(16.dp)
     ) {
         Box(
             modifier = Modifier.fillMaxWidth(),
@@ -68,7 +68,7 @@ fun TopAppBarRight(
         modifier = Modifier
             .fillMaxWidth()
             .background(White)
-            .padding(vertical = 16.dp)
+            .padding(16.dp)
     ) {
         Box(
             modifier = Modifier.fillMaxWidth(),
