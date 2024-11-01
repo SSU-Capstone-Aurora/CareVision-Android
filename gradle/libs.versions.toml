@@ -15,6 +15,7 @@ kotlin-parcelize = "1.8.20"
 compose-navigation = "2.8.0"
 kotlinx-serialization = "1.9.0"
 kotlinx-serialization-json = "1.6.3"
+splash-api = "1.0.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -42,6 +43,8 @@ hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-comp
 hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-navigation-compose" }
 hilt-core = { group = "com.google.dagger", name = "hilt-core", version.ref = "hilt-android" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
+
+splash-screen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splash-api" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
