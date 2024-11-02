@@ -13,8 +13,11 @@ import com.aurora.carevision.feature.intro.Intro
 import com.aurora.carevision.feature.intro.initialLoginScreen
 import com.aurora.carevision.feature.nurse.auth.login.navigateToNurseLogin
 import com.aurora.carevision.feature.nurse.auth.login.nurseLoginScreen
-import com.aurora.carevision.feature.nurse.auth.signup.navigateToNurseSignUp
-import com.aurora.carevision.feature.nurse.auth.signup.nurseSignUpScreen
+import com.aurora.carevision.feature.nurse.auth.signup.navigateToNurseSignUpHospital
+import com.aurora.carevision.feature.nurse.auth.signup.navigationToNurseSignupIdPw
+import com.aurora.carevision.feature.nurse.auth.signup.navigationToNurseSignupName
+import com.aurora.carevision.feature.nurse.auth.signup.navigationToNurseSignupWaiting
+import com.aurora.carevision.feature.nurse.auth.signup.nurseSignUpHospitalScreen
 import com.aurora.carevision.feature.nurse.home.navigation.navigateToNurseHome
 
 @Composable
@@ -28,24 +31,27 @@ fun CVNavHost(
     ) {
         initialLoginScreen(
             navigateToLogin = { navController.navigateToNurseLogin() },
-            navigateToSignUp = { navController.navigateToNurseSignUp() },
+            navigateToSignUp = { navController.navigateToNurseSignUpHospital() },
             navigateToAdminLogin = { navController.navigateToAdminLogin() }
         )
 
         nurseLoginScreen(
             navigateToHome = { navController.navigateToNurseHome() },
-            navigateToSignUp = { navController.navigateToNurseSignUp() },
+            navigateToSignUp = { navController.navigateToNurseSignUpHospital() },
             navigateToBack = { navController.popBackStack() }
         )
 
-        nurseSignUpScreen(
+        nurseSignUpHospitalScreen(
+            navigateToNurseSignUpName = { navController.navigationToNurseSignupName() },
+            navigateToNurseSignUpIdPw = { navController.navigationToNurseSignupIdPw() },
+            navigateToNurseSignUpWaiting = { navController.navigationToNurseSignupWaiting() },
             navigateToHome = { navController.navigateToNurseHome() },
             navigateToBack = { navController.popBackStack() }
         )
 
         adminLoginScreen(
             navigateToHome = { navController.navigateToAdminHome() },
-            navigateToSignUp = { navController.navigateToNurseSignUp() }
+            navigateToSignUp = { navController.navigateToNurseSignUpHospital() }
         )
 
         adminSignUpScreen(

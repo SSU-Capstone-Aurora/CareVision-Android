@@ -24,7 +24,10 @@ import com.aurora.carevision.core.component.CVSignInPasswordTextField
 import com.aurora.carevision.core.component.TopAppBarLeft
 
 @Composable
-fun NurseSignUpNameScreen() {
+fun NurseSignUpNameScreen(
+    navigateToBack: () -> Unit = {},
+    navigateToNext: () -> Unit = {}
+) {
     Column(
         modifier = Modifier.fillMaxSize().background(White).systemBarsPadding().statusBarsPadding()
     ) {

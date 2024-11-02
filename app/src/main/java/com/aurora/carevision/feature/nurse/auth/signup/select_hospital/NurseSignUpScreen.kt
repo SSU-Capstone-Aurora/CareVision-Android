@@ -24,6 +24,7 @@ import com.aurora.carevision.core.component.TopAppBarLeft
 @Composable
 fun NurseSignUpScreen(
     navigateToBack: () -> Unit = {},
+    navigateToNext: () -> Unit = {}
 ){
     Column (
         modifier = Modifier

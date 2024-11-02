@@ -30,7 +30,9 @@ import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.CVLongButton
 
 @Composable
-fun NurseSignUpWaitingScreen() {
+fun NurseSignUpWaitingScreen(
+    navigateToHome: () -> Unit = {}
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
