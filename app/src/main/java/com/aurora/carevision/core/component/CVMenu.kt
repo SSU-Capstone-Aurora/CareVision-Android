@@ -1,27 +1,20 @@
 package com.aurora.carevision.core.component
 
-import android.annotation.SuppressLint
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,10 +26,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.modifier.modifierLocalMapOf
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -44,55 +33,58 @@ import com.aurora.carevision.R
 import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.Gray300
 import com.aurora.carevision.app.ui.theme.Gray500
-import com.aurora.carevision.app.ui.theme.Primary300
+import com.aurora.carevision.app.ui.theme.Gray600
+import com.aurora.carevision.app.ui.theme.Primary200
+import com.aurora.carevision.app.ui.theme.Primary600
 import com.aurora.carevision.app.ui.theme.White
-import kotlinx.coroutines.selects.select
-import androidx.compose.foundation.interaction.InteractionSource as InteractionSource1
 
-@SuppressLint("RememberReturnType")
 @Composable
 fun ReviewDropdownMenu(
     menuItems: List<String>,
-    selectedText : String,
-    onMenuItemClick: (String) -> Unit
+    modifier: Modifier = Modifier,
+    placeholder: String = "병원을 선택해주세요.",
+    onMenuItemClick: (String) -> Unit = {}
 ) {
     var isDropDownMenuExpanded by remember { mutableStateOf(false) }
-    var buttonWidth by remember { mutableStateOf(0.dp) }
-    val density = LocalDensity.current
-    Column {
+    var selectedItem by remember { mutableStateOf("") }
+
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 24.dp),
+    ) {
         Box(
             modifier = Modifier
                 .clip(shape = RoundedCornerShape(10.dp))
                 .fillMaxWidth()
                 .border(1.dp, Gray300, RoundedCornerShape(10.dp))
                 .background(White)
-                .padding(6.dp)
-                .onGloballyPositioned { coordinates ->
-                    buttonWidth = with(density) { coordinates.size.width.toDp() }
-                },
+                .padding(6.dp),
             contentAlignment = Alignment.CenterEnd
-        ){
+        ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment =  Alignment.CenterVertically
-            ){
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Text(
-                    text = if(selectedText.isEmpty()) "���� �������ּ���" else selectedText,
+                    text = if (selectedItem.isEmpty()) placeholder else selectedItem,
                     style = CVTheme.typography.textBody1Medium,
                     color = Gray500,
                     modifier = Modifier
-                        .padding(start=12.dp)
+                        .padding(start = 12.dp)
                 )
             }
 
             IconButton(onClick = { isDropDownMenuExpanded = !isDropDownMenuExpanded }) {
-                Image(
+                Icon(
                     painter = painterResource(id = R.drawable.ic_menubutton_24),
                     contentDescription = "menu icon",
+                    tint = Gray600,
                     modifier = Modifier
                         .size(36.dp)
+                        .padding(end = 12.dp)
                 )
             }
         }
@@ -101,18 +93,19 @@ fun ReviewDropdownMenu(
             expanded = isDropDownMenuExpanded,
             onDismissRequest = { isDropDownMenuExpanded = false },
             modifier = Modifier
+                .padding(horizontal = 24.dp)
+                .fillMaxWidth()
+                .height(235.dp)
                 .clip(shape = RoundedCornerShape(10.dp))
-                .width(buttonWidth +12.dp)
-                .border(1.dp, Primary300, RoundedCornerShape(10.dp))
+                .border(1.dp, Primary600, RoundedCornerShape(10.dp))
                 .background(White)
         ) {
-            menuItems.forEachIndexed {index, menuItem ->
-                var isCursered by remember{ mutableStateOf(false)}
-                val backgroundcolor = if(isCursered) Primary300 else White
+            menuItems.forEach { menuItem ->
+                val isSelected = menuItem == selectedItem
                 DropdownMenuItem(
                     onClick = {
+                        selectedItem = menuItem
                         onMenuItemClick(menuItem)
-                        isDropDownMenuExpanded = false
                     },
                     text = {
                         Text(
@@ -124,42 +117,45 @@ fun ReviewDropdownMenu(
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(backgroundcolor)
+                        .background(if (isSelected) Primary200 else White)
                         .padding(8.dp)
-
-                        .pointerInput(Unit){
-                            awaitPointerEventScope {
-                                while(true){
-                                    val event = awaitPointerEvent()
-                                    isCursered = event.changes.any {it.pressed}
-                                }
-                            }
-                        }
-
-
                 )
-
             }
         }
     }
-
 }
 
 @Composable
 @Preview
 fun ReviewDropdownMenuPreview() {
     CVTheme {
-        var selectedItem by rememberSaveable { mutableStateOf("���� �������ּ���") }
+        var selectedItem by rememberSaveable { mutableStateOf("병원을 선택해주세요") }
         Column(
             modifier = Modifier
                 .background(White)
                 .fillMaxSize(),
-            horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally,
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            val menuItems = listOf("�Ű��ϱ�", "�����ϱ�", "��Ÿ")
-            ReviewDropdownMenu(menuItems = menuItems, selectedText = "", onMenuItemClick = { selected ->
-                selectedItem= selected
-                })
+            val menuItems = listOf(
+                "내과",
+                "외과",
+                "소아과",
+                "피부과",
+                "안과",
+                "이비인후과",
+                "비뇨기과",
+                "정형외과",
+                "신경외과",
+                "치과",
+                "한의원",
+                "약국"
+            )
+            ReviewDropdownMenu(
+                menuItems = menuItems,
+                onMenuItemClick = { selected ->
+                    selectedItem = selected
+                }
+            )
         }
     }
 }
