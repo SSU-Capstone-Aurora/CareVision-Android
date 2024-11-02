@@ -11,19 +11,24 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.CVLongButton
 import com.aurora.carevision.core.component.CVTailIconSearchBar
 import com.aurora.carevision.core.component.ReviewDropdownMenu
 import com.aurora.carevision.core.component.TopAppBarLeft
+import com.aurora.carevision.feature.nurse.auth.signup.NurseSignUpViewModel
 
 @Composable
 fun NurseSignUpScreen(
+    viewModel: NurseSignUpViewModel = hiltViewModel(),
     navigateToBack: () -> Unit = {},
     navigateToNext: () -> Unit = {}
 ){
@@ -41,6 +46,8 @@ fun NurseSignUpScreen(
         "한의원",
         "약국"
     )
+
+    val state by viewModel.state.collectAsState()
 
     Column (
         modifier = Modifier
@@ -63,6 +70,10 @@ fun NurseSignUpScreen(
         ReviewDropdownMenu(
             placeholder = "병원 이름을 입력하세요",
             menuItems = dummyMenuItems,
+            selectedItem = state.hospitalName,
+            onMenuItemClick = { selected ->
+                viewModel.updateSelectedHospital(selected)
+            }
         )
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -70,12 +81,16 @@ fun NurseSignUpScreen(
         ReviewDropdownMenu(
             placeholder = "과를 선택해주세요",
             menuItems = dummyMenuItems,
+            selectedItem = state.department,
+            onMenuItemClick = { selected ->
+                viewModel.updateSelectedDepartment(selected)
+            }
         )
 
         CVLongButton(
             text = "다음",
             onClick = navigateToNext,
-            enabled = true,
+            enabled = state.hospitalName.isNotEmpty() && state.department.isNotEmpty(),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 24.dp)

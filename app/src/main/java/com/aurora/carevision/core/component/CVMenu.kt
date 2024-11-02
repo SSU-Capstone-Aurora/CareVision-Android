@@ -26,6 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -43,22 +44,24 @@ fun ReviewDropdownMenu(
     menuItems: List<String>,
     modifier: Modifier = Modifier,
     placeholder: String = "병원을 선택해주세요.",
+    selectedItem: String = "",
     onMenuItemClick: (String) -> Unit = {}
 ) {
     var isDropDownMenuExpanded by remember { mutableStateOf(false) }
-    var selectedItem by remember { mutableStateOf("") }
+    var selectedText by remember { mutableStateOf(selectedItem) }
 
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 24.dp),
+            .padding(horizontal = 24.dp)
+            .background(White)
     ) {
         Box(
             modifier = Modifier
+                .background(White)
                 .clip(shape = RoundedCornerShape(10.dp))
                 .fillMaxWidth()
                 .border(1.dp, Gray300, RoundedCornerShape(10.dp))
-                .background(White)
                 .padding(6.dp),
             contentAlignment = Alignment.CenterEnd
         ) {
@@ -69,7 +72,7 @@ fun ReviewDropdownMenu(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = if (selectedItem.isEmpty()) placeholder else selectedItem,
+                    text = if (selectedText.isEmpty()) placeholder else selectedItem,
                     style = CVTheme.typography.textBody1Medium,
                     color = Gray500,
                     modifier = Modifier
@@ -94,17 +97,17 @@ fun ReviewDropdownMenu(
             onDismissRequest = { isDropDownMenuExpanded = false },
             modifier = Modifier
                 .padding(horizontal = 24.dp)
+                .background(White)
                 .fillMaxWidth()
                 .height(235.dp)
                 .clip(shape = RoundedCornerShape(10.dp))
                 .border(1.dp, Primary600, RoundedCornerShape(10.dp))
-                .background(White)
         ) {
             menuItems.forEach { menuItem ->
-                val isSelected = menuItem == selectedItem
+                val isSelected = menuItem == selectedText
                 DropdownMenuItem(
                     onClick = {
-                        selectedItem = menuItem
+                        selectedText = menuItem
                         onMenuItemClick(menuItem)
                     },
                     text = {
