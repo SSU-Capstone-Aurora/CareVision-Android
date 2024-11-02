@@ -62,7 +62,7 @@ fun NurseSignUpScreen(
 
         CVLongButton(
             text = "다음",
-            onClick = { },
+            onClick = navigateToNext,
             enabled = true,
             modifier = Modifier
                 .fillMaxWidth()

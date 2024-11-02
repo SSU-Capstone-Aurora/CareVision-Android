@@ -30,7 +30,9 @@ fun NurseSignUpIdPwScreen(
     Column(
         modifier = Modifier.fillMaxSize().background(White).systemBarsPadding().statusBarsPadding()
     ) {
-        TopAppBarLeft()
+        TopAppBarLeft(
+            onClick = navigateToBack
+        )
         Text(
             text = "가입을 위한 정보를\n입력해주세요",
             style = CVTheme.typography.headingPrimary,
@@ -78,7 +80,7 @@ fun NurseSignUpIdPwScreen(
 
         CVLongButton(
             text = "완료",
-            onClick = {},
+            onClick = navigateToNext,
             enabled = true,
             modifier = Modifier
                 .fillMaxWidth()

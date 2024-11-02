@@ -13,10 +13,19 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object NurseSignUp
 
+@Serializable
+data object NurseSignUpName
+
+@Serializable
+data object NurseSignUpIdPw
+
+@Serializable
+data object NurseSignUpWaiting
+
 fun NavController.navigateToNurseSignUpHospital(navOptions: NavOptions? = null) = navigate(NurseSignUp, navOptions)
-fun NavController.navigationToNurseSignupName(navOptions: NavOptions? = null) = navigate(NurseSignUp, navOptions)
-fun NavController.navigationToNurseSignupIdPw(navOptions: NavOptions? = null) = navigate(NurseSignUp, navOptions)
-fun NavController.navigationToNurseSignupWaiting(navOptions: NavOptions? = null) = navigate(NurseSignUp, navOptions)
+fun NavController.navigationToNurseSignupName(navOptions: NavOptions? = null) = navigate(NurseSignUpName, navOptions)
+fun NavController.navigationToNurseSignupIdPw(navOptions: NavOptions? = null) = navigate(NurseSignUpIdPw, navOptions)
+fun NavController.navigationToNurseSignupWaiting(navOptions: NavOptions? = null) = navigate(NurseSignUpWaiting, navOptions)
 
 fun NavGraphBuilder.nurseSignUpHospitalScreen(
     navigateToNurseSignUpName: () -> Unit,
@@ -32,30 +41,23 @@ fun NavGraphBuilder.nurseSignUpHospitalScreen(
         )
     }
 
-    composable<NurseSignUp> {
+    composable<NurseSignUpName> {
         NurseSignUpNameScreen(
             navigateToBack = navigateToBack,
             navigateToNext = navigateToNurseSignUpIdPw,
         )
     }
 
-    composable<NurseSignUp> {
+    composable<NurseSignUpIdPw> {
         NurseSignUpIdPwScreen(
             navigateToBack = navigateToBack,
             navigateToNext = navigateToNurseSignUpWaiting,
         )
     }
 
-    composable<NurseSignUp> {
-        NurseSignUpIdPwScreen(
-            navigateToBack = navigateToBack,
-            navigateToNext = navigateToNurseSignUpWaiting,
-        )
-    }
-
-    composable<NurseSignUp> {
+    composable<NurseSignUpWaiting> {
         NurseSignUpWaitingScreen(
-            navigateToHome = navigateToHome
+            navigateToHome = navigateToHome,
         )
     }
 }
