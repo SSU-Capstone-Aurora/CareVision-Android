@@ -43,12 +43,6 @@ fun NurseLoginScreen(
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
-                is NurseLoginSideEffect.OnUserIdChange -> {
-                    viewModel.onUserIdChange(state.userId)
-                }
-                is NurseLoginSideEffect.OnPasswordChange -> {
-                    viewModel.onPasswordChange(state.password)
-                }
                 is NurseLoginSideEffect.OnSignUpClick -> navigateToSignUp()
                 is NurseLoginSideEffect.OnBackClick -> navigateToBack()
                 is NurseLoginSideEffect.NavigateToHome -> navigateToHome()
