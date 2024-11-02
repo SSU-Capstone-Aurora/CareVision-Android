@@ -4,6 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import com.aurora.carevision.feature.nurse.auth.signup.select_hospital.NurseSignUpScreen
 import kotlinx.serialization.Serializable
 
 @Serializable

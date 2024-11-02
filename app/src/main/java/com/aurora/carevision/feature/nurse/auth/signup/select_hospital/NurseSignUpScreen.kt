@@ -1,4 +1,4 @@
-package com.aurora.carevision.feature.nurse.auth.signup
+package com.aurora.carevision.feature.nurse.auth.signup.select_hospital
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column

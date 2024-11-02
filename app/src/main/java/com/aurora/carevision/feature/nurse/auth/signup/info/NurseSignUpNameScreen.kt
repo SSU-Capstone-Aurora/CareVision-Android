@@ -1,4 +1,4 @@
-package com.aurora.carevision.feature.nurse.auth.signup
+package com.aurora.carevision.feature.nurse.auth.signup.info
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -17,13 +17,14 @@ import com.aurora.carevision.app.ui.theme.Black
 import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.Red600
 import com.aurora.carevision.app.ui.theme.White
+import com.aurora.carevision.core.component.CVBasicTextField
 import com.aurora.carevision.core.component.CVDuplicateCheckTextField
 import com.aurora.carevision.core.component.CVLongButton
 import com.aurora.carevision.core.component.CVSignInPasswordTextField
 import com.aurora.carevision.core.component.TopAppBarLeft
 
 @Composable
-fun NurseSignUpInfoScreen() {
+fun NurseSignUpNameScreen() {
     Column(
         modifier = Modifier.fillMaxSize().background(White).systemBarsPadding().statusBarsPadding()
     ) {
@@ -35,46 +36,20 @@ fun NurseSignUpInfoScreen() {
             modifier = Modifier
                 .padding(top = 16.dp, start = 24.dp, end = 24.dp, bottom = 24.dp)
         )
-        CVDuplicateCheckTextField(
+
+        CVBasicTextField(
             value = "",
-            placeholder = "아이디를 입력해주세요",
+            placeholder = "이름을 입력해주세요",
             label = "아이디",
             onTextChanged = { },
             onFocusChanged = { },
-            onDuplicateCheck = {},
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 24.dp, end = 24.dp, bottom = 24.dp)
         )
-        Spacer(modifier = Modifier.padding())
-        CVSignInPasswordTextField(
-            value = "",
-            isError = true,
-            placeholder = "비밀번호를 입력해주세요",
-            label = "비밀번호",
-            onTextChanged = { },
-            onFocusChanged = {},
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 24.dp, end = 24.dp)
-        )
-
-        Text(
-            text = "* 8글자 이상이어야 합니다",
-            color = Red600,
-            style = CVTheme.typography.captionRegular,
-            modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp, horizontal = 24.dp)
-        )
-
-        Text(
-            text = "* 숫자가 들어가야 합니다",
-            color = Red600,
-            style = CVTheme.typography.captionRegular,
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)
-        )
 
         CVLongButton(
-            text = "완료",
+            text = "다음",
             onClick = {},
             enabled = true,
             modifier = Modifier
@@ -86,14 +61,14 @@ fun NurseSignUpInfoScreen() {
 
 @Composable
 @Preview
-fun NurseSignUpInfoScreenPreview() {
+fun NurseSignUpNameScreenPreview() {
     CVTheme {
         Column(
             modifier = Modifier
                 .background(White)
                 .fillMaxSize()
         ) {
-            NurseSignUpInfoScreen()
+            NurseSignUpNameScreen()
         }
     }
 }
