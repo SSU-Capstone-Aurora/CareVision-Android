@@ -19,6 +19,7 @@ import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.CVLongButton
 import com.aurora.carevision.core.component.CVTailIconSearchBar
+import com.aurora.carevision.core.component.ReviewDropdownMenu
 import com.aurora.carevision.core.component.TopAppBarLeft
 
 @Composable
@@ -26,6 +27,21 @@ fun NurseSignUpScreen(
     navigateToBack: () -> Unit = {},
     navigateToNext: () -> Unit = {}
 ){
+    val dummyMenuItems = listOf(
+        "내과",
+        "외과",
+        "소아과",
+        "피부과",
+        "안과",
+        "이비인후과",
+        "비뇨기과",
+        "정형외과",
+        "신경외과",
+        "치과",
+        "한의원",
+        "약국"
+    )
+
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -44,20 +60,16 @@ fun NurseSignUpScreen(
                 .padding(top=16.dp, start = 24.dp, end = 24.dp, bottom = 24.dp)
         )
 
-        CVTailIconSearchBar(
-            value = "",
-            onValueChange = {},
+        ReviewDropdownMenu(
             placeholder = "병원 이름을 입력하세요",
-            onTextChanged = { },
-            onFocusChanged = { }
+            menuItems = dummyMenuItems,
         )
+
         Spacer(modifier = Modifier.height(24.dp))
-        CVTailIconSearchBar(
-            value = "",
-            onValueChange = {},
+
+        ReviewDropdownMenu(
             placeholder = "과를 선택해주세요",
-            onTextChanged = { },
-            onFocusChanged = { }
+            menuItems = dummyMenuItems,
         )
 
         CVLongButton(
