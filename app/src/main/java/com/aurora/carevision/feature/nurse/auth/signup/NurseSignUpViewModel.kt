@@ -19,11 +19,16 @@ class NurseSignUpViewModel @Inject constructor(
 
     fun updateSelectedHospital(newHospitalName: String) {
         _state.value = _state.value.copy(hospitalName = newHospitalName)
-        Log.d("NurseSignUpViewModel", "updateSelectedHospital: ${_state.value.hospitalName}")
+        Log.d("NurseSignUpViewModel", "id:${_state.value.hospitalName}pw:${_state.value.department}updateUserName: ${_state.value.userName}")
     }
 
     fun updateSelectedDepartment(newDepartment: String) {
         _state.value = _state.value.copy(department = newDepartment)
-        Log.d("NurseSignUpViewModel", "updateSelectedDepartment: ${_state.value.department}")
+        Log.d("NurseSignUpViewModel", "id:${_state.value.hospitalName}pw:${_state.value.department}updateUserName: ${_state.value.userName}")
+    }
+
+    fun updateUserName(newUserName: String) {
+        _state.value = _state.value.copy(userName = newUserName)
+        Log.d("NurseSignUpViewModel", "id:${_state.value.hospitalName}pw:${_state.value.department}updateUserName: ${_state.value.userName}")
     }
 }

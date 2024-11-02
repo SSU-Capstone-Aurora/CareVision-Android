@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -24,6 +25,7 @@ import com.aurora.carevision.core.component.CVLongButton
 import com.aurora.carevision.core.component.CVTailIconSearchBar
 import com.aurora.carevision.core.component.ReviewDropdownMenu
 import com.aurora.carevision.core.component.TopAppBarLeft
+import com.aurora.carevision.feature.nurse.auth.signup.NurseSignUpSideEffect
 import com.aurora.carevision.feature.nurse.auth.signup.NurseSignUpViewModel
 
 @Composable
@@ -49,6 +51,20 @@ fun NurseSignUpScreen(
 
     val state by viewModel.state.collectAsState()
 
+    LaunchedEffect(Unit) {
+        viewModel.sideEffect.collect { sideEffect ->
+            when (sideEffect) {
+                is NurseSignUpSideEffect.NavigateToNext -> {
+                    navigateToNext()
+                }
+                is NurseSignUpSideEffect.NavigateToBack -> {
+                    navigateToBack()
+                }
+                else -> {}
+            }
+        }
+    }
+
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -57,7 +73,7 @@ fun NurseSignUpScreen(
             .systemBarsPadding()
     ){
         TopAppBarLeft(
-            onClick =  navigateToBack
+            onClick =  {viewModel.sideEffect.value = NurseSignUpSideEffect.NavigateToBack},
         )
         Text(
             text = "환영합니다!\n어디에서 근무 중이신가요?",
@@ -89,7 +105,7 @@ fun NurseSignUpScreen(
 
         CVLongButton(
             text = "다음",
-            onClick = navigateToNext,
+            onClick = {viewModel.sideEffect.value = NurseSignUpSideEffect.NavigateToNext},
             enabled = state.hospitalName.isNotEmpty() && state.department.isNotEmpty(),
             modifier = Modifier
                 .fillMaxWidth()
