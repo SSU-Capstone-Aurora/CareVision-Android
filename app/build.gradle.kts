@@ -83,4 +83,7 @@ dependencies {
     // navigation
     implementation(libs.compose.navigation)
     implementation(libs.kotlinx.serialization.json)
+
+    // splash
+    implementation(libs.splash.screen)
 }
