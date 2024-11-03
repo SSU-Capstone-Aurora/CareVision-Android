@@ -14,11 +14,13 @@ fun NavHostController.navigateToAdminLogin(navOptions: NavOptions? = null) = nav
 fun NavGraphBuilder.adminLoginScreen(
     navigateToHome: () -> Unit,
     navigateToSignUp: () -> Unit,
+    navigateToBack:() -> Unit
 ) {
     composable<AdminLogin> {
         AdminLoginScreen(
-            //onLoginClick = navigateToHome,
-            //onSignUpClick = navigateToSignUp,
+            navigateToHome = navigateToHome,
+            navigateToSignUp = navigateToSignUp,
+            navigateToBack = navigateToBack,
         )
     }
 }
