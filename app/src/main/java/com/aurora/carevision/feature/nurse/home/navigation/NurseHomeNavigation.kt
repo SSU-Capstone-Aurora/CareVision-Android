@@ -14,7 +14,6 @@ fun NavController.navigateToNurseHome(navOptions: NavOptions? = null) = navigate
 
 fun NavGraphBuilder.nurseHomeScreen(
     navigateToNurseLogin: () -> Unit,
-    navigateToNurseSignUp: () -> Unit,
 ) {
     composable<NurseHome> {
         HomeScreen(

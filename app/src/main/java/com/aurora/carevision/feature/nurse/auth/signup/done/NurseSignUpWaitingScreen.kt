@@ -70,7 +70,10 @@ fun NurseSignUpWaitingScreen(
 
         CVLongButton(
             text = "다시 요청하기",
-            onClick = { viewModel.requestSignUp() },
+            onClick = {
+                viewModel.requestSignUp()
+                navigateToHome() //TODO : 성공 시 navigate
+                      },
             backgroundColor = White,
             textColor = Gray700,
             modifier = Modifier

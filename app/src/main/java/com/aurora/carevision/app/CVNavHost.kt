@@ -22,6 +22,7 @@ import com.aurora.carevision.feature.nurse.auth.signup.navigationToNurseSignupNa
 import com.aurora.carevision.feature.nurse.auth.signup.navigationToNurseSignupWaiting
 import com.aurora.carevision.feature.nurse.auth.signup.nurseSignUpHospitalScreen
 import com.aurora.carevision.feature.nurse.home.navigation.navigateToNurseHome
+import com.aurora.carevision.feature.nurse.home.navigation.nurseHomeScreen
 
 @Composable
 fun CVNavHost(
@@ -55,6 +56,10 @@ fun CVNavHost(
             navigateToNurseSignUpWaiting = { navController.navigationToNurseSignupWaiting() },
             navigateToHome = { navController.navigateToNurseHome() },
             navigateToBack = { navController.popBackStack() }
+        )
+
+        nurseHomeScreen(
+            navigateToNurseLogin = { navController.navigateToIntro() },
         )
 
         adminLoginScreen(
