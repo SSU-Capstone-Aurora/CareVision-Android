@@ -2,7 +2,6 @@ package com.aurora.carevision.feature.nurse.auth.signup.info
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -18,12 +17,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.aurora.carevision.app.ui.theme.Black
 import com.aurora.carevision.app.ui.theme.CVTheme
-import com.aurora.carevision.app.ui.theme.Red600
 import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.CVBasicTextField
-import com.aurora.carevision.core.component.CVDuplicateCheckTextField
 import com.aurora.carevision.core.component.CVLongButton
-import com.aurora.carevision.core.component.CVSignInPasswordTextField
 import com.aurora.carevision.core.component.TopAppBarLeft
 import com.aurora.carevision.feature.nurse.auth.signup.NurseSignUpSideEffect
 import com.aurora.carevision.feature.nurse.auth.signup.NurseSignUpViewModel
@@ -32,7 +28,7 @@ import com.aurora.carevision.feature.nurse.auth.signup.NurseSignUpViewModel
 fun NurseSignUpNameScreen(
     viewModel: NurseSignUpViewModel = hiltViewModel(),
     navigateToBack: () -> Unit = {},
-    navigateToNext: () -> Unit = {}
+    navigateToSignUpIdPwScreen: () -> Unit = {}
 ) {
 
     val state = viewModel.state.collectAsState()
@@ -40,10 +36,10 @@ fun NurseSignUpNameScreen(
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
-                is NurseSignUpSideEffect.NavigateToNext -> {
-                    navigateToNext()
+                is NurseSignUpSideEffect.NavigateToIdPw -> {
+                    navigateToSignUpIdPwScreen()
                 }
-                is NurseSignUpSideEffect.NavigateToBack -> {
+                is NurseSignUpSideEffect.NavigateToInitialLogin -> {
                     navigateToBack()
                 }
                 else -> {
@@ -60,7 +56,7 @@ fun NurseSignUpNameScreen(
             .statusBarsPadding()
     ) {
         TopAppBarLeft(
-            onClick = { viewModel.sideEffect.value = NurseSignUpSideEffect.NavigateToNext }
+            onClick = navigateToBack
         )
 
         Text(
@@ -84,7 +80,7 @@ fun NurseSignUpNameScreen(
 
         CVLongButton(
             text = "다음",
-            onClick = { viewModel.sideEffect.value = NurseSignUpSideEffect.NavigateToNext },
+            onClick = navigateToSignUpIdPwScreen,
             enabled = true,
             modifier = Modifier
                 .fillMaxWidth()

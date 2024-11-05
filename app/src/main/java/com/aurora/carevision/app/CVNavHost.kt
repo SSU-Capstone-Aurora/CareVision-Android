@@ -1,6 +1,7 @@
 package com.aurora.carevision.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
@@ -11,8 +12,10 @@ import com.aurora.carevision.feature.admin.home.navigation.adminHomeScreen
 import com.aurora.carevision.feature.admin.home.navigation.navigateToAdminHome
 import com.aurora.carevision.feature.intro.Intro
 import com.aurora.carevision.feature.intro.initialLoginScreen
+import com.aurora.carevision.feature.intro.navigateToIntro
 import com.aurora.carevision.feature.nurse.auth.login.navigateToNurseLogin
 import com.aurora.carevision.feature.nurse.auth.login.nurseLoginScreen
+import com.aurora.carevision.feature.nurse.auth.signup.NurseSignUpViewModel
 import com.aurora.carevision.feature.nurse.auth.signup.navigateToNurseSignUpHospital
 import com.aurora.carevision.feature.nurse.auth.signup.navigationToNurseSignupIdPw
 import com.aurora.carevision.feature.nurse.auth.signup.navigationToNurseSignupName
@@ -25,6 +28,8 @@ fun CVNavHost(
     navController: NavHostController = rememberNavController(),
     startDestination: Any = Intro,
 ) {
+    val nurseSignUpViewModel: NurseSignUpViewModel = hiltViewModel()
+
     NavHost(
         navController = navController,
         startDestination = startDestination
@@ -42,6 +47,9 @@ fun CVNavHost(
         )
 
         nurseSignUpHospitalScreen(
+            viewModel = nurseSignUpViewModel,  // Pass shared ViewModel
+            navigateToIntro = { navController.navigateToIntro() },
+            navigateToNurseSignUpHospital = { navController.navigateToNurseSignUpHospital() },
             navigateToNurseSignUpName = { navController.navigationToNurseSignupName() },
             navigateToNurseSignUpIdPw = { navController.navigationToNurseSignupIdPw() },
             navigateToNurseSignUpWaiting = { navController.navigationToNurseSignupWaiting() },

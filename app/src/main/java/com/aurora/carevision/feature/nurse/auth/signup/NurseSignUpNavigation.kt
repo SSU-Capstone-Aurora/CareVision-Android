@@ -28,6 +28,9 @@ fun NavController.navigationToNurseSignupIdPw(navOptions: NavOptions? = null) = 
 fun NavController.navigationToNurseSignupWaiting(navOptions: NavOptions? = null) = navigate(NurseSignUpWaiting, navOptions)
 
 fun NavGraphBuilder.nurseSignUpHospitalScreen(
+    viewModel: NurseSignUpViewModel,
+    navigateToIntro: () -> Unit,
+    navigateToNurseSignUpHospital: () -> Unit,
     navigateToNurseSignUpName: () -> Unit,
     navigateToNurseSignUpIdPw: () -> Unit,
     navigateToNurseSignUpWaiting: () -> Unit,
@@ -36,28 +39,32 @@ fun NavGraphBuilder.nurseSignUpHospitalScreen(
 ) {
     composable<NurseSignUp> {
         NurseSignUpScreen(
-            navigateToBack = navigateToBack,
-            navigateToNext = navigateToNurseSignUpName,
+            navigateToBack = navigateToIntro,
+            navigateToSignUpNameScreen = navigateToNurseSignUpName,
+            viewModel = viewModel
         )
     }
 
     composable<NurseSignUpName> {
         NurseSignUpNameScreen(
-            navigateToBack = navigateToBack,
-            navigateToNext = navigateToNurseSignUpIdPw,
+            navigateToBack = navigateToNurseSignUpHospital,
+            navigateToSignUpIdPwScreen = navigateToNurseSignUpIdPw,
+            viewModel = viewModel
         )
     }
 
     composable<NurseSignUpIdPw> {
         NurseSignUpIdPwScreen(
-            navigateToBack = navigateToBack,
-            navigateToNext = navigateToNurseSignUpWaiting,
+            navigateToBack = navigateToNurseSignUpName,
+            navigateToSignUpWaitingScreen = navigateToNurseSignUpWaiting,
+            //viewModel = viewModel
         )
     }
 
     composable<NurseSignUpWaiting> {
         NurseSignUpWaitingScreen(
             navigateToHome = navigateToHome,
+            //viewModel = viewModel
         )
     }
 }

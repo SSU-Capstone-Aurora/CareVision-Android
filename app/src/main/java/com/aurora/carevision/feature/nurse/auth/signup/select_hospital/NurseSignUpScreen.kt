@@ -22,7 +22,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.CVLongButton
-import com.aurora.carevision.core.component.CVTailIconSearchBar
 import com.aurora.carevision.core.component.ReviewDropdownMenu
 import com.aurora.carevision.core.component.TopAppBarLeft
 import com.aurora.carevision.feature.nurse.auth.signup.NurseSignUpSideEffect
@@ -32,7 +31,7 @@ import com.aurora.carevision.feature.nurse.auth.signup.NurseSignUpViewModel
 fun NurseSignUpScreen(
     viewModel: NurseSignUpViewModel = hiltViewModel(),
     navigateToBack: () -> Unit = {},
-    navigateToNext: () -> Unit = {}
+    navigateToSignUpNameScreen: () -> Unit = {}
 ){
     val dummyMenuItems = listOf(
         "내과",
@@ -54,10 +53,10 @@ fun NurseSignUpScreen(
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
-                is NurseSignUpSideEffect.NavigateToNext -> {
-                    navigateToNext()
+                is NurseSignUpSideEffect.NavigateToName -> {
+                    navigateToSignUpNameScreen()
                 }
-                is NurseSignUpSideEffect.NavigateToBack -> {
+                is NurseSignUpSideEffect.NavigateToInitialLogin -> {
                     navigateToBack()
                 }
                 else -> {}
@@ -73,7 +72,7 @@ fun NurseSignUpScreen(
             .systemBarsPadding()
     ){
         TopAppBarLeft(
-            onClick =  {viewModel.sideEffect.value = NurseSignUpSideEffect.NavigateToBack},
+            onClick =  navigateToBack,
         )
         Text(
             text = "환영합니다!\n어디에서 근무 중이신가요?",
@@ -105,7 +104,7 @@ fun NurseSignUpScreen(
 
         CVLongButton(
             text = "다음",
-            onClick = {viewModel.sideEffect.value = NurseSignUpSideEffect.NavigateToNext},
+            onClick = navigateToSignUpNameScreen,
             enabled = state.hospitalName.isNotEmpty() && state.department.isNotEmpty(),
             modifier = Modifier
                 .fillMaxWidth()

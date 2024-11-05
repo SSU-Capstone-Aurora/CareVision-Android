@@ -25,7 +25,7 @@ import com.aurora.carevision.core.component.TopAppBarLeft
 @Composable
 fun NurseSignUpIdPwScreen(
     navigateToBack: () -> Unit = {},
-    navigateToNext: () -> Unit = {}
+    navigateToSignUpWaitingScreen: () -> Unit = {}
 ) {
     Column(
         modifier = Modifier.fillMaxSize().background(White).systemBarsPadding().statusBarsPadding()
@@ -80,7 +80,7 @@ fun NurseSignUpIdPwScreen(
 
         CVLongButton(
             text = "완료",
-            onClick = navigateToNext,
+            onClick = navigateToSignUpWaitingScreen,
             enabled = true,
             modifier = Modifier
                 .fillMaxWidth()

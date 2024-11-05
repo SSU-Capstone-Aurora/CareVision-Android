@@ -11,7 +11,7 @@ import kotlinx.serialization.Serializable
 data object Intro
 
 // 외부에서 Intro로 이동할 수 있도록 NavHostController에 navigateToIntro 함수를 추가
-fun NavHostController.navigateToIntro(navOptions: NavOptions) = navigate(Intro, navOptions)
+fun NavHostController.navigateToIntro(navOptions: NavOptions? = null) = navigate(Intro, navOptions)
 
 // Intro 화면을 그리는 composable 함수를 NavGraphBuilder에 추가
 fun NavGraphBuilder.initialLoginScreen(
