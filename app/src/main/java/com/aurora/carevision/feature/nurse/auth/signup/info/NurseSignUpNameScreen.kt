@@ -81,7 +81,7 @@ fun NurseSignUpNameScreen(
         CVLongButton(
             text = "다음",
             onClick = navigateToSignUpIdPwScreen,
-            enabled = true,
+            enabled = state.value.userName.isNotEmpty(),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 24.dp)

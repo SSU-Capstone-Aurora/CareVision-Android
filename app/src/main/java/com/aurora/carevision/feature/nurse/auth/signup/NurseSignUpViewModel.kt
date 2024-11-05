@@ -19,16 +19,32 @@ class NurseSignUpViewModel @Inject constructor(
 
     fun updateSelectedHospital(newHospitalName: String) {
         _state.value = _state.value.copy(hospitalName = newHospitalName)
-        Log.d("NurseSignUpViewModel", "id:${_state.value.hospitalName}pw:${_state.value.department}updateUserName: ${_state.value.userName}")
     }
 
     fun updateSelectedDepartment(newDepartment: String) {
         _state.value = _state.value.copy(department = newDepartment)
-        Log.d("NurseSignUpViewModel", "id:${_state.value.hospitalName}pw:${_state.value.department}updateUserName: ${_state.value.userName}")
     }
 
     fun updateUserName(newUserName: String) {
         _state.value = _state.value.copy(userName = newUserName)
-        Log.d("NurseSignUpViewModel", "id:${_state.value.hospitalName}pw:${_state.value.department}updateUserName: ${_state.value.userName}")
+    }
+
+    fun updateUserId(newUserId: String) {
+        _state.value = _state.value.copy(userId = newUserId)
+    }
+
+    fun updatePassword(newPassword: String) {
+        _state.value = _state.value.copy(password = newPassword)
+        Log.d("NurseSignUpViewModel", "updatedHospital : ${_state.value.hospitalName}, updatedDepartment : ${_state.value.department}, updatedUserName : ${_state.value.userName}, updatedUserId : ${_state.value.userId}, updatedPassword : ${_state.value.password}")
+    }
+
+    fun checkPwValidation(): Boolean {
+        val pattern = Regex("^(?=.*[A-Za-z])(?=.*[0-9]).{8,}\$")
+        return pattern.matches(_state.value.password)
+    }
+
+    fun checkIdValidation(): Boolean {
+        // 중복확인 API 호출
+        return false
     }
 }

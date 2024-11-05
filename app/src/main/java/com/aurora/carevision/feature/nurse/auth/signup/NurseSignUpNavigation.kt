@@ -57,7 +57,7 @@ fun NavGraphBuilder.nurseSignUpHospitalScreen(
         NurseSignUpIdPwScreen(
             navigateToBack = navigateToNurseSignUpName,
             navigateToSignUpWaitingScreen = navigateToNurseSignUpWaiting,
-            //viewModel = viewModel
+            viewModel = viewModel
         )
     }
 

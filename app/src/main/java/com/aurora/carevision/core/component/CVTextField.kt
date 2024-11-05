@@ -154,7 +154,9 @@ fun CVPasswordTextField(
 
     OutlinedTextField(
         value = value,
-        onValueChange = onTextChanged,
+        onValueChange = {
+            onTextChanged(it)
+        },
         singleLine = true,
         trailingIcon = {
             val icon = if (value.isEmpty()) {
