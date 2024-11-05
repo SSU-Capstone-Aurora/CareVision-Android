@@ -111,7 +111,10 @@ fun NurseSignUpIdPwScreen(
 
         CVLongButton(
             text = "완료",
-            onClick = navigateToSignUpWaitingScreen,
+            onClick = {
+                navigateToSignUpWaitingScreen()
+                viewModel.requestSignUp()
+                      },
             enabled = (state.value.userId.isNotEmpty() && state.value.password.isNotEmpty() && state.value.password.length >= 8 && viewModel.checkPwValidation() && !viewModel.checkIdValidation()),
             modifier = Modifier
                 .fillMaxWidth()

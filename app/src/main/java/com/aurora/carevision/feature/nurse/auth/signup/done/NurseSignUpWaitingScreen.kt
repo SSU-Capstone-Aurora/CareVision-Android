@@ -21,6 +21,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.aurora.carevision.R
 import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.Gray300
@@ -28,9 +29,11 @@ import com.aurora.carevision.app.ui.theme.Gray500
 import com.aurora.carevision.app.ui.theme.Gray700
 import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.CVLongButton
+import com.aurora.carevision.feature.nurse.auth.signup.NurseSignUpViewModel
 
 @Composable
 fun NurseSignUpWaitingScreen(
+    viewModel: NurseSignUpViewModel = hiltViewModel(),
     navigateToHome: () -> Unit = {}
 ) {
     Column(
@@ -67,7 +70,7 @@ fun NurseSignUpWaitingScreen(
 
         CVLongButton(
             text = "다시 요청하기",
-            onClick = { /*TODO*/ },
+            onClick = { viewModel.requestSignUp() },
             backgroundColor = White,
             textColor = Gray700,
             modifier = Modifier

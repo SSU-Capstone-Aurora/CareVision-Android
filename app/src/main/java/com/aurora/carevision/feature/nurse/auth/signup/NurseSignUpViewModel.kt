@@ -47,4 +47,8 @@ class NurseSignUpViewModel @Inject constructor(
         // 중복확인 API 호출
         return false
     }
+
+    fun requestSignUp() {
+        // 회원가입 API 호출
+    }
 }

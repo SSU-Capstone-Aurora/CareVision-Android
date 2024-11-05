@@ -64,7 +64,7 @@ fun NavGraphBuilder.nurseSignUpHospitalScreen(
     composable<NurseSignUpWaiting> {
         NurseSignUpWaitingScreen(
             navigateToHome = navigateToHome,
-            //viewModel = viewModel
+            viewModel = viewModel
         )
     }
 }
