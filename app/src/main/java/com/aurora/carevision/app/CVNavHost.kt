@@ -68,10 +68,7 @@ fun CVNavHost(
                 CVNurseBottomBar(navController)
             }
             if (currentRoute == AdminHome.javaClass.name) {
-                AdminBottomBar(
-                    navigateToHome = { navController.navigate("home") },
-                    navigateToPatientRegister = { navController.navigate("patient_register") },
-                )
+                // AdminBottomBar 관련 코드 추가
             }
         }
     ) { innerPadding ->
