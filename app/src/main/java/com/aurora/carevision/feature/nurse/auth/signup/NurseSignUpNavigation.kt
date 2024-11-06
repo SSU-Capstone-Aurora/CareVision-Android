@@ -27,7 +27,7 @@ fun NavController.navigationToNurseSignupName(navOptions: NavOptions? = null) = 
 fun NavController.navigationToNurseSignupIdPw(navOptions: NavOptions? = null) = navigate(NurseSignUpIdPw, navOptions)
 fun NavController.navigationToNurseSignupWaiting(navOptions: NavOptions? = null) = navigate(NurseSignUpWaiting, navOptions)
 
-fun NavGraphBuilder.nurseSignUpHospitalScreen(
+fun NavGraphBuilder.nurseSignUpScreen(
     viewModel: NurseSignUpViewModel,
     navigateToIntro: () -> Unit,
     navigateToNurseSignUpHospital: () -> Unit,

@@ -16,7 +16,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.aurora.carevision.app.ui.theme.White
-import com.aurora.carevision.core.component.AdminBottomBar
 import com.aurora.carevision.core.component.NurseBottomBar
 import com.aurora.carevision.feature.admin.auth.login.adminLoginScreen
 import com.aurora.carevision.feature.admin.auth.login.navigateToAdminLogin
@@ -34,7 +33,7 @@ import com.aurora.carevision.feature.nurse.auth.signup.navigateToNurseSignUpHosp
 import com.aurora.carevision.feature.nurse.auth.signup.navigationToNurseSignupIdPw
 import com.aurora.carevision.feature.nurse.auth.signup.navigationToNurseSignupName
 import com.aurora.carevision.feature.nurse.auth.signup.navigationToNurseSignupWaiting
-import com.aurora.carevision.feature.nurse.auth.signup.nurseSignUpHospitalScreen
+import com.aurora.carevision.feature.nurse.auth.signup.nurseSignUpScreen
 import com.aurora.carevision.feature.nurse.home.navigation.NurseHome
 import com.aurora.carevision.feature.nurse.home.navigation.navigateToNurseHome
 import com.aurora.carevision.feature.nurse.home.navigation.nurseHomeScreen
@@ -96,8 +95,8 @@ fun CVNavHost(
                 navigateToBack = { navController.popBackStack() }
             )
 
-            nurseSignUpHospitalScreen(
-                viewModel = nurseSignUpViewModel,  // Pass shared ViewModel
+            nurseSignUpScreen(
+                viewModel = nurseSignUpViewModel,  // Pass shared ViewModel TODO Refactoring
                 navigateToIntro = { navController.navigateToIntro() },
                 navigateToNurseSignUpHospital = { navController.navigateToNurseSignUpHospital() },
                 navigateToNurseSignUpName = { navController.navigationToNurseSignupName() },
