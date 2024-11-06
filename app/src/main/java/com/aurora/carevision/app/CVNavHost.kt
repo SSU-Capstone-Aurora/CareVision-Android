@@ -83,7 +83,15 @@ fun CVNavHost(
             )
 
             nurseLoginScreen(
-                navigateToHome = { navController.navigateToNurseHome() },
+                navigateToHome = { navController.navigateToNurseHome(
+                    navOptions {
+                        popUpTo(navController.graph.findStartDestination().id){
+                            inclusive = true
+                        }
+                        launchSingleTop = true
+                        restoreState = false
+                    }
+                ) },
                 navigateToSignUp = { navController.navigateToNurseSignUpHospital() },
                 navigateToBack = { navController.popBackStack() }
             )
@@ -95,7 +103,15 @@ fun CVNavHost(
                 navigateToNurseSignUpName = { navController.navigationToNurseSignupName() },
                 navigateToNurseSignUpIdPw = { navController.navigationToNurseSignupIdPw() },
                 navigateToNurseSignUpWaiting = { navController.navigationToNurseSignupWaiting() },
-                navigateToHome = { navController.navigateToNurseHome() },
+                navigateToHome = { navController.navigateToNurseHome(
+                    navOptions {
+                        popUpTo(navController.graph.findStartDestination().id){
+                            inclusive = true
+                        }
+                        launchSingleTop = true
+                        restoreState = false
+                    }
+                ) },
                 navigateToBack = { navController.popBackStack() }
             )
 
