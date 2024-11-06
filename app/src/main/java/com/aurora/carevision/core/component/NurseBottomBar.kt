@@ -25,7 +25,7 @@ fun NurseBottomBar(
     navigateToHome: () -> Unit = {},
     navigateToPatientInfo: () -> Unit = {},
     navigateToPatientRegister: () -> Unit = {},
-    navigateToMyInfo: () -> Unit = {},
+    navigateToMypage: () -> Unit = {},
 ) {
     val selectedItem = remember { mutableStateOf("home") }  // 현재 선택된 아이템 상태
 
@@ -72,7 +72,7 @@ fun NurseBottomBar(
             isSelected = selectedItem.value == "my_info",
             onClick = {
                 selectedItem.value = "my_info"
-                navigateToMyInfo()
+                navigateToMypage()
             }
         )
     }
