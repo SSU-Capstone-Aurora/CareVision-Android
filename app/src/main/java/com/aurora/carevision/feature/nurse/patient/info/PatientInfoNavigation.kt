@@ -9,8 +9,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object PatientInfo
 
-fun NavController.navigateToPatientInfo(navOptions: NavOptions? = null) =
-    navigate(PatientInfo, navOptions)
+fun NavController.navigateToPatientInfo(navOptions: NavOptions? = null) = navigate(PatientInfo, navOptions)
 
 fun NavGraphBuilder.patientInfoScreen(
     //navigateToNurseLogin: () -> Unit,

@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -63,47 +64,8 @@ fun CVNavHost(
             .systemBarsPadding(),
 
         bottomBar = {
-            if (currentRoute == NurseHome.javaClass.name || currentRoute == NurseMypage.javaClass.name || currentRoute == PatientInfo.javaClass.name || currentRoute == PatientRegistration.javaClass.name) {
-                NurseBottomBar(
-                    navigateToHome = { navController.navigateToNurseHome(
-                        navOptions {
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = false
-                        }
-                    ) },
-                    navigateToPatientInfo = { navController.navigateToPatientInfo(
-                        navOptions {
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = false
-                        }
-                    ) },
-                    navigateToPatientRegister = {
-                        navController.navigateToPatientRegistration(
-                            navOptions {
-                                popUpTo(navController.graph.findStartDestination().id) {
-                                    saveState = true
-                                }
-                                launchSingleTop = true
-                                restoreState = false
-                            }
-                        )
-                    },
-                    navigateToMypage = { navController.navigateToNurseMypage(
-                        navOptions {
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = false
-                        }
-                    ) }
-                )
+            if (isNurseBottomNaviScreen(currentRoute)) {
+                CVNurseBottomBar(navController)
             }
             if (currentRoute == AdminHome.javaClass.name) {
                 AdminBottomBar(
@@ -162,4 +124,50 @@ fun CVNavHost(
             adminHomeScreen()
         }
     }
+}
+
+@Composable
+private fun isNurseBottomNaviScreen(currentRoute: String?): Boolean =
+    currentRoute == NurseHome.javaClass.name || currentRoute == NurseMypage.javaClass.name || currentRoute == PatientInfo.javaClass.name || currentRoute == PatientRegistration.javaClass.name
+
+@Composable
+private fun CVNurseBottomBar(navController: NavHostController) {
+    NurseBottomBar(
+        navigateToHome = {
+            navController.navigateToNurseHome(
+                navOptions {
+                    bottomNavOptions(navController)
+                }
+            )
+        },
+        navigateToPatientInfo = {
+            navController.navigateToPatientInfo(
+                navOptions {
+                    bottomNavOptions(navController)
+                }
+            )
+        },
+        navigateToPatientRegister = {
+            navController.navigateToPatientRegistration(
+                navOptions {
+                    bottomNavOptions(navController)
+                }
+            )
+        },
+        navigateToMypage = {
+            navController.navigateToNurseMypage(
+                navOptions {
+                    bottomNavOptions(navController)
+                }
+            )
+        }
+    )
+}
+
+private fun NavOptionsBuilder.bottomNavOptions(navController: NavHostController) {
+    popUpTo(navController.graph.findStartDestination().id) {
+        saveState = true
+    }
+    launchSingleTop = true
+    restoreState = false
 }
