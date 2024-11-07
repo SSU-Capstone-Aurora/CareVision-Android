@@ -89,8 +89,7 @@ dependencies {
 
     // retrofit
     implementation(libs.retrofit2)
-    // Json 데이터를 사용자가 정의한 Java 객체로 변환해주는 라이브러리
-    implementation(libs.retrofit2.converter.gson)
+    implementation(libs.retrofit2.kotlin.serialization)
 
     // okhttp : Retrofit으로 받는 데이터를 로그로 확인하기 위해
     implementation(libs.okhttp3)
