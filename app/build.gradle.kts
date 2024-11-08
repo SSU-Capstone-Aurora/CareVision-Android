@@ -13,6 +13,7 @@ android {
     namespace = "com.aurora.carevision"
     compileSdk = 34
 
+    // local.properties에서 값을 가져오기 위해 properties 객체 생성
     val properties = Properties().apply {
         load(rootProject.file("local.properties").inputStream())
     }
@@ -29,7 +30,6 @@ android {
             useSupportLibrary = true
         }
 
-        // BuildConfig에 CV_BASE_URL_DEV 필드 추가
         // BuildConfig에 CV_BASE_URL_DEV 필드에 properties에서 가져온 값 추가
         // properties에서 가져온 값은 local.properties CV_BASE_URL_DEV에 저장되어 있음
         buildConfigField("String", "CV_BASE_URL_DEV", "${properties.getProperty("cv.base.url.dev")}")
