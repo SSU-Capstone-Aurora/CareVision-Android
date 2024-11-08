@@ -13,6 +13,10 @@ android {
     namespace = "com.aurora.carevision"
     compileSdk = 34
 
+    val properties = Properties().apply {
+        load(rootProject.file("local.properties").inputStream())
+    }
+
     defaultConfig {
         applicationId = "com.aurora.carevision"
         minSdk = 28
@@ -24,20 +28,20 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        // BuildConfig에 CV_BASE_URL_DEV 필드 추가
+        // BuildConfig에 CV_BASE_URL_DEV 필드에 properties에서 가져온 값 추가
+        // properties에서 가져온 값은 local.properties CV_BASE_URL_DEV에 저장되어 있음
+        buildConfigField("String", "CV_BASE_URL_DEV", "${properties.getProperty("cv.base.url.dev")}")
     }
 
     buildTypes {
-        val properties = Properties().apply {
-            load(rootProject.file("local.properties").inputStream())
-        }
-
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
-            buildConfigField("String", "CV_BASE_URL_DEV", "\"${properties.getProperty("CV_BASE_URL_DEV")}\"")
         }
     }
     compileOptions {
@@ -49,6 +53,7 @@ android {
     }
     buildFeatures {
         compose = true
+        // buildConfig를 사용하기 위해 추가
         buildConfig = true
     }
     composeOptions {
