@@ -6,17 +6,13 @@ import com.aurora.carevision.feature.nurse.mypage.NurseMypage
 import com.aurora.carevision.feature.nurse.patient.info.PatientInfo
 import com.aurora.carevision.feature.nurse.patient.registration.PatientRegistration
 
-data class TopLevelRoute<T : Any>(val route: T, val defaultIcon: Int, val selectedIcon: Int)
+data class TopLevelRoute<T : Any>(val name: String, val route: T, val defaultIcon: Int)
 
 val topLevelRoutes = listOf(
-    TopLevelRoute(NurseHome, R.drawable.ic_home_line, R.drawable.ic_home_filled),
-    TopLevelRoute(PatientInfo, R.drawable.ic_patient_info_line, R.drawable.ic_patient_info_filled),
-    TopLevelRoute(
-        PatientRegistration,
-        R.drawable.ic_patient_register_line,
-        R.drawable.ic_patient_register_filled
-    ),
-    TopLevelRoute(NurseMypage, R.drawable.ic_person_line, R.drawable.ic_person_filled),
+    TopLevelRoute("홈", NurseHome, R.drawable.ic_home_line),
+    TopLevelRoute("환자 정보", PatientInfo, R.drawable.ic_patient_info_line),
+    TopLevelRoute("환자 등록", PatientRegistration, R.drawable.ic_patient_register_line),
+    TopLevelRoute("내 정보", NurseMypage, R.drawable.ic_person_line),
 )
 
 

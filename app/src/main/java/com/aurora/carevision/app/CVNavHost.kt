@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptionsBuilder
@@ -15,7 +17,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import com.aurora.carevision.app.topLevelRoutes
 import com.aurora.carevision.app.ui.theme.White
+import com.aurora.carevision.core.component.BottomNavItem
 import com.aurora.carevision.core.component.NurseBottomBar
 import com.aurora.carevision.feature.admin.auth.login.adminLoginScreen
 import com.aurora.carevision.feature.admin.auth.login.navigateToAdminLogin
@@ -38,13 +42,10 @@ import com.aurora.carevision.feature.nurse.home.navigation.NurseHome
 import com.aurora.carevision.feature.nurse.home.navigation.navigateToNurseHome
 import com.aurora.carevision.feature.nurse.home.navigation.nurseHomeScreen
 import com.aurora.carevision.feature.nurse.mypage.NurseMypage
-import com.aurora.carevision.feature.nurse.mypage.navigateToNurseMypage
 import com.aurora.carevision.feature.nurse.mypage.nurseMypageScreen
 import com.aurora.carevision.feature.nurse.patient.info.PatientInfo
-import com.aurora.carevision.feature.nurse.patient.info.navigateToPatientInfo
 import com.aurora.carevision.feature.nurse.patient.info.patientInfoScreen
 import com.aurora.carevision.feature.nurse.patient.registration.PatientRegistration
-import com.aurora.carevision.feature.nurse.patient.registration.navigateToPatientRegistration
 import com.aurora.carevision.feature.nurse.patient.registration.patientRegistrationScreen
 
 @Composable
@@ -64,9 +65,25 @@ fun CVNavHost(
 
         bottomBar = {
             if (isNurseBottomNaviScreen(currentRoute)) {
-                CVNurseBottomBar(navController)
-            }
-            if (currentRoute == AdminHome.javaClass.name) {
+                NurseBottomBar {
+                    val navBackStackEntry by navController.currentBackStackEntryAsState()
+                    val currentDestination = navBackStackEntry?.destination
+                    topLevelRoutes.forEach { topLevelRoute ->
+                        BottomNavItem(
+                            icon = topLevelRoute.defaultIcon,
+                            label = topLevelRoute.name,
+                            isSelected = currentDestination?.hierarchy?.any {
+                                it.route == topLevelRoute.route.javaClass.name
+                            } == true,
+                            onClick = {
+                                navController.navigate(topLevelRoute.route) {
+                                    bottomNavOptions(navController)
+                                }
+                            }
+                        )
+                    }
+                }
+            } else if (currentRoute == AdminHome.javaClass.name) {
                 // AdminBottomBar 관련 코드 추가
             }
         }
@@ -82,15 +99,17 @@ fun CVNavHost(
             )
 
             nurseLoginScreen(
-                navigateToHome = { navController.navigateToNurseHome(
-                    navOptions {
-                        popUpTo(navController.graph.findStartDestination().id){
-                            inclusive = true
+                navigateToHome = {
+                    navController.navigateToNurseHome(
+                        navOptions {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                inclusive = true
+                            }
+                            launchSingleTop = true
+                            restoreState = false
                         }
-                        launchSingleTop = true
-                        restoreState = false
-                    }
-                ) },
+                    )
+                },
                 navigateToSignUp = { navController.navigateToNurseSignUpHospital() },
                 navigateToBack = { navController.popBackStack() }
             )
@@ -102,15 +121,17 @@ fun CVNavHost(
                 navigateToNurseSignUpName = { navController.navigationToNurseSignupName() },
                 navigateToNurseSignUpIdPw = { navController.navigationToNurseSignupIdPw() },
                 navigateToNurseSignUpWaiting = { navController.navigationToNurseSignupWaiting() },
-                navigateToHome = { navController.navigateToNurseHome(
-                    navOptions {
-                        popUpTo(navController.graph.findStartDestination().id){
-                            inclusive = true
+                navigateToHome = {
+                    navController.navigateToNurseHome(
+                        navOptions {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                inclusive = true
+                            }
+                            launchSingleTop = true
+                            restoreState = false
                         }
-                        launchSingleTop = true
-                        restoreState = false
-                    }
-                ) },
+                    )
+                },
                 navigateToBack = { navController.popBackStack() }
             )
 
@@ -142,43 +163,9 @@ fun CVNavHost(
 private fun isNurseBottomNaviScreen(currentRoute: String?): Boolean =
     currentRoute == NurseHome.javaClass.name || currentRoute == NurseMypage.javaClass.name || currentRoute == PatientInfo.javaClass.name || currentRoute == PatientRegistration.javaClass.name
 
-@Composable
-private fun CVNurseBottomBar(navController: NavHostController) {
-    NurseBottomBar(
-        navigateToHome = {
-            navController.navigateToNurseHome(
-                navOptions {
-                    bottomNavOptions(navController)
-                }
-            )
-        },
-        navigateToPatientInfo = {
-            navController.navigateToPatientInfo(
-                navOptions {
-                    bottomNavOptions(navController)
-                }
-            )
-        },
-        navigateToPatientRegister = {
-            navController.navigateToPatientRegistration(
-                navOptions {
-                    bottomNavOptions(navController)
-                }
-            )
-        },
-        navigateToMypage = {
-            navController.navigateToNurseMypage(
-                navOptions {
-                    bottomNavOptions(navController)
-                }
-            )
-        }
-    )
-}
-
 private fun NavOptionsBuilder.bottomNavOptions(navController: NavHostController) {
-    popUpTo(navController.graph.findStartDestination().id) {
-        saveState = true
+    popUpTo(navController.graph.id) {
+        inclusive = true
     }
     launchSingleTop = true
     restoreState = false
