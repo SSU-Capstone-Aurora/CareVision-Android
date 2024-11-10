@@ -9,7 +9,9 @@ import androidx.navigation.compose.rememberNavController
 import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.feature.intro.Intro
 import com.aurora.carevision.navigation.CVNavHost
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,11 +20,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             CVTheme {
-
                 // navController를 생성하고, 이를 NavHost에 전달
                 val navController = rememberNavController()
 
-                // NavHost는 여러개의 composable을 가지고 있는데, 이 composable들을 관리하는 역할
                 CVNavHost(
                     navController = navController,
                     startDestination = Intro,
