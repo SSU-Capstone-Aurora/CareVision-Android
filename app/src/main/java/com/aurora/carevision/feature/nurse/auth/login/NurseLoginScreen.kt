@@ -43,12 +43,6 @@ fun NurseLoginScreen(
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
-                is NurseLoginSideEffect.OnUserIdChange -> {
-                    viewModel.onUserIdChange(state.userId)
-                }
-                is NurseLoginSideEffect.OnPasswordChange -> {
-                    viewModel.onPasswordChange(state.password)
-                }
                 is NurseLoginSideEffect.OnSignUpClick -> navigateToSignUp()
                 is NurseLoginSideEffect.OnBackClick -> navigateToBack()
                 is NurseLoginSideEffect.NavigateToHome -> navigateToHome()
@@ -116,7 +110,7 @@ fun NurseLoginScreen(
 
         CVLongButton(
             text = "로그인",
-            onClick = { viewModel.sideEffect.value = NurseLoginSideEffect.OnLoginClick },
+            onClick = navigateToHome,
             enabled = state.userId.isNotBlank() && state.password.isNotBlank(),
             modifier = Modifier
                 .padding(top = 24.dp)

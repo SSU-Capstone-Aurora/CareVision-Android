@@ -85,7 +85,7 @@ fun CVShortDropDownMenuPreview() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            val menuItems = listOf("Åð¿ø")
+            val menuItems = listOf("í‡´ì›")
             CVShortDropDownMenu(menuItems) { selectedItem ->
                 println("Selected item: $selectedItem")
             }

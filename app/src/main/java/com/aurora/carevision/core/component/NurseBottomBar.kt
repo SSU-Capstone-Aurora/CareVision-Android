@@ -2,12 +2,19 @@ package com.aurora.carevision.core.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -22,58 +29,23 @@ import com.aurora.carevision.app.ui.theme.White
 
 @Composable
 fun NurseBottomBar(
-    navigateToHome: () -> Unit = {},
-    navigateToPatientInfo: () -> Unit = {},
-    navigateToPatientRegister: () -> Unit = {},
-    navigateToMyInfo: () -> Unit = {},
+    content: @Composable RowScope.() -> Unit
 ) {
-    val selectedItem = remember { mutableStateOf("home") }  // 현재 선택된 아이템 상태
-
-    Row(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .background(White)
-            .padding(horizontal = 12.dp, vertical = 10.dp),
-        horizontalArrangement = Arrangement.SpaceBetween
+            .height(64.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
-        BottomNavItem(
-            icon = R.drawable.ic_home_line,
-            label = "홈",
-            isSelected = selectedItem.value == "home",
-            onClick = {
-                selectedItem.value = "home"
-                navigateToHome()
-            }
-        )
-
-        BottomNavItem(
-            icon = R.drawable.ic_patient_info_line,
-            label = "환자 정보",
-            isSelected = selectedItem.value == "patient_info",
-            onClick = {
-                selectedItem.value = "patient_info"
-                navigateToPatientInfo()
-            }
-        )
-
-        BottomNavItem(
-            icon = R.drawable.ic_patient_register_line,
-            label = "환자 등록",
-            isSelected = selectedItem.value == "patient_register",
-            onClick = {
-                selectedItem.value = "patient_register"
-                navigateToPatientRegister()
-            }
-        )
-
-        BottomNavItem(
-            icon = R.drawable.ic_person_line,
-            label = "내 정보",
-            isSelected = selectedItem.value == "my_info",
-            onClick = {
-                selectedItem.value = "my_info"
-                navigateToMyInfo()
-            }
+        Row(
+            modifier = Modifier
+                .selectableGroup()
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+            content = content,
         )
     }
 }
@@ -87,9 +59,11 @@ fun BottomNavItem(
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
         modifier = Modifier
-            .padding(horizontal = 10.dp)
+            .padding(horizontal = 30.dp)
             .clickable { onClick() }
+            .fillMaxHeight()
     ) {
         Icon(
             painter = painterResource(id = icon),
@@ -114,7 +88,34 @@ fun NurseBottomBarPreview() {
             modifier = Modifier
                 .background(White)
         ) {
-            NurseBottomBar()
+            NurseBottomBar(
+                content = {
+                    BottomNavItem(
+                        icon = R.drawable.ic_home_line,
+                        label = "Home",
+                        isSelected = true,
+                        onClick = {}
+                    )
+                    BottomNavItem(
+                        icon = R.drawable.ic_home_line,
+                        label = "Search",
+                        isSelected = false,
+                        onClick = {}
+                    )
+                    BottomNavItem(
+                        icon = R.drawable.ic_home_line,
+                        label = "Favorite",
+                        isSelected = false,
+                        onClick = {}
+                    )
+                    BottomNavItem(
+                        icon = R.drawable.ic_home_line,
+                        label = "내 정보",
+                        isSelected = false,
+                        onClick = {}
+                    )
+                }
+            )
         }
     }
 }
