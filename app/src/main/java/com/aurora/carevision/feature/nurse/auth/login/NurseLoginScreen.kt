@@ -110,7 +110,7 @@ fun NurseLoginScreen(
 
         CVLongButton(
             text = "로그인",
-            onClick = { viewModel.sideEffect.value = NurseLoginSideEffect.OnLoginClick },
+            onClick = navigateToHome,
             enabled = state.userId.isNotBlank() && state.password.isNotBlank(),
             modifier = Modifier
                 .padding(top = 24.dp)
