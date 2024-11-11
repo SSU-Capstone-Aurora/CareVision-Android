@@ -49,32 +49,26 @@ fun AdminLoginScreen(
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
-                is AdminLoginSideEffect.OnUserIdChange ->{
-                    viewModel.onUserIdChange(state.userId)
-                }
-                is AdminLoginSideEffect.OnPasswordChange ->{
-                    viewModel.onPasswordChange(state.password)
-                }
+                is AdminLoginSideEffect.OnUserIdChange -> viewModel.onUserIdChange(state.userId)
+                is AdminLoginSideEffect.OnPasswordChange -> viewModel.onPasswordChange(state.password)
                 is AdminLoginSideEffect.ShowToast -> {
-                    //Toast.makeText(context, sideEffect.text, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, sideEffect.text, Toast.LENGTH_SHORT).show()
                 }
                 is AdminLoginSideEffect.NavigateToHome -> navigateToHome()
                 is AdminLoginSideEffect.OnSignUpClick -> navigateToSignUp()
                 is AdminLoginSideEffect.OnBackClick -> navigateToBack()
+                is AdminLoginSideEffect.OnLoginClick -> {
+                    viewModel.adminLogin()
+                }
                 else -> {}
             }
         }
     }
-//    var userID by rememberSaveable { mutableStateOf("") }
-//    var password by rememberSaveable { mutableStateOf("") }
-//    var isError by remember { mutableStateOf(false) }
-//    var errorMessage by remember { mutableStateOf("") }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(White)
-            .statusBarsPadding()
-            .systemBarsPadding()
     ){
         TopAppBarLeft(
             onClick = {viewModel.sideEffect.value = AdminLoginSideEffect.OnBackClick},
@@ -88,7 +82,6 @@ fun AdminLoginScreen(
         )
         CVBasicTextField(
             value = state.userId,
-            //isError = isError && userID != correctUserID,
             placeholder = "아이디를 입력해주세요",
             label = "아이디",
             onTextChanged = { viewModel.onUserIdChange(it)},
@@ -101,7 +94,6 @@ fun AdminLoginScreen(
         )
         CVPasswordTextField(
             value = state.password,
-            //isError = isError && password!= correctPassword,
             placeholder = "비밀번호를 입력해주세요",
             label = "비밀번호",
             onTextChanged = { viewModel.onPasswordChange(it) },
@@ -117,14 +109,14 @@ fun AdminLoginScreen(
                 color = Red600,
                 style = CVTheme.typography.captionRegular,
                 modifier = Modifier
-                    .padding(top = 8.dp, start = 36.dp)
+                    .padding(horizontal = 24.dp, vertical = 8.dp)
                     .fillMaxWidth()
             )
         }
 
         CVLongButton(
             text = "로그인",
-            onClick = { viewModel.onLoginClick()},
+            onClick = navigateToHome,
             enabled = state.userId.isNotBlank() && state.password.isNotBlank(),
             modifier = Modifier
                 .padding(top = 24.dp)

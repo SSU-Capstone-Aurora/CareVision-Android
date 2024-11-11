@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -34,13 +36,6 @@ fun AdminIDPasswordInfoScreen(
     navigateToSignUpWaitingScreen: () -> Unit = {},
     navigateToBack:() -> Unit = {},
 ){
-    var isError by remember{ mutableStateOf(false) }
-    var isTyping by remember { mutableStateOf(false) }
-    var isFieldVisible by remember { mutableStateOf(false) }
-    var userID by rememberSaveable { mutableStateOf("") }
-    var password by rememberSaveable { mutableStateOf("") }
-    var errorMessageCount by remember { mutableStateOf(false)}
-    var errorMessageNoInt by remember { mutableStateOf(false)}
 
     val state = viewModel.state.collectAsState()
 
@@ -48,8 +43,12 @@ fun AdminIDPasswordInfoScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(White)
+            .systemBarsPadding()
+            .statusBarsPadding()
     ){
-        TopAppBarLeft()
+        TopAppBarLeft(
+            onClick = navigateToBack
+        )
         Text(
             text = "가입을 위한 정보를\n입력해주세요",
             style = CVTheme.typography.headingPrimary,
@@ -58,7 +57,7 @@ fun AdminIDPasswordInfoScreen(
                 .padding(top=16.dp, start = 24.dp, end = 24.dp, bottom = 24.dp)
         )
         CVDuplicateCheckTextField(
-            value = userID,
+            value = state.value.userId,
             placeholder = "아이디를 입력해주세요",
             label = "아이디",
             onTextChanged = {viewModel.updateUserId(it)},
@@ -80,8 +79,8 @@ fun AdminIDPasswordInfoScreen(
         }
         Spacer(modifier = Modifier.padding())
         CVSignInPasswordTextField(
-            value = password,
-            //isError = errorMessageCount || errorMessageNoInt ,
+            value = state.value.password,
+            isError = false,
             placeholder = "비밀번호를 입력해주세요",
             label = "비밀번호",
             onTextChanged = {viewModel.updatePassword(it)},
@@ -116,7 +115,7 @@ fun AdminIDPasswordInfoScreen(
         CVLongButton(
             text = "완료",
             onClick = {
-                navigateToSignUpWaitingScreen
+                navigateToSignUpWaitingScreen()
                 viewModel.requestSignUp()
             },
             enabled = (state.value.userId.isNotEmpty() &&
@@ -136,8 +135,6 @@ fun AdminIDPasswordInfoScreen(
 @Composable
 @Preview
 fun AdminIDPasswordInfoScreenPreview(){
-    val correctUserID = "admin"
-    val correctPassword = "password"
     CVTheme{
         Column(
             modifier = Modifier

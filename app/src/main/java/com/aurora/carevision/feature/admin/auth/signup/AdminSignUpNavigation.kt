@@ -23,14 +23,10 @@ data object AdminSignUpIdPw
 @Serializable
 data object AdminSignUpWaiting
 
-fun NavController.navigateToAdminSignUp(navOptions: NavOptions? = null) = navigate(
-    AdminSignUp, navOptions)
-fun NavController.navigationToAdminSignUpName(navOptions: NavOptions? = null) = navigate(
-    AdminSignUpName, navOptions)
-fun NavController.navigationToAdminSignUpIdPw(navOptions: NavOptions? = null) = navigate(
-    AdminSignUpIdPw, navOptions)
-fun NavController.navigationToAdminSignupWaiting(navOptions: NavOptions? = null) = navigate(
-    AdminSignUpWaiting, navOptions)
+fun NavController.navigateToAdminSignUp(navOptions: NavOptions? = null) = navigate(AdminSignUp, navOptions)
+fun NavController.navigationToAdminSignUpName(navOptions: NavOptions? = null) = navigate(AdminSignUpName, navOptions)
+fun NavController.navigationToAdminSignUpIdPw(navOptions: NavOptions? = null) = navigate(AdminSignUpIdPw, navOptions)
+fun NavController.navigationToAdminSignupWaiting(navOptions: NavOptions? = null) = navigate(AdminSignUpWaiting, navOptions)
 
 
 fun NavGraphBuilder.adminSignUpHospitalScreen(

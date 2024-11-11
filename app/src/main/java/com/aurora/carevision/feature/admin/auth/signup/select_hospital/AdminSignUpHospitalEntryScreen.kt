@@ -94,6 +94,15 @@ fun AdminSignUpHospitalEntryScreen(
         )
         Spacer(modifier = Modifier.height(24.dp))
 
+        ReviewDropdownMenu(
+            placeholder = "과를 선택해주세요",
+            menuItems = dummyMenuItems,
+            selectedItem = state.department,
+            onMenuItemClick = { selected ->
+                viewModel.updateSelectedDepartment(selected)
+            }
+        )
+
         CVLongButton(
             text = "다음",
             onClick = navigateToSignUpNameScreen,

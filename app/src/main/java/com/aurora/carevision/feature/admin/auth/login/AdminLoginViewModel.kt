@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import androidx.lifecycle.viewModelScope
+import com.aurora.carevision.feature.nurse.auth.login.NurseLoginSideEffect
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -13,7 +14,10 @@ import kotlinx.coroutines.launch
 
 
 @HiltViewModel
-class AdminLoginViewModel @Inject constructor() : ViewModel(){
+class AdminLoginViewModel @Inject constructor(
+
+) : ViewModel(){
+
     private val _state = MutableStateFlow(AdminLoginState())
     val state: MutableStateFlow<AdminLoginState> = _state
 
@@ -30,32 +34,19 @@ class AdminLoginViewModel @Inject constructor() : ViewModel(){
         Log.d("AdminLoginViewModel", "onPasswordChange: ${_state.value.password}")
     }
 
-    fun onLoginClick() {
+    fun adminLogin() {
         viewModelScope.launch {
-            if (_state.value.userId == "admin" && _state.value.password == "password") { //TODO db에 있는 데이터와 비교해야함
+            Log.d(
+                "adminLoginViewModel",
+                "adminLogin: ${_state.value.userId} ${_state.value.password}"
+            )
+            if (_state.value.userId.isNotBlank() && _state.value.password.isNotBlank()) {
                 _sideEffect.emit(AdminLoginSideEffect.NavigateToHome)
-            }
-            else {
+                _sideEffect.emit(AdminLoginSideEffect.ShowToast("로그인 클릭"))
+            } else {
                 _state.value = _state.value.copy(isLoginError = true)
-                Log.d("AdminLoginViewModel","Login failed")
-                }
+                _sideEffect.emit(AdminLoginSideEffect.ShowToast("아이디 또는 비밀번호가 잘못되었습니다"))
             }
-        }
-
-    fun onSignUpClick() {
-        viewModelScope.launch {
-            _sideEffect.emit(AdminLoginSideEffect.OnSignUpClick)
-        }
-    }
-
-    fun onLogInClick() {
-        viewModelScope.launch {
-            _sideEffect.emit(AdminLoginSideEffect.OnLoginClick)
-        }
-    }
-    fun onBackClick() {
-        viewModelScope.launch {
-            _sideEffect.emit(AdminLoginSideEffect.OnBackClick)
         }
     }
 }

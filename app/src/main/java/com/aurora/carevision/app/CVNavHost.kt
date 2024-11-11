@@ -2,6 +2,7 @@ package com.aurora.carevision.navigation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Scaffold
@@ -23,7 +24,12 @@ import com.aurora.carevision.core.component.BottomNavItem
 import com.aurora.carevision.core.component.NurseBottomBar
 import com.aurora.carevision.feature.admin.auth.login.adminLoginScreen
 import com.aurora.carevision.feature.admin.auth.login.navigateToAdminLogin
-import com.aurora.carevision.feature.admin.auth.signup.adminSignUpScreen
+import com.aurora.carevision.feature.admin.auth.signup.AdminSignUpHospitalEntryViewModel
+import com.aurora.carevision.feature.admin.auth.signup.navigateToAdminSignUp
+import com.aurora.carevision.feature.admin.auth.signup.navigationToAdminSignUpIdPw
+import com.aurora.carevision.feature.admin.auth.signup.navigationToAdminSignUpName
+import com.aurora.carevision.feature.admin.auth.signup.navigationToAdminSignupWaiting
+import com.aurora.carevision.feature.admin.auth.signup.adminSignUpHospitalScreen
 import com.aurora.carevision.feature.admin.home.navigation.AdminHome
 import com.aurora.carevision.feature.admin.home.navigation.adminHomeScreen
 import com.aurora.carevision.feature.admin.home.navigation.navigateToAdminHome
@@ -54,6 +60,7 @@ fun CVNavHost(
     startDestination: Any = Intro,
 ) {
     val nurseSignUpViewModel: NurseSignUpViewModel = hiltViewModel()
+    val adminSignUpViewModel: AdminSignUpHospitalEntryViewModel = hiltViewModel()
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
 
     Scaffold(
@@ -90,7 +97,8 @@ fun CVNavHost(
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = startDestination
+            startDestination = startDestination,
+            modifier = Modifier.padding(innerPadding) // innerPadding 오류로 임시 추가
         ) {
             initialLoginScreen(
                 navigateToLogin = { navController.navigateToNurseLogin() },
@@ -145,16 +153,46 @@ fun CVNavHost(
 
             patientRegistrationScreen()
 
+//            adminLoginScreen(
+//                navigateToHome = { navController.navigateToAdminHome() },
+//                navigateToSignUp = { navController.navigateToAdminSignUp() },
+//                navigateToBack = { navController.popBackStack() }
+//            )
             adminLoginScreen(
-                navigateToHome = { navController.navigateToAdminHome() },
-                navigateToSignUp = { navController.navigateToNurseSignUpHospital() }
+                navigateToHome = {
+                    navController.navigateToAdminHome(
+                        navOptions {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                inclusive = true
+                            }
+                            launchSingleTop = true
+                            restoreState = false
+                        }
+                    )
+                },
+                navigateToSignUp = { navController.navigateToAdminSignUp() },
+                navigateToBack = { navController.popBackStack() }
             )
 
-            adminSignUpScreen(
-                navigateToHome = { navController.navigateToAdminHome() }
+            adminSignUpHospitalScreen(
+                viewModel = adminSignUpViewModel,
+                navigateToIntro = { navController.navigateToIntro() },
+                navigateToAdminSignUpHospital = { navController.navigateToAdminSignUp() },
+                navigateToAdminSignUpName = { navController.navigationToAdminSignUpName() },
+                navigateToAdminSignUpIdPw = { navController.navigationToAdminSignUpIdPw() },
+                navigateToAdminSignUpWaiting = { navController.navigationToAdminSignupWaiting() },
+                navigateToHome = {
+                    navController.navigateToAdminHome(navOptions {
+                        popUpTo(navController.graph.findStartDestination().id) { inclusive = true }
+                        launchSingleTop = true
+                    })
+                },
+                navigateToBack = { navController.popBackStack() }
             )
 
-            adminHomeScreen()
+            adminHomeScreen(
+                navigateToAdminLogin = {navController.navigateToIntro()}
+            )
         }
     }
 }
