@@ -154,7 +154,9 @@ fun CVPasswordTextField(
 
     OutlinedTextField(
         value = value,
-        onValueChange = onTextChanged,
+        onValueChange = {
+            onTextChanged(it)
+        },
         singleLine = true,
         trailingIcon = {
             val icon = if (value.isEmpty()) {
@@ -299,13 +301,13 @@ fun CVSignInPasswordTextField(
         textStyle = CVTheme.typography.textBody2Medium.copy(color = Black),
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = if (isError) Red600 else Primary500,
-            unfocusedBorderColor = if (isError) Red600 else Gray500,
+            unfocusedBorderColor = if (isError) Red600 else Gray300,
             focusedLabelColor = if (isError) Red600 else Primary600,
             focusedLeadingIconColor = if (isError) Red600 else Primary600,
             focusedTrailingIconColor = if (isError) Red600 else Primary600,
-            unfocusedLabelColor = if (isError) Red600 else Gray500,
-            unfocusedLeadingIconColor = if (isError) Red600 else Gray500,
-            unfocusedTrailingIconColor = if (isError) Red600 else Gray500,
+            unfocusedLabelColor = if (isError) Red600 else Gray300,
+            unfocusedLeadingIconColor = if (isError) Red600 else Gray300,
+            unfocusedTrailingIconColor = if (isError) Red600 else Gray300,
             errorLabelColor = Red600,
             errorBorderColor = Red600,
             cursorColor = Primary600,
@@ -370,13 +372,13 @@ fun CVDuplicateCheckTextField(
         textStyle = CVTheme.typography.textBody2Medium.copy(color = Black),
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = if (isError) Red600 else Primary500,
-            unfocusedBorderColor = if (isError) Red600 else Gray500,
+            unfocusedBorderColor = if (isError) Red600 else Gray300,
             focusedLabelColor = if (isError) Red600 else Primary600,
             focusedLeadingIconColor = if (isError) Red600 else Primary600,
             focusedTrailingIconColor = if (isError) Red600 else Primary600,
-            unfocusedLabelColor = if (isError) Red600 else Gray500,
-            unfocusedLeadingIconColor = if (isError) Red600 else Gray500,
-            unfocusedTrailingIconColor = if (isError) Red600 else Gray500,
+            unfocusedLabelColor = if (isError) Red600 else Gray300,
+            unfocusedLeadingIconColor = if (isError) Red600 else Gray300,
+            unfocusedTrailingIconColor = if (isError) Red600 else Gray300,
             errorLabelColor = Red600,
             errorBorderColor = Red600,
             cursorColor = Primary600,
@@ -461,7 +463,7 @@ fun CVTextFieldPreview() {
                 onTextChanged = {},
                 onDuplicateCheck = {},
                 onFocusChanged = {},
-                isError = true
+                isError = false
             )
             Spacer(modifier = Modifier.height(16.dp))
 

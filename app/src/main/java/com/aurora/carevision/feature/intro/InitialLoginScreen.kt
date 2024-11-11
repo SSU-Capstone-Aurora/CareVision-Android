@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,6 +24,7 @@ import com.aurora.carevision.R
 import com.aurora.carevision.app.ui.theme.Black
 import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.Primary200
+import com.aurora.carevision.app.ui.theme.Primary600
 import com.aurora.carevision.app.ui.theme.Primary700
 import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.CVLongButton
@@ -43,14 +45,14 @@ fun InitialLoginScreen(
     ) {
 
         Column(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier.weight(2f),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.temporary_logo),
-                contentDescription = "CareVision Logo",
-                modifier = Modifier.padding(80.dp)
-            )
+            Spacer(modifier = Modifier.height(65.dp))
+
+            Icon(painter = painterResource(id = R.drawable.ic_logo), contentDescription = "logo", tint = Primary600, modifier = Modifier.weight(1f))
+
+            Spacer(modifier = Modifier.height(65.dp))
             Text(
                 text = stringResource(R.string.start_login_description),
                 style = CVTheme.typography.headingPrimary,
@@ -59,7 +61,10 @@ fun InitialLoginScreen(
             )
         }
 
-        Spacer(Modifier.height(16.dp).weight(1f))
+        Spacer(
+            Modifier
+                .height(16.dp)
+                .weight(1f))
 
         Column(
             modifier = Modifier.weight(1f),

@@ -93,7 +93,7 @@ fun CVTabs(
 fun CVTabsPreview() {
     CVTheme {
         CVTabs(
-            tabItemTitle = listOf("°£È£»ç", "È¯ÀÚ", "Ä«¸Ş¶ó"),
+            tabItemTitle = listOf("ê°„í˜¸ì‚¬", "í™˜ì", "ì¹´ë©”ë¼"),
             onClickTabItem = {},
         )
     }
