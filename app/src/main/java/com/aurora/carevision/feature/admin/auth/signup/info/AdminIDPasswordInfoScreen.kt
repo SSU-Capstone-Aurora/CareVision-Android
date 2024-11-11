@@ -1,4 +1,4 @@
-package com.aurora.carevision.feature.admin.auth.signup
+package com.aurora.carevision.feature.admin.auth.signup.info
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -16,16 +17,23 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.aurora.carevision.app.ui.theme.Black
 import com.aurora.carevision.app.ui.theme.CVTheme
+import com.aurora.carevision.app.ui.theme.Red600
 import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.CVDuplicateCheckTextField
 import com.aurora.carevision.core.component.CVLongButton
 import com.aurora.carevision.core.component.CVSignInPasswordTextField
 import com.aurora.carevision.core.component.TopAppBarLeft
+import com.aurora.carevision.feature.admin.auth.signup.AdminSignUpHospitalEntryViewModel
 
 @Composable
-fun AdminIDPasswordInfoScreen(){
+fun AdminIDPasswordInfoScreen(
+    viewModel: AdminSignUpHospitalEntryViewModel = hiltViewModel(),
+    navigateToSignUpWaitingScreen: () -> Unit = {},
+    navigateToBack:() -> Unit = {},
+){
     var isError by remember{ mutableStateOf(false) }
     var isTyping by remember { mutableStateOf(false) }
     var isFieldVisible by remember { mutableStateOf(false) }
@@ -34,11 +42,8 @@ fun AdminIDPasswordInfoScreen(){
     var errorMessageCount by remember { mutableStateOf(false)}
     var errorMessageNoInt by remember { mutableStateOf(false)}
 
-//    fun validatePassword(password: String) {
-//        errorMessageCount = password.length < 8
-//        errorMessageNoInt = !password.any { it.isDigit() }
-//        isError = errorMessageCount || errorMessageNoInt
-//    }
+    val state = viewModel.state.collectAsState()
+
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -56,60 +61,69 @@ fun AdminIDPasswordInfoScreen(){
             value = userID,
             placeholder = "아이디를 입력해주세요",
             label = "아이디",
-            onTextChanged = {
-                text ->
-                userID = text
-                isTyping = text.isNotEmpty()
-                },
-            onFocusChanged = {
-                focused ->
-                if(!focused) {
-                    isTyping = false}
-            },
+            onTextChanged = {viewModel.updateUserId(it)},
+            onFocusChanged = {},
             onDuplicateCheck = {},
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 24.dp, end = 24.dp , bottom = 24.dp)
+                .padding(start = 24.dp, end = 24.dp, bottom = 24.dp)
         )
+        if (!viewModel.checkIdValidation()) {
+            Text(
+                text = "* 아이디가 중복됩니다.",
+                color = Red600,
+                style = CVTheme.typography.captionRegular,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp)
+            )
+        }
         Spacer(modifier = Modifier.padding())
         CVSignInPasswordTextField(
             value = password,
             //isError = errorMessageCount || errorMessageNoInt ,
             placeholder = "비밀번호를 입력해주세요",
             label = "비밀번호",
-            onTextChanged = {
-                password = it
-            },
+            onTextChanged = {viewModel.updatePassword(it)},
             onFocusChanged = {},
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 24.dp, end = 24.dp)
         )
-//        if(errorMessageCount){
-//            Text(
-//                text = "* 8글자 이상이어야 합니다",
-//                color = Red600,
-//                style = CVTheme.typography.captionRegular,
-//                modifier = Modifier.padding(top = 4.dp, start = 12.dp)
-//            )
-//        }
-//        if(errorMessageNoInt){
-//            Text(
-//                text = "* 숫자가 들어가야 합니다",
-//                color = Red600,
-//                style = CVTheme.typography.captionRegular,
-//                modifier = Modifier.padding(top = 4.dp, start = 12.dp)
-//            )
-//        }
+        if ((state.value.password.isNotEmpty() && state.value.password.length < 8)) {
+            Text(
+                text = "* 8글자 이상이어야 합니다",
+                color = Red600,
+                style = CVTheme.typography.captionRegular,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 4.dp, horizontal = 24.dp)
+            )
+        }
+
+        if (!viewModel.checkPwValidation()) {
+            Text(
+                text = "* 영문과 숫자가 포함되어야 합니다",
+                color = Red600,
+                style = CVTheme.typography.captionRegular,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp)
+            )
+        }
+
+
         CVLongButton(
             text = "완료",
-           onClick = {},
-//                validatePassword(password)
-//                if (password.isNotEmpty() && !errorMessageCount && !errorMessageNoInt) {
-//                    isFieldVisible = true
-//                }
-//                      },
-//            enabled = password.isNotEmpty() && userID.isNotEmpty(),
+            onClick = {
+                navigateToSignUpWaitingScreen
+                viewModel.requestSignUp()
+            },
+            enabled = (state.value.userId.isNotEmpty() &&
+                    state.value.password.isNotEmpty() &&
+                    state.value.password.length >= 8 &&
+                    viewModel.checkPwValidation() &&
+                    !viewModel.checkIdValidation()),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 24.dp)

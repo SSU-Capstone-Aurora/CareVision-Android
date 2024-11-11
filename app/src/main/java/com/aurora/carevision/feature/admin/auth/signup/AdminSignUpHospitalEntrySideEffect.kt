@@ -1,0 +1,12 @@
+package com.aurora.carevision.feature.admin.auth.signup
+
+sealed class AdminSignUpHospitalEntrySideEffect {
+    object NavigateNextScreen : AdminSignUpHospitalEntrySideEffect()
+    object ShowError : AdminSignUpHospitalEntrySideEffect()
+    data class PerformHospitalSearch(val query: String) : AdminSignUpHospitalEntrySideEffect()
+    object NavigateToName : AdminSignUpHospitalEntrySideEffect()
+    object NavigateToIdPw : AdminSignUpHospitalEntrySideEffect()
+    object NavigateToWaiting : AdminSignUpHospitalEntrySideEffect()
+    object NavigateToHome : AdminSignUpHospitalEntrySideEffect()
+    object NavigateToInitialLogin : AdminSignUpHospitalEntrySideEffect()
+}
