@@ -1,4 +1,4 @@
-package com.aurora.carevision.data.auth.reponse
+package com.aurora.carevision.data.remote.auth.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

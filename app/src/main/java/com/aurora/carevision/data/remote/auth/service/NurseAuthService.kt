@@ -1,7 +1,7 @@
-package com.aurora.carevision.data.auth.service
+package com.aurora.carevision.data.remote.auth.service
 
 import com.aurora.carevision.core.network.response.BaseResponse
-import com.aurora.carevision.data.auth.reponse.HospitalListResponse
+import com.aurora.carevision.data.remote.auth.model.HospitalListResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

@@ -1,7 +1,7 @@
-package com.aurora.carevision.data.auth.di
+package com.aurora.carevision.data.remote.auth.di
 
 import com.aurora.carevision.core.network.qualifier.Unsecured
-import com.aurora.carevision.data.auth.service.NurseAuthService
+import com.aurora.carevision.data.remote.auth.service.NurseAuthService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

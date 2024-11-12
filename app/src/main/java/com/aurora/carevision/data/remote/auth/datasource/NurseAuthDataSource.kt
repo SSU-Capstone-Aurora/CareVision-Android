@@ -1,7 +1,7 @@
-package com.aurora.carevision.data.auth.datasource
+package com.aurora.carevision.data.remote.auth.datasource
 
 import com.aurora.carevision.core.network.response.BaseResponse
-import com.aurora.carevision.data.auth.reponse.HospitalListResponse
+import com.aurora.carevision.data.remote.auth.model.HospitalListResponse
 
 interface NurseAuthRemoteDataSource {
     suspend fun checkUsername(username: String): BaseResponse<Boolean>

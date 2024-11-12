@@ -1,8 +1,8 @@
-package com.aurora.carevision.data.auth.di
+package com.aurora.carevision.data.remote.auth.di
 
-import com.aurora.carevision.data.auth.datasource.DefaultNurseAuthDataSource
-import com.aurora.carevision.data.auth.datasource.NurseAuthRemoteDataSource
-import com.aurora.carevision.data.auth.repository.DefaultNurseAuthRepository
+import com.aurora.carevision.data.remote.auth.datasource.DefaultNurseAuthDataSource
+import com.aurora.carevision.data.remote.auth.datasource.NurseAuthRemoteDataSource
+import com.aurora.carevision.data.remote.auth.repository.DefaultNurseAuthRepository
 import com.aurora.carevision.domain.nurse.repository.NurseAuthRepository
 import dagger.Binds
 import dagger.Module

@@ -1,4 +1,4 @@
-package com.aurora.carevision.core.network.auth
+package com.aurora.carevision.data.local.auth
 
 import okhttp3.Interceptor
 import okhttp3.Response

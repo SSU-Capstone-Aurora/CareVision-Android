@@ -1,8 +1,8 @@
 package com.aurora.carevision.core.network.di
 
 import com.aurora.carevision.BuildConfig
-import com.aurora.carevision.core.network.auth.AuthInterceptor
-import com.aurora.carevision.core.network.auth.TokenRefreshAuthenticator
+import com.aurora.carevision.data.local.auth.AuthInterceptor
+import com.aurora.carevision.data.local.auth.TokenRefreshAuthenticator
 import com.aurora.carevision.core.network.qualifier.Secured
 import com.aurora.carevision.core.network.qualifier.Unsecured
 import dagger.Module

@@ -1,6 +1,6 @@
-package com.aurora.carevision.core.network.auth
+package com.aurora.carevision.data.local.auth
 
-import com.aurora.carevision.data.auth.service.NurseAuthService
+import com.aurora.carevision.data.remote.auth.service.NurseAuthService
 import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response
