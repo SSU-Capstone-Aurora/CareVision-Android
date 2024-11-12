@@ -18,8 +18,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import com.aurora.carevision.app.adminTopLevelRoutes
 import com.aurora.carevision.app.topLevelRoutes
 import com.aurora.carevision.app.ui.theme.White
+import com.aurora.carevision.core.component.AdminBottomBar
+import com.aurora.carevision.core.component.AdminBottomNavItem
 import com.aurora.carevision.core.component.BottomNavItem
 import com.aurora.carevision.core.component.NurseBottomBar
 import com.aurora.carevision.feature.admin.auth.login.adminLoginScreen
@@ -33,6 +36,8 @@ import com.aurora.carevision.feature.admin.auth.signup.adminSignUpHospitalScreen
 import com.aurora.carevision.feature.admin.home.navigation.AdminHome
 import com.aurora.carevision.feature.admin.home.navigation.adminHomeScreen
 import com.aurora.carevision.feature.admin.home.navigation.navigateToAdminHome
+import com.aurora.carevision.feature.admin.request.AdminRequestAcceptance
+import com.aurora.carevision.feature.admin.request.adminRequestAcceptanceScreen
 import com.aurora.carevision.feature.intro.Intro
 import com.aurora.carevision.feature.intro.initialLoginScreen
 import com.aurora.carevision.feature.intro.navigateToIntro
@@ -90,9 +95,29 @@ fun CVNavHost(
                         )
                     }
                 }
-            } else if (currentRoute == AdminHome.javaClass.name) {
-                // AdminBottomBar 관련 코드 추가
             }
+            // AdminBottomBar 관련 코드 추가
+                else if (isAdminBottomNaviScreen(currentRoute)) {
+                    AdminBottomBar {
+                        val navBackStackEntry by navController.currentBackStackEntryAsState()
+                        val currentDestination = navBackStackEntry?.destination
+                        adminTopLevelRoutes.forEach { topLevelRoute ->
+                            AdminBottomNavItem(
+                                icon = topLevelRoute.defaultIcon,
+                                label = topLevelRoute.name,
+                                isSelected = currentDestination?.hierarchy?.any {
+                                    it.route == topLevelRoute.route.javaClass.name
+                                } == true,
+                                onClick = {
+                                    navController.navigate(topLevelRoute.route) {
+                                        bottomNavOptions(navController)
+                                    }
+                                }
+                            )
+                        }
+                    }
+                }
+            //}
         }
     ) { innerPadding ->
         NavHost(
@@ -153,11 +178,6 @@ fun CVNavHost(
 
             patientRegistrationScreen()
 
-//            adminLoginScreen(
-//                navigateToHome = { navController.navigateToAdminHome() },
-//                navigateToSignUp = { navController.navigateToAdminSignUp() },
-//                navigateToBack = { navController.popBackStack() }
-//            )
             adminLoginScreen(
                 navigateToHome = {
                     navController.navigateToAdminHome(
@@ -193,9 +213,13 @@ fun CVNavHost(
             adminHomeScreen(
                 navigateToAdminLogin = {navController.navigateToIntro()}
             )
+            adminRequestAcceptanceScreen(
+                navigateToBack = { navController.popBackStack() }
+            )
         }
     }
 }
+
 
 @Composable
 private fun isNurseBottomNaviScreen(currentRoute: String?): Boolean =
@@ -208,3 +232,7 @@ private fun NavOptionsBuilder.bottomNavOptions(navController: NavHostController)
     launchSingleTop = true
     restoreState = false
 }
+
+@Composable
+private fun isAdminBottomNaviScreen(currentRoute: String?): Boolean =
+    currentRoute == AdminHome.javaClass.name || currentRoute == AdminRequestAcceptance.javaClass.name
