@@ -1,8 +1,8 @@
-package com.aurora.carevision.data.remote.auth.datasource
+package com.aurora.carevision.data.remote.nurse.auth.datasource
 
 import com.aurora.carevision.core.network.response.BaseResponse
-import com.aurora.carevision.data.remote.auth.model.HospitalListResponse
-import com.aurora.carevision.data.remote.auth.service.NurseAuthService
+import com.aurora.carevision.data.remote.nurse.auth.model.HospitalListResponse
+import com.aurora.carevision.data.remote.nurse.auth.service.NurseAuthService
 import javax.inject.Inject
 
 
