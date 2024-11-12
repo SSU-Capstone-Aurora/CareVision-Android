@@ -1,4 +1,4 @@
-package com.aurora.carevision.domain.nurse
+package com.aurora.carevision.domain.nurse.model
 
 data class Patient(
     val patientId: Int,

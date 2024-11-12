@@ -1,4 +1,4 @@
-package com.aurora.carevision.domain.nurse.video
+package com.aurora.carevision.domain.nurse.model.video
 
 data class SavedVideo(
     val videoId: Int,
