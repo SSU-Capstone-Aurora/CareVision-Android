@@ -3,6 +3,7 @@ package com.aurora.carevision.core.component
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,45 +23,31 @@ import com.aurora.carevision.app.ui.theme.White
 
 @Composable
 fun AdminBottomBar(
-    navigateToHome: () -> Unit = {},
-    navigateToPatientRegister: () -> Unit = {},
-    navigateToNotification: () -> Unit = {},
+    content : @Composable RowScope.() -> Unit
 ) {
-    val selectedItem = remember { mutableStateOf("home") }  // 현재 선택된 아이템 상태
-
-    Row(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .background(White)
-            .padding(horizontal = 12.dp, vertical = 10.dp),
-        horizontalArrangement = Arrangement.SpaceBetween
+            .height(64.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
-        BottomNavItem(
-            icon = R.drawable.ic_home_line,
-            label = "홈",
-            isSelected = selectedItem.value == "home",
-            onClick = {
-                selectedItem.value = "home"
-                navigateToHome()
-            },
-            modifier = Modifier.padding(start = 50.dp)
+        Row(
+            modifier =  Modifier
+                .selectableGroup()
+                .fillMaxWidth()
+                .padding(start = 59.dp, end = 59.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+            content = content,
         )
 
-        BottomNavItem(
-            icon = R.drawable.ic_bell_bottom_navi_line,
-            label = "요청",
-            isSelected = selectedItem.value == "notification",
-            onClick = {
-                selectedItem.value = "notification"
-                navigateToNotification()
-            },
-            modifier = Modifier.padding(end = 50.dp)
-        )
     }
 }
 
 @Composable
-fun BottomNavItem(
+fun AdminBottomNavItem(
     icon: Int,
     label: String,
     isSelected: Boolean,
@@ -69,7 +56,11 @@ fun BottomNavItem(
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier.clickable { onClick() }
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .padding(horizontal = 30.dp)
+            .clickable { onClick() }
+            .fillMaxHeight()
     ) {
         Icon(
             painter = painterResource(id = icon),
@@ -90,6 +81,27 @@ fun BottomNavItem(
 @Preview
 fun AdminBottomBarPreview() {
     CVTheme {
-        AdminBottomBar()
+        Column(
+            modifier = Modifier
+                .background(White)
+        ) {
+            AdminBottomBar(
+                content = {
+                    AdminBottomNavItem(
+                        icon = R.drawable.ic_home_line,
+                        label = "홈",
+                        isSelected = true,
+                        onClick = {}
+                    )
+
+                    AdminBottomNavItem(
+                        icon = R.drawable.ic_bell_bottom_navi_line,
+                        label = "요청",
+                        isSelected = false,
+                        onClick = {}
+                    )
+                }
+            )
+        }
     }
 }
