@@ -9,7 +9,7 @@ import javax.inject.Inject
 class DefaultNurseAuthRepository @Inject constructor(
     private val remoteDataSource: NurseAuthRemoteDataSource
 ) : NurseAuthRepository {
-    override suspend fun checkUsername(username: String): BaseResponse<Boolean> {
+    override suspend fun checkUsername(username: String): Boolean {
         return remoteDataSource.checkUsername(username)
     }
 
