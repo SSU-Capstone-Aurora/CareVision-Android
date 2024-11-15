@@ -46,6 +46,7 @@ import com.aurora.carevision.feature.nurse.mypage.nurseMypageScreen
 import com.aurora.carevision.feature.nurse.patient.info.PatientInfo
 import com.aurora.carevision.feature.nurse.patient.info.patientInfoScreen
 import com.aurora.carevision.feature.nurse.patient.registration.PatientRegistration
+import com.aurora.carevision.feature.nurse.patient.registration.navigateToPatientRegistration
 import com.aurora.carevision.feature.nurse.patient.registration.patientRegistrationScreen
 
 @Composable
@@ -141,7 +142,9 @@ fun CVNavHost(
 
             nurseMypageScreen()
 
-            patientInfoScreen()
+            patientInfoScreen(
+                navigateToPatientRegistration = { navController.navigateToPatientRegistration() }
+            )
 
             patientRegistrationScreen()
 

@@ -23,7 +23,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import com.aurora.carevision.R
 import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.Gray100
-import com.aurora.carevision.app.ui.theme.Gray200
+import com.aurora.carevision.app.ui.theme.Gray300
 import com.aurora.carevision.app.ui.theme.Gray500
 import com.aurora.carevision.app.ui.theme.Gray600
 import com.aurora.carevision.app.ui.theme.Primary700
@@ -104,16 +103,21 @@ fun PatientInfoScreen(
                 modifier = Modifier
             )
 
-            Box(modifier = Modifier
-                .clip(RoundedCornerShape(10.dp))
-                .size(35.dp)
-                .background(White)
-                .shadow(1.dp, ambientColor = Gray100, shape = RoundedCornerShape(10.dp))
-                .clickable { onClickNavigateToPatientRegistration() },
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(10.dp))
+                    .size(35.dp)
+                    .background(White)
+                    .border(1.dp, Gray300, shape = RoundedCornerShape(10.dp))
+                    .clickable { onClickNavigateToPatientRegistration() },
 
                 contentAlignment = Alignment.Center
-                ) {
-                Icon(painter = painterResource(id = R.drawable.ic_plus), contentDescription = "add patient", tint = Gray500)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_plus),
+                    contentDescription = "add patient",
+                    tint = Gray500
+                )
             }
         }
         Spacer(modifier = Modifier.height(12.dp))
@@ -203,10 +207,12 @@ fun MyPatientListItem(
                 }
             )
         }
-        Spacer(modifier = Modifier
-            .height(1.dp)
-            .fillMaxWidth()
-            .background(Gray100))
+        Spacer(
+            modifier = Modifier
+                .height(1.dp)
+                .fillMaxWidth()
+                .background(Gray100)
+        )
 
         Row(
             modifier = Modifier
