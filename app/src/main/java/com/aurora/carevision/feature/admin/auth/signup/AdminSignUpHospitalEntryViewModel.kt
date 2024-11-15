@@ -23,11 +23,11 @@ class AdminSignUpHospitalEntryViewModel @Inject constructor(
     val sideEffect: MutableStateFlow<AdminSignUpHospitalEntrySideEffect?> = _sideEffect
 
     fun updateSelectedHospital(newHospitalName: String) {
-        _state.value = _state.value.copy(hospitalName = newHospitalName)
+        _state.value = _state.value.copy(hospitalName = newHospitalName, isHospitalSelected = true)
     }
 
     fun updateSelectedDepartment(newDepartment: String) {
-        _state.value = _state.value.copy(selectedItem = newDepartment)
+        _state.value = _state.value.copy(department = newDepartment)
     }
 
     fun updateUserName(newUserName: String) {
@@ -40,7 +40,7 @@ class AdminSignUpHospitalEntryViewModel @Inject constructor(
 
     fun updatePassword(newPassword: String) {
         _state.value = _state.value.copy(password = newPassword)
-        Log.d("NurseSignUpViewModel", "updatedHospital : ${_state.value.hospitalName}, updatedDepartment : ${_state.value.department}, updatedUserName : ${_state.value.userName}, updatedUserId : ${_state.value.userId}, updatedPassword : ${_state.value.password}")
+        Log.d("AdminignUpViewModel", "updatedHospital : ${_state.value.hospitalName}, updatedDepartment : ${_state.value.department}, updatedUserName : ${_state.value.userName}, updatedUserId : ${_state.value.userId}, updatedPassword : ${_state.value.password}")
     }
 
     fun checkPwValidation(): Boolean {
@@ -55,8 +55,9 @@ class AdminSignUpHospitalEntryViewModel @Inject constructor(
     }
 
     fun performHospitalSearch(query: String) {
-        val results = listOf("Hospital A", "Hospital B") // Replace with actual API call
+        val results = listOf("seoul", "soongsil")
         _state.value = _state.value.copy(searchResults = results)
+        // 병원 정보 조회 API 호출
     }
 
     fun requestSignUp() {

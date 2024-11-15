@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,6 +28,7 @@ import com.aurora.carevision.core.component.CVTailIconSearchBar
 import com.aurora.carevision.core.component.ReviewDropdownMenu
 import com.aurora.carevision.core.component.TopAppBarLeft
 import com.aurora.carevision.feature.admin.auth.signup.AdminSignUpHospitalEntrySideEffect
+import com.aurora.carevision.feature.admin.auth.signup.AdminSignUpHospitalEntryState
 import com.aurora.carevision.feature.admin.auth.signup.AdminSignUpHospitalEntryViewModel
 
 @Composable
@@ -51,6 +53,7 @@ fun AdminSignUpHospitalEntryScreen(
     )
 
     val state by viewModel.state.collectAsState()
+    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
@@ -70,7 +73,7 @@ fun AdminSignUpHospitalEntryScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(White)
-            .systemBarsPadding()
+            .statusBarsPadding()
             .systemBarsPadding()
     ) {
         TopAppBarLeft(
@@ -84,25 +87,36 @@ fun AdminSignUpHospitalEntryScreen(
                 .padding(top = 16.dp, start = 24.dp, end = 24.dp, bottom = 24.dp)
         )
 
-        ReviewDropdownMenu(
+        CVTailIconSearchBar(
+            modifier = Modifier
+                .padding(start=24.dp, end=24.dp),
+            value = state.hospitalName,
+            onValueChange = {viewModel.updateSelectedHospital(it)},
             placeholder = "병원 이름을 입력하세요",
-            menuItems = dummyMenuItems,
-            selectedItem = state.hospitalName,
-            onMenuItemClick = { selected ->
-                viewModel.updateSelectedHospital(selected)
+            onTextChanged = { query->
+                viewModel.performHospitalSearch(query)
+            },
+            onFocusChanged = { //focused ->
+                //if (!focused) viewModel.updateSelectedHospital("")
+            },
+            onSearchClick = {
+                if (state.hospitalName.isNotEmpty()) {
+                    viewModel.performHospitalSearch(state.hospitalName)
+                }
             }
         )
         Spacer(modifier = Modifier.height(24.dp))
 
-        ReviewDropdownMenu(
-            placeholder = "과를 선택해주세요",
-            menuItems = dummyMenuItems,
-            selectedItem = state.department,
-            onMenuItemClick = { selected ->
-                viewModel.updateSelectedDepartment(selected)
-            }
-        )
-
+        if(state.isHospitalSelected) {
+            ReviewDropdownMenu(
+                placeholder = "과를 선택해주세요",
+                menuItems = dummyMenuItems,
+                selectedItem = state.department,
+                onMenuItemClick = { selected ->
+                    viewModel.updateSelectedDepartment(selected)
+                }
+            )
+        }
         CVLongButton(
             text = "다음",
             onClick = navigateToSignUpNameScreen,

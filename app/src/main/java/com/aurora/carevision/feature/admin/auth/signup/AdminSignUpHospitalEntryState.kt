@@ -1,7 +1,7 @@
 package com.aurora.carevision.feature.admin.auth.signup
 
 data class AdminSignUpHospitalEntryState(
-    val hospitalName: String = "",
+    var hospitalName: String = "",
     val isTyping: Boolean = false,
     val isFieldVisible: Boolean = false,
     val selectedItem: String = "",
@@ -12,4 +12,5 @@ data class AdminSignUpHospitalEntryState(
     val userId: String = "",
     val password: String = "",
     val nameDuplicate: Boolean = false,
+    val isHospitalSelected: Boolean = false,
 )
