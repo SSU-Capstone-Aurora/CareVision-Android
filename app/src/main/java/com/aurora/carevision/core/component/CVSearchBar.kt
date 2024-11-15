@@ -51,24 +51,17 @@ fun CVHeadIconSearchBar(
     headIcon: Int = R.drawable.ic_search_gray_24,
     borderVisible: Boolean = false
 ) {
-    val focusRequester = remember { FocusRequester() }
 
     BasicTextField(
         value = value,
         onValueChange = onValueChange,
-        modifier = Modifier
-            .clip(shape = RoundedCornerShape(10.dp))
+        modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 24.dp)
             .border(if (borderVisible) 1.dp else 0.dp, Gray300, RoundedCornerShape(10.dp))
+            .clip(shape = RoundedCornerShape(10.dp))
             .background(backgroundColor)
-            .padding(16.dp)
-            .focusRequester(focusRequester)
-            .onFocusChanged { focusState ->
-                if (focusState.isFocused) {
-                    focusRequester.requestFocus()
-                }
-            },
+            .padding(16.dp),
         singleLine = true,
         textStyle = CVTheme.typography.textBody1Medium.copy(color = Gray500),
         decorationBox = { innerTextField ->
@@ -85,11 +78,11 @@ fun CVHeadIconSearchBar(
 
 
                 Box(
-                    modifier = Modifier.padding(horizontal = 8.dp)
+                    modifier = modifier.padding(horizontal = 8.dp)
                 ) {
                     innerTextField()
 
-                    if (value.isEmpty()) {
+                    if (value.isBlank()) {
                         Text(
                             text = placeholder,
                             color = Gray500,

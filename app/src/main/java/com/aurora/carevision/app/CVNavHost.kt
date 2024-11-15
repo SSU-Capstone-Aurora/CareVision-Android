@@ -44,9 +44,11 @@ import com.aurora.carevision.feature.nurse.home.navigation.nurseHomeScreen
 import com.aurora.carevision.feature.nurse.mypage.NurseMypage
 import com.aurora.carevision.feature.nurse.mypage.nurseMypageScreen
 import com.aurora.carevision.feature.nurse.patient.info.PatientInfo
+import com.aurora.carevision.feature.nurse.patient.info.navigateToPatientInfo
 import com.aurora.carevision.feature.nurse.patient.info.patientInfoScreen
 import com.aurora.carevision.feature.nurse.patient.registration.PatientRegistration
 import com.aurora.carevision.feature.nurse.patient.registration.navigateToPatientRegistration
+import com.aurora.carevision.feature.nurse.patient.registration.navigateToPatientRegistrationDone
 import com.aurora.carevision.feature.nurse.patient.registration.patientRegistrationScreen
 
 @Composable
@@ -146,7 +148,13 @@ fun CVNavHost(
                 navigateToPatientRegistration = { navController.navigateToPatientRegistration() }
             )
 
-            patientRegistrationScreen()
+            patientRegistrationScreen(
+                navigateToPatientRegistrationDone = { navController.navigateToPatientRegistrationDone() },
+                navigateToPatientInfo = { navController.navigateToPatientInfo() },
+                navigateToPatientRegistration = { navController.popBackStack() }
+            )
+
+
 
             adminLoginScreen(
                 navigateToHome = { navController.navigateToAdminHome() },
