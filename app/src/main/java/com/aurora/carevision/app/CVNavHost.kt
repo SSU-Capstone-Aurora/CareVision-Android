@@ -161,7 +161,7 @@ fun CVNavHost(
 
 @Composable
 private fun isNurseBottomNaviScreen(currentRoute: String?): Boolean =
-    currentRoute == NurseHome.javaClass.name || currentRoute == NurseMypage.javaClass.name || currentRoute == PatientInfo.javaClass.name || currentRoute == PatientRegistration.javaClass.name
+    currentRoute == NurseHome.javaClass.name || currentRoute == NurseMypage.javaClass.name || currentRoute == PatientInfo.javaClass.name
 
 private fun NavOptionsBuilder.bottomNavOptions(navController: NavHostController) {
     popUpTo(navController.graph.id) {
