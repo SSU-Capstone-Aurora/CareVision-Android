@@ -28,7 +28,7 @@ import com.aurora.carevision.app.ui.theme.Gray600
 import com.aurora.carevision.app.ui.theme.Primary100
 import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.TopAppBarLeft
-import com.aurora.carevision.domain.nurse.notification.Notification
+import com.aurora.carevision.domain.nurse.model.notification.Notification
 
 @Composable
 fun NotificationScreen() {

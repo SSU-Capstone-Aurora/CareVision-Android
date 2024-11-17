@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -11,6 +13,11 @@ android {
     namespace = "com.aurora.carevision"
     compileSdk = 34
 
+    // local.properties에서 값을 가져오기 위해 properties 객체 생성
+    val properties = Properties().apply {
+        load(rootProject.file("local.properties").inputStream())
+    }
+
     defaultConfig {
         applicationId = "com.aurora.carevision"
         minSdk = 28
@@ -22,6 +29,10 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        // BuildConfig에 CV_BASE_URL_DEV 필드에 properties에서 가져온 값 추가
+        // properties에서 가져온 값은 local.properties CV_BASE_URL_DEV에 저장되어 있음
+        buildConfigField("String", "CV_BASE_URL_DEV", "${properties.getProperty("cv.base.url.dev")}")
     }
 
     buildTypes {
@@ -42,6 +53,8 @@ android {
     }
     buildFeatures {
         compose = true
+        // buildConfig를 사용하기 위해 추가
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -86,4 +99,12 @@ dependencies {
 
     // splash
     implementation(libs.splash.screen)
+
+    // retrofit
+    implementation(libs.retrofit2)
+    implementation(libs.retrofit2.kotlin.serialization)
+
+    // okhttp : Retrofit으로 받는 데이터를 로그로 확인하기 위해
+    implementation(libs.okhttp3)
+    implementation(libs.okhttp3.logging.interceptor)
 }

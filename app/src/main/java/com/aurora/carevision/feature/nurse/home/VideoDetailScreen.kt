@@ -28,7 +28,7 @@ import com.aurora.carevision.app.ui.theme.Gray100
 import com.aurora.carevision.app.ui.theme.Gray700
 import com.aurora.carevision.core.component.AdminVideoListItem
 import com.aurora.carevision.core.component.TopAppBarLeft
-import com.aurora.carevision.domain.nurse.video.SavedVideo
+import com.aurora.carevision.domain.nurse.model.video.SavedVideo
 
 @Composable
 fun VideoDetailScreen() {

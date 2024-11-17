@@ -56,14 +56,17 @@ fun NurseSignUpIdPwScreen(
             value = state.value.userId,
             placeholder = "아이디를 입력해주세요",
             label = "아이디",
-            onTextChanged = { viewModel.updateUserId(it) },
+            onTextChanged = {
+                viewModel.updateUserId(it)
+                viewModel.updateDoCheckNameDuplicate(false)
+                            },
             onFocusChanged = { },
-            onDuplicateCheck = {},
+            onDuplicateCheck = { viewModel.checkIdValidation() },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 24.dp, end = 24.dp, bottom = 4.dp)
         )
-        if (!viewModel.checkIdValidation()) {
+        if (!state.value.nameDuplicate) {
             Text(
                 text = "* 아이디가 중복됩니다.",
                 color = Red600,
@@ -115,7 +118,7 @@ fun NurseSignUpIdPwScreen(
                 navigateToSignUpWaitingScreen()
                 viewModel.requestSignUp()
                       },
-            enabled = (state.value.userId.isNotEmpty() && state.value.password.isNotEmpty() && state.value.password.length >= 8 && viewModel.checkPwValidation() && !viewModel.checkIdValidation()),
+            enabled = (state.value.userId.isNotEmpty() && state.value.password.isNotEmpty() && state.value.password.length >= 8 && viewModel.checkPwValidation() && state.value.nameDuplicate && state.value.doCheckNameDuplicate),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 24.dp)
