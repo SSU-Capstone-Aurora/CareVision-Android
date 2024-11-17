@@ -63,6 +63,7 @@ import com.aurora.carevision.feature.nurse.patient.registration.navigateToCheckP
 import com.aurora.carevision.feature.nurse.patient.registration.navigateToEnterPatientNumber
 import com.aurora.carevision.feature.nurse.patient.registration.navigateToPatientRegistration
 import com.aurora.carevision.feature.nurse.patient.registration.navigateToPatientRegistrationDone
+import com.aurora.carevision.feature.nurse.patient.registration.navigateToScanningBarcode
 import com.aurora.carevision.feature.nurse.patient.registration.patientRegistrationScreen
 
 @Composable
@@ -192,10 +193,9 @@ fun CVNavHost(
                 navigateToCheckPatientName = { navController.navigateToCheckPatientName() },
                 navigateToCameraListInfo = { navController.navigateToCameraListInfo() },
                 navigateToCheckTotalInfo = { navController.navigateToCheckTotalInfo() },
+                navigateToScanningBarcode = { navController.navigateToScanningBarcode() },
                 onClickBack = { navController.popBackStack() }
             )
-
-
 
             adminLoginScreen(
                 navigateToHome = {
