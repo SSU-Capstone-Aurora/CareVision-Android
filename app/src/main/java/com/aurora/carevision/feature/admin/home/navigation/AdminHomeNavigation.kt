@@ -18,6 +18,7 @@ fun NavController.navigateToAdminHome(navOptions: NavOptions? = null) = navigate
 fun NavGraphBuilder.adminHomeScreen(
     // admin home 화면에서 이동해야하는 모든 도착지에 대한 함수들을 정의
     // navigateToRequestAcceptance: () -> Unit,
+    navigateToAdminLogin:() ->Unit,
 ) {
     composable<AdminHome> {
         AdminListScreen()

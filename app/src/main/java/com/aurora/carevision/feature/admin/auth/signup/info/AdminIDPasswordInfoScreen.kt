@@ -1,17 +1,21 @@
-package com.aurora.carevision.feature.nurse.auth.signup.info
+package com.aurora.carevision.feature.admin.auth.signup.info
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -24,24 +28,24 @@ import com.aurora.carevision.core.component.CVDuplicateCheckTextField
 import com.aurora.carevision.core.component.CVLongButton
 import com.aurora.carevision.core.component.CVSignInPasswordTextField
 import com.aurora.carevision.core.component.TopAppBarLeft
-import com.aurora.carevision.feature.nurse.auth.signup.NurseSignUpViewModel
+import com.aurora.carevision.feature.admin.auth.signup.AdminSignUpHospitalEntryViewModel
 
 @Composable
-fun NurseSignUpIdPwScreen(
-    viewModel: NurseSignUpViewModel = hiltViewModel(),
-    navigateToBack: () -> Unit = {},
-    navigateToSignUpWaitingScreen: () -> Unit = {}
-) {
+fun AdminIDPasswordInfoScreen(
+    viewModel: AdminSignUpHospitalEntryViewModel = hiltViewModel(),
+    navigateToSignUpWaitingScreen: () -> Unit = {},
+    navigateToBack:() -> Unit = {},
+){
 
     val state = viewModel.state.collectAsState()
 
-    Column(
+    Column (
         modifier = Modifier
             .fillMaxSize()
             .background(White)
             .systemBarsPadding()
             .statusBarsPadding()
-    ) {
+    ){
         TopAppBarLeft(
             onClick = navigateToBack
         )
@@ -50,23 +54,20 @@ fun NurseSignUpIdPwScreen(
             style = CVTheme.typography.headingPrimary,
             color = Black,
             modifier = Modifier
-                .padding(top = 16.dp, start = 24.dp, end = 24.dp, bottom = 24.dp)
+                .padding(top=16.dp, start = 24.dp, end = 24.dp, bottom = 24.dp)
         )
         CVDuplicateCheckTextField(
             value = state.value.userId,
             placeholder = "아이디를 입력해주세요",
             label = "아이디",
-            onTextChanged = {
-                viewModel.updateUserId(it)
-                viewModel.updateDoCheckNameDuplicate(false)
-                            },
-            onFocusChanged = { },
-            onDuplicateCheck = { viewModel.checkIdValidation() },
+            onTextChanged = {viewModel.updateUserId(it)},
+            onFocusChanged = {},
+            onDuplicateCheck = {},
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 24.dp, end = 24.dp, bottom = 4.dp)
+                .padding(start = 24.dp, end = 24.dp, bottom = 24.dp)
         )
-        if (!state.value.nameDuplicate) {
+        if (!viewModel.checkIdValidation()) {
             Text(
                 text = "* 아이디가 중복됩니다.",
                 color = Red600,
@@ -76,20 +77,18 @@ fun NurseSignUpIdPwScreen(
                     .padding(horizontal = 24.dp)
             )
         }
-
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.padding())
         CVSignInPasswordTextField(
             value = state.value.password,
             isError = false,
             placeholder = "비밀번호를 입력해주세요",
             label = "비밀번호",
-            onTextChanged = { viewModel.updatePassword(it) },
+            onTextChanged = {viewModel.updatePassword(it)},
             onFocusChanged = {},
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 24.dp, end = 24.dp)
         )
-
         if ((state.value.password.isNotEmpty() && state.value.password.length < 8)) {
             Text(
                 text = "* 8글자 이상이어야 합니다",
@@ -112,13 +111,18 @@ fun NurseSignUpIdPwScreen(
             )
         }
 
+
         CVLongButton(
             text = "완료",
             onClick = {
                 navigateToSignUpWaitingScreen()
                 viewModel.requestSignUp()
-                      },
-            enabled = (state.value.userId.isNotEmpty() && state.value.password.isNotEmpty() && state.value.password.length >= 8 && viewModel.checkPwValidation() && state.value.nameDuplicate && state.value.doCheckNameDuplicate),
+            },
+            enabled = (state.value.userId.isNotEmpty() &&
+                    state.value.password.isNotEmpty() &&
+                    state.value.password.length >= 8 &&
+                    viewModel.checkPwValidation() &&
+                    !viewModel.checkIdValidation()),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 24.dp)
@@ -126,16 +130,19 @@ fun NurseSignUpIdPwScreen(
     }
 }
 
+
+
 @Composable
 @Preview
-fun NurseSignUpIdPwScreenPreview() {
-    CVTheme {
+fun AdminIDPasswordInfoScreenPreview(){
+    CVTheme{
         Column(
             modifier = Modifier
                 .background(White)
                 .fillMaxSize()
-        ) {
-            NurseSignUpIdPwScreen()
+        ){
+            AdminIDPasswordInfoScreen()
         }
     }
 }
+

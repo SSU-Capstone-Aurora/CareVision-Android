@@ -1,4 +1,4 @@
-package com.aurora.carevision.feature.admin.auth.signup
+package com.aurora.carevision.feature.admin.auth.signup.done
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -15,12 +15,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.aurora.carevision.R
 import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.White
+import com.aurora.carevision.feature.admin.auth.signup.AdminSignUpHospitalEntryViewModel
 
 @Composable
-fun AdminSignUpCompletionScreen(){
+fun AdminSignUpCompletionScreen(
+    viewModel: AdminSignUpHospitalEntryViewModel = hiltViewModel(),
+    navigateToHome: () -> Unit = {}
+){
     Column (
         modifier = Modifier
             .fillMaxSize()
