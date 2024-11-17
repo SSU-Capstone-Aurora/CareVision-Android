@@ -2,6 +2,7 @@ package com.aurora.carevision.feature.nurse.mypage
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,7 +30,9 @@ import com.aurora.carevision.app.ui.theme.Primary600
 import com.aurora.carevision.app.ui.theme.White
 
 @Composable
-fun MypageScreen() {
+fun MypageScreen(
+    onClickLogout: () -> Unit = {}
+) {
 
     val userName = "김김김"
     val joinDate = "2024.09.30"
@@ -57,6 +60,7 @@ fun MypageScreen() {
                 modifier = Modifier
                     .clip(RoundedCornerShape(16.dp))
                     .background(Gray100)
+                    .clickable { onClickLogout() }
             )
         }
 

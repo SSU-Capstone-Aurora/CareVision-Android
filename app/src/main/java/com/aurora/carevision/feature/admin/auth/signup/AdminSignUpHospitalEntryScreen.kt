@@ -58,6 +58,7 @@ fun AdminSignUpHospitalEntryScreen(){
                     isTyping = false
                 }
             },
+            onSearchClick = {}
 
 
         )
