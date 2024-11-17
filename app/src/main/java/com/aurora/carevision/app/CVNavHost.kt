@@ -57,7 +57,10 @@ import com.aurora.carevision.feature.nurse.mypage.nurseMypageScreen
 import com.aurora.carevision.feature.nurse.patient.info.PatientInfo
 import com.aurora.carevision.feature.nurse.patient.info.navigateToPatientInfo
 import com.aurora.carevision.feature.nurse.patient.info.patientInfoScreen
-import com.aurora.carevision.feature.nurse.patient.registration.PatientRegistration
+import com.aurora.carevision.feature.nurse.patient.registration.navigateToCameraListInfo
+import com.aurora.carevision.feature.nurse.patient.registration.navigateToCheckTotalInfo
+import com.aurora.carevision.feature.nurse.patient.registration.navigateToCheckPatientName
+import com.aurora.carevision.feature.nurse.patient.registration.navigateToEnterPatientNumber
 import com.aurora.carevision.feature.nurse.patient.registration.navigateToPatientRegistration
 import com.aurora.carevision.feature.nurse.patient.registration.navigateToPatientRegistrationDone
 import com.aurora.carevision.feature.nurse.patient.registration.patientRegistrationScreen
@@ -184,7 +187,12 @@ fun CVNavHost(
             patientRegistrationScreen(
                 navigateToPatientRegistrationDone = { navController.navigateToPatientRegistrationDone() },
                 navigateToPatientInfo = { navController.navigateToPatientInfo() },
-                navigateToPatientRegistration = { navController.popBackStack() }
+                navigateToPatientRegistration = { navController.navigateToPatientInfo() },
+                navigateToEnterPatientNumber = { navController.navigateToEnterPatientNumber() },
+                navigateToCheckPatientName = { navController.navigateToCheckPatientName() },
+                navigateToCameraListInfo = { navController.navigateToCameraListInfo() },
+                navigateToCheckTotalInfo = { navController.navigateToCheckTotalInfo() },
+                onClickBack = { navController.popBackStack() }
             )
 
 

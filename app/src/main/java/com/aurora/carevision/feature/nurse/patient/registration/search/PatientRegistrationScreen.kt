@@ -40,7 +40,7 @@ import com.aurora.carevision.core.component.AdminPatientListItem
 import com.aurora.carevision.core.component.CVHeadIconSearchBar
 import com.aurora.carevision.core.component.CVLongButton
 import com.aurora.carevision.core.component.TopAppBarLeft
-import com.aurora.carevision.domain.nurse.Patient
+import com.aurora.carevision.domain.nurse.model.Patient
 
 @Composable
 fun PatientRegistrationScreen(

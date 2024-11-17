@@ -198,14 +198,19 @@ fun AdminCameraListItem(
     cameraInfo: String,
     cameraId: String,
     modifier: Modifier = Modifier,
+    isSelected: Boolean = false,
     onClick: () -> Unit = {}
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 12.dp, horizontal = 12.dp)
             .clip(RoundedCornerShape(5.dp))
-            .background(White),
+            .background(White)
+            .clickable {
+                onClick()
+            }
+            .border(if(isSelected)1.dp else 0.dp, if(isSelected)Primary500 else Color.Transparent, RoundedCornerShape(5.dp))
+            .padding(horizontal = 16.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
