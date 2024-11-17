@@ -1,4 +1,4 @@
-package com.aurora.carevision.data.remote.nurse.auth.service
+package com.aurora.carevision.data.remote.admin.auth.service
 
 import com.aurora.carevision.core.network.response.BaseResponse
 import com.aurora.carevision.data.remote.nurse.auth.model.HospitalListResponse
