@@ -2,6 +2,7 @@ package com.aurora.carevision.navigation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Scaffold
@@ -17,16 +18,26 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import com.aurora.carevision.app.adminTopLevelRoutes
 import com.aurora.carevision.app.topLevelRoutes
 import com.aurora.carevision.app.ui.theme.White
+import com.aurora.carevision.core.component.AdminBottomBar
+import com.aurora.carevision.core.component.AdminBottomNavItem
 import com.aurora.carevision.core.component.BottomNavItem
 import com.aurora.carevision.core.component.NurseBottomBar
 import com.aurora.carevision.feature.admin.auth.login.adminLoginScreen
 import com.aurora.carevision.feature.admin.auth.login.navigateToAdminLogin
-import com.aurora.carevision.feature.admin.auth.signup.adminSignUpScreen
+import com.aurora.carevision.feature.admin.auth.signup.AdminSignUpHospitalEntryViewModel
+import com.aurora.carevision.feature.admin.auth.signup.navigateToAdminSignUp
+import com.aurora.carevision.feature.admin.auth.signup.navigationToAdminSignUpIdPw
+import com.aurora.carevision.feature.admin.auth.signup.navigationToAdminSignUpName
+import com.aurora.carevision.feature.admin.auth.signup.navigationToAdminSignupWaiting
+import com.aurora.carevision.feature.admin.auth.signup.adminSignUpHospitalScreen
 import com.aurora.carevision.feature.admin.home.navigation.AdminHome
 import com.aurora.carevision.feature.admin.home.navigation.adminHomeScreen
 import com.aurora.carevision.feature.admin.home.navigation.navigateToAdminHome
+import com.aurora.carevision.feature.admin.request.AdminRequestAcceptance
+import com.aurora.carevision.feature.admin.request.adminRequestAcceptanceScreen
 import com.aurora.carevision.feature.intro.Intro
 import com.aurora.carevision.feature.intro.initialLoginScreen
 import com.aurora.carevision.feature.intro.navigateToIntro
@@ -57,6 +68,7 @@ fun CVNavHost(
     startDestination: Any = Intro,
 ) {
     val nurseSignUpViewModel: NurseSignUpViewModel = hiltViewModel()
+    val adminSignUpViewModel: AdminSignUpHospitalEntryViewModel = hiltViewModel()
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
 
     Scaffold(
@@ -86,14 +98,35 @@ fun CVNavHost(
                         )
                     }
                 }
-            } else if (currentRoute == AdminHome.javaClass.name) {
-                // AdminBottomBar 관련 코드 추가
             }
+            // AdminBottomBar 관련 코드 추가
+                else if (isAdminBottomNaviScreen(currentRoute)) {
+                    AdminBottomBar {
+                        val navBackStackEntry by navController.currentBackStackEntryAsState()
+                        val currentDestination = navBackStackEntry?.destination
+                        adminTopLevelRoutes.forEach { topLevelRoute ->
+                            AdminBottomNavItem(
+                                icon = topLevelRoute.defaultIcon,
+                                label = topLevelRoute.name,
+                                isSelected = currentDestination?.hierarchy?.any {
+                                    it.route == topLevelRoute.route.javaClass.name
+                                } == true,
+                                onClick = {
+                                    navController.navigate(topLevelRoute.route) {
+                                        bottomNavOptions(navController)
+                                    }
+                                }
+                            )
+                        }
+                    }
+                }
+            //}
         }
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = startDestination
+            startDestination = startDestination,
+            modifier = Modifier.padding(innerPadding) // innerPadding 오류로 임시 추가
         ) {
             initialLoginScreen(
                 navigateToLogin = { navController.navigateToNurseLogin() },
@@ -157,18 +190,47 @@ fun CVNavHost(
 
 
             adminLoginScreen(
-                navigateToHome = { navController.navigateToAdminHome() },
-                navigateToSignUp = { navController.navigateToNurseSignUpHospital() }
+                navigateToHome = {
+                    navController.navigateToAdminHome(
+                        navOptions {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                inclusive = true
+                            }
+                            launchSingleTop = true
+                            restoreState = false
+                        }
+                    )
+                },
+                navigateToSignUp = { navController.navigateToAdminSignUp() },
+                navigateToBack = { navController.popBackStack() }
             )
 
-            adminSignUpScreen(
-                navigateToHome = { navController.navigateToAdminHome() }
+            adminSignUpHospitalScreen(
+                viewModel = adminSignUpViewModel,
+                navigateToIntro = { navController.navigateToIntro() },
+                navigateToAdminSignUpHospital = { navController.navigateToAdminSignUp() },
+                navigateToAdminSignUpName = { navController.navigationToAdminSignUpName() },
+                navigateToAdminSignUpIdPw = { navController.navigationToAdminSignUpIdPw() },
+                navigateToAdminSignUpWaiting = { navController.navigationToAdminSignupWaiting() },
+                navigateToHome = {
+                    navController.navigateToAdminHome(navOptions {
+                        popUpTo(navController.graph.findStartDestination().id) { inclusive = true }
+                        launchSingleTop = true
+                    })
+                },
+                navigateToBack = { navController.popBackStack() }
             )
 
-            adminHomeScreen()
+            adminHomeScreen(
+                navigateToAdminLogin = {navController.navigateToIntro()}
+            )
+            adminRequestAcceptanceScreen(
+                navigateToBack = { navController.popBackStack() }
+            )
         }
     }
 }
+
 
 @Composable
 private fun isNurseBottomNaviScreen(currentRoute: String?): Boolean =
@@ -181,3 +243,7 @@ private fun NavOptionsBuilder.bottomNavOptions(navController: NavHostController)
     launchSingleTop = true
     restoreState = false
 }
+
+@Composable
+private fun isAdminBottomNaviScreen(currentRoute: String?): Boolean =
+    currentRoute == AdminHome.javaClass.name || currentRoute == AdminRequestAcceptance.javaClass.name

@@ -36,7 +36,7 @@ import com.aurora.carevision.app.ui.theme.Gray600
 import com.aurora.carevision.app.ui.theme.Primary700
 import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.CVShortDropDownMenu
-import com.aurora.carevision.domain.nurse.Patient
+import com.aurora.carevision.domain.nurse.model.Patient
 
 @Composable
 fun PatientInfoScreen(

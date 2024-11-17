@@ -6,5 +6,6 @@ data class NurseSignUpState(
     val userName: String = "",
     val userId: String = "",
     val password: String = "",
-    val nameDuplicate: Boolean = false,
+    val doCheckNameDuplicate: Boolean = false,
+    val nameDuplicate: Boolean = true,
 )
