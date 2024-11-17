@@ -115,13 +115,18 @@ fun CVTailIconSearchBar(
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     onTextChanged: (String) -> Unit,
     onFocusChanged: (Boolean) -> Unit,
+    onSearchClick: () -> Unit,
 ) {
+    var isFocused by remember{ mutableStateOf(false)}
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
 
     BasicTextField(
         value = value,
-        onValueChange = onValueChange,
+        onValueChange = {
+            onValueChange(it)
+            onTextChanged(it)
+        },
         modifier = Modifier
             .fillMaxWidth()
             .clip(shape = RoundedCornerShape(10.dp))
@@ -131,13 +136,14 @@ fun CVTailIconSearchBar(
             .padding(16.dp)
             .focusRequester(focusRequester)
             .onFocusChanged { focusState ->
-                if (focusState.isFocused) {
-                    focusRequester.requestFocus()
-                }
+                isFocused = focusState.isFocused
+                onFocusChanged(isFocused)
             },
 
         singleLine = true,
         textStyle = CVTheme.typography.textBody1Medium.copy(color = Gray500),
+        keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions,
         decorationBox = { innerTextField ->
             Row(
                 verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
@@ -161,6 +167,7 @@ fun CVTailIconSearchBar(
                     painter = painterResource(id = tailIcon),
                     contentDescription = "search icon",
                     tint = Gray500,
+                    modifier = Modifier.clickable { onSearchClick() }
                 )
             }
         }
@@ -189,6 +196,7 @@ fun PreviewCVSearchBar() {
                 placeholder = "병원 이름을 입력하세요",
                 onTextChanged = {},
                 onFocusChanged = {},
+                onSearchClick = {},
             )
         }
     }
