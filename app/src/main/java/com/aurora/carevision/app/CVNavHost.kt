@@ -36,6 +36,12 @@ import com.aurora.carevision.feature.admin.auth.signup.adminSignUpHospitalScreen
 import com.aurora.carevision.feature.admin.home.navigation.AdminHome
 import com.aurora.carevision.feature.admin.home.navigation.adminHomeScreen
 import com.aurora.carevision.feature.admin.home.navigation.navigateToAdminHome
+import com.aurora.carevision.feature.admin.registration.patient.adminPatientRegistrationScreen
+import com.aurora.carevision.feature.admin.registration.patient.navigateToAdminCameraListInfo
+import com.aurora.carevision.feature.admin.registration.patient.navigateToAdminCheckPatientName
+import com.aurora.carevision.feature.admin.registration.patient.navigateToAdminCheckTotalInfo
+import com.aurora.carevision.feature.admin.registration.patient.navigateToAdminPatientRegistrationDone
+import com.aurora.carevision.feature.admin.registration.patient.navigateToEnterAdminPatientNumber
 import com.aurora.carevision.feature.admin.request.AdminRequestAcceptance
 import com.aurora.carevision.feature.admin.request.adminRequestAcceptanceScreen
 import com.aurora.carevision.feature.intro.Intro
@@ -235,6 +241,17 @@ fun CVNavHost(
             adminRequestAcceptanceScreen(
                 navigateToBack = { navController.popBackStack() }
             )
+
+            adminPatientRegistrationScreen(
+                navigateToAdminPatientRegistrationDone = { navController.navigateToAdminPatientRegistrationDone() },
+                navigateToEnterAdminPatientNumber = { navController.navigateToEnterAdminPatientNumber() },
+                navigateToAdminCheckPatientName = { navController.navigateToAdminCheckPatientName() },
+                navigateToAdminCameraListInfo = { navController.navigateToAdminCameraListInfo() },
+                navigateToAdminCheckTotalInfo = {navController.navigateToAdminCheckTotalInfo()},
+                navigateToAdminHome = {navController.navigateToAdminHome()},
+                onClickBack = { navController.popBackStack() }
+            )
+
         }
     }
 }

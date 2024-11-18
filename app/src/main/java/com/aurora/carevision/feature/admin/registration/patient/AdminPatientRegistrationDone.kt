@@ -1,0 +1,74 @@
+package com.aurora.carevision.feature.admin.registration.patient
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.aurora.carevision.R
+import com.aurora.carevision.app.ui.theme.CVTheme
+import com.aurora.carevision.app.ui.theme.Gray700
+import com.aurora.carevision.app.ui.theme.White
+import com.aurora.carevision.core.component.CVLongButton
+import com.aurora.carevision.core.component.TopAppBarLeft
+
+@Composable
+fun AdminPatientRegistrationDone(
+    navigateToPatientInfo: () -> Unit = {},
+    onClickBack: () -> Unit = {}
+) {
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(White),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ){
+        val patientName = "오로라"
+
+        TopAppBarLeft("환자 등록", onClick = onClickBack)
+
+        Spacer(modifier = Modifier
+            .height(24.dp)
+            .weight(1f))
+        Image(painter = painterResource(id = R.drawable.ic_signup_complete_icon), contentDescription = "Patient Registration Done", modifier = Modifier.size(120.dp))
+        Spacer(modifier = Modifier.height(36.dp))
+        Text(
+            text = "$patientName 환자가 등록되었습니다",
+            style = CVTheme.typography.headingPrimary,
+            color = Gray700,
+        )
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        CVLongButton(
+            text = "확인",
+            onClick = navigateToPatientInfo,
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(modifier = Modifier
+            .height(24.dp)
+            .weight(1f))
+    }
+}
+
+@Composable
+@Preview
+fun PatientRegistrationDonePreview(){
+    CVTheme{
+        AdminPatientRegistrationDone()
+    }
+}
+
