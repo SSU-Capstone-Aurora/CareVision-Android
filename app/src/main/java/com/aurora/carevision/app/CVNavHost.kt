@@ -172,7 +172,9 @@ fun CVNavHost(
                 navigateToNurseLogin = { navController.navigateToIntro() },
             )
 
-            nurseMypageScreen()
+            nurseMypageScreen(
+                navigateToNurseLogin = { navController.navigateToIntro() }
+            )
 
             patientInfoScreen()
 
