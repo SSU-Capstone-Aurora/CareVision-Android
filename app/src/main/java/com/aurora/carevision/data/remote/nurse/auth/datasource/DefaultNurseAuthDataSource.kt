@@ -14,6 +14,6 @@ class DefaultNurseAuthDataSource @Inject constructor(
     }
 
     override suspend fun getHospitalList(searchText: String): BaseResponse<HospitalListResponse> {
-        return nurseAuthService.getHospitalList(searchText)
+        return nurseAuthService.getHospitalListNurse(searchText)
     }
 }

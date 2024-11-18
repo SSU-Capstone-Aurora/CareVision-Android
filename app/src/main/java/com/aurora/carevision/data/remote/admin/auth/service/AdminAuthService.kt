@@ -1,7 +1,7 @@
 package com.aurora.carevision.data.remote.admin.auth.service
 
 import com.aurora.carevision.core.network.response.BaseResponse
-import com.aurora.carevision.data.remote.nurse.auth.model.HospitalListResponse
+import com.aurora.carevision.data.remote.admin.auth.model.HospitalListResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -11,11 +11,11 @@ interface AdminAuthService {
     // 회원가입
     // 닉네임 중복 확인 api
     @GET("api/admin/check-username")
-    suspend fun checkDuplication(@Query ("username") username: String): String
+    suspend fun checkDuplication(@Query ("username") username: String): BaseResponse<Boolean>
 
     // 병원명 조회 api
     @GET("api/admin/hospitals")
-    suspend fun searchHospitalList(@Query ("search") searchText: String): BaseResponse<HospitalListResponse>
+    suspend fun getHospitalList(@Query ("search") searchText: String): BaseResponse<HospitalListResponse>
 
     // 병원 과 조회 api
 

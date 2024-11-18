@@ -13,7 +13,7 @@ interface NurseAuthService {
     // 회원가입 api
     // 병원명 조회 api
     @GET("api/admin/hospitals")
-    suspend fun getHospitalList(@Query ("search") searchText: String): BaseResponse<HospitalListResponse>
+    suspend fun getHospitalListNurse(@Query ("search") searchText: String): BaseResponse<HospitalListResponse>
 
     // 로그인 api
 }

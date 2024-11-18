@@ -1,7 +1,7 @@
 package com.aurora.carevision.data.remote.admin.auth.di
 
 import com.aurora.carevision.core.network.qualifier.Unsecured
-import com.aurora.carevision.data.remote.nurse.auth.service.NurseAuthService
+import com.aurora.carevision.data.remote.admin.auth.service.AdminAuthService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,11 +12,11 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AuthModule {
+object AdminAuthModule {
     @Provides
     @Singleton
     // NurseAuthService 인터페이스를 구현한 객체를 제공
     // @Unsecured 어노테이션이 붙은 Retrofit 객체를 사용
     // provideLoginApi 사용되는 곳은 viewModel, repository 등 필요한 곳
-    fun provideNurseAuthApi(@Unsecured retrofit: Retrofit): NurseAuthService = retrofit.create()
+    fun provideAdminAuthApi(@Unsecured retrofit: Retrofit): AdminAuthService = retrofit.create()
 }
