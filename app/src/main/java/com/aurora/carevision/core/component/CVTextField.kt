@@ -3,6 +3,7 @@ package com.aurora.carevision.core.component
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -68,6 +69,7 @@ fun CVBasicTextField(
     onFocusChanged: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
     trailingIcon: Int? = null,
+    onClickTailingIcon: () -> Unit = {},
     isError: Boolean = false,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
@@ -126,7 +128,7 @@ fun CVBasicTextField(
         },
         trailingIcon = {
             if (trailingIcon != null) {
-                Icon(painter = painterResource(id = trailingIcon), contentDescription = "")
+                Icon(painter = painterResource(id = trailingIcon), contentDescription = "", tint = Primary600, modifier = Modifier.clickable { onClickTailingIcon() })
             }
         }
     )

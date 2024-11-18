@@ -8,6 +8,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.feature.intro.Intro
+import com.aurora.carevision.feature.nurse.home.navigation.NurseHome
 import com.aurora.carevision.navigation.CVNavHost
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,7 +26,7 @@ class MainActivity : ComponentActivity() {
 
                 CVNavHost(
                     navController = navController,
-                    startDestination = Intro,
+                    startDestination = NurseHome,
                 )
             }
         }

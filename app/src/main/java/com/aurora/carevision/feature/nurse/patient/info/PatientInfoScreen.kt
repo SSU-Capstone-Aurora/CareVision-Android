@@ -2,6 +2,7 @@ package com.aurora.carevision.feature.nurse.patient.info
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,9 +13,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import com.aurora.carevision.R
 import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.Gray100
+import com.aurora.carevision.app.ui.theme.Gray300
 import com.aurora.carevision.app.ui.theme.Gray500
 import com.aurora.carevision.app.ui.theme.Gray600
 import com.aurora.carevision.app.ui.theme.Primary700
@@ -35,7 +39,9 @@ import com.aurora.carevision.core.component.CVShortDropDownMenu
 import com.aurora.carevision.domain.nurse.model.Patient
 
 @Composable
-fun PatientInfoScreen() {
+fun PatientInfoScreen(
+    onClickNavigateToPatientRegistration: () -> Unit = {}
+) {
 
     val userName = "오로라"
     val dummyList = listOf(
@@ -83,14 +89,37 @@ fun PatientInfoScreen() {
                 .fillMaxWidth()
                 .padding(horizontal = 24.dp, vertical = 4.dp)
         )
-        Text(
-            text = stringResource(R.string.tv_my_patient_list),
-            color = Gray600,
-            style = CVTheme.typography.headingSecondary,
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 24.dp)
-        )
+                .padding(horizontal = 24.dp, vertical = 4.dp)
+        ) {
+            Text(
+                text = stringResource(R.string.tv_my_patient_list),
+                color = Gray600,
+                style = CVTheme.typography.headingSecondary,
+                modifier = Modifier
+            )
+
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(10.dp))
+                    .size(35.dp)
+                    .background(White)
+                    .border(1.dp, Gray300, shape = RoundedCornerShape(10.dp))
+                    .clickable { onClickNavigateToPatientRegistration() },
+
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_plus),
+                    contentDescription = "add patient",
+                    tint = Gray500
+                )
+            }
+        }
         Spacer(modifier = Modifier.height(12.dp))
         LazyColumn(
             modifier = Modifier
@@ -178,10 +207,12 @@ fun MyPatientListItem(
                 }
             )
         }
-        Spacer(modifier = Modifier
-            .height(1.dp)
-            .fillMaxWidth()
-            .background(Gray100))
+        Spacer(
+            modifier = Modifier
+                .height(1.dp)
+                .fillMaxWidth()
+                .background(Gray100)
+        )
 
         Row(
             modifier = Modifier
