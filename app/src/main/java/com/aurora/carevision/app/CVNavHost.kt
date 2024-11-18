@@ -55,8 +55,14 @@ import com.aurora.carevision.feature.nurse.home.navigation.nurseHomeScreen
 import com.aurora.carevision.feature.nurse.mypage.NurseMypage
 import com.aurora.carevision.feature.nurse.mypage.nurseMypageScreen
 import com.aurora.carevision.feature.nurse.patient.info.PatientInfo
+import com.aurora.carevision.feature.nurse.patient.info.navigateToPatientInfo
 import com.aurora.carevision.feature.nurse.patient.info.patientInfoScreen
-import com.aurora.carevision.feature.nurse.patient.registration.PatientRegistration
+import com.aurora.carevision.feature.nurse.patient.registration.navigateToCameraListInfo
+import com.aurora.carevision.feature.nurse.patient.registration.navigateToCheckTotalInfo
+import com.aurora.carevision.feature.nurse.patient.registration.navigateToCheckPatientName
+import com.aurora.carevision.feature.nurse.patient.registration.navigateToEnterPatientNumber
+import com.aurora.carevision.feature.nurse.patient.registration.navigateToPatientRegistration
+import com.aurora.carevision.feature.nurse.patient.registration.navigateToPatientRegistrationDone
 import com.aurora.carevision.feature.nurse.patient.registration.patientRegistrationScreen
 
 @Composable
@@ -174,9 +180,22 @@ fun CVNavHost(
 
             nurseMypageScreen()
 
-            patientInfoScreen()
+            patientInfoScreen(
+                navigateToPatientRegistration = { navController.navigateToPatientRegistration() }
+            )
 
-            patientRegistrationScreen()
+            patientRegistrationScreen(
+                navigateToPatientRegistrationDone = { navController.navigateToPatientRegistrationDone() },
+                navigateToPatientInfo = { navController.navigateToPatientInfo() },
+                navigateToPatientRegistration = { navController.navigateToPatientInfo() },
+                navigateToEnterPatientNumber = { navController.navigateToEnterPatientNumber() },
+                navigateToCheckPatientName = { navController.navigateToCheckPatientName() },
+                navigateToCameraListInfo = { navController.navigateToCameraListInfo() },
+                navigateToCheckTotalInfo = { navController.navigateToCheckTotalInfo() },
+                onClickBack = { navController.popBackStack() }
+            )
+
+
 
             adminLoginScreen(
                 navigateToHome = {
@@ -223,7 +242,7 @@ fun CVNavHost(
 
 @Composable
 private fun isNurseBottomNaviScreen(currentRoute: String?): Boolean =
-    currentRoute == NurseHome.javaClass.name || currentRoute == NurseMypage.javaClass.name || currentRoute == PatientInfo.javaClass.name || currentRoute == PatientRegistration.javaClass.name
+    currentRoute == NurseHome.javaClass.name || currentRoute == NurseMypage.javaClass.name || currentRoute == PatientInfo.javaClass.name
 
 private fun NavOptionsBuilder.bottomNavOptions(navController: NavHostController) {
     popUpTo(navController.graph.id) {

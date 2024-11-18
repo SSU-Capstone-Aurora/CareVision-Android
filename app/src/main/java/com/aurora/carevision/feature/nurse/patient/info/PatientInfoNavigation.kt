@@ -13,10 +13,11 @@ fun NavController.navigateToPatientInfo(navOptions: NavOptions? = null) = naviga
 
 fun NavGraphBuilder.patientInfoScreen(
     //navigateToNurseLogin: () -> Unit,
+    navigateToPatientRegistration: () -> Unit
 ) {
     composable<PatientInfo> {
         PatientInfoScreen(
-            //
+            onClickNavigateToPatientRegistration = navigateToPatientRegistration
         )
     }
 }
