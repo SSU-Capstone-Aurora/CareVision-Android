@@ -40,6 +40,11 @@ import com.aurora.carevision.feature.admin.auth.signup.adminSignUpHospitalScreen
 import com.aurora.carevision.feature.admin.home.navigation.AdminHome
 import com.aurora.carevision.feature.admin.home.navigation.adminHomeScreen
 import com.aurora.carevision.feature.admin.home.navigation.navigateToAdminHome
+import com.aurora.carevision.feature.admin.registration.camera.CameraRegistrationViewModel
+import com.aurora.carevision.feature.admin.registration.camera.cameraRegistrationScreen
+import com.aurora.carevision.feature.admin.registration.camera.navigateToCameraRegistAfterBarCode
+import com.aurora.carevision.feature.admin.registration.camera.navigateToCameraRegistFinish
+import com.aurora.carevision.feature.admin.registration.camera.navigateToCameraRegistrationInfo
 import com.aurora.carevision.feature.admin.registration.patient.adminPatientRegistrationScreen
 import com.aurora.carevision.feature.admin.registration.patient.navigateToAdminCameraListInfo
 import com.aurora.carevision.feature.admin.registration.patient.navigateToAdminCheckPatientName
@@ -74,6 +79,7 @@ import com.aurora.carevision.feature.nurse.patient.registration.navigateToEnterP
 import com.aurora.carevision.feature.nurse.patient.registration.navigateToPatientRegistration
 import com.aurora.carevision.feature.nurse.patient.registration.navigateToPatientRegistrationDone
 import com.aurora.carevision.feature.nurse.patient.registration.patientRegistrationScreen
+import dagger.hilt.android.lifecycle.HiltViewModel
 
 @Composable
 fun CVNavHost(
@@ -82,8 +88,10 @@ fun CVNavHost(
 ) {
     val nurseSignUpViewModel: NurseSignUpViewModel = hiltViewModel()
     val adminSignUpViewModel: AdminSignUpHospitalEntryViewModel = hiltViewModel()
+    val cameraRegistrationViewModel : CameraRegistrationViewModel = hiltViewModel()
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
 
+    var isModalVisible by remember { mutableStateOf(false) }
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
@@ -114,7 +122,6 @@ fun CVNavHost(
             }
             // AdminBottomBar 관련 코드 추가
                 else if (isAdminBottomNaviScreen(currentRoute)) {
-                var isModalVisible by remember { mutableStateOf(false) }
                     AdminBottomBar (
                         onCenterButtonClick = {isModalVisible = true}
                     ){
@@ -140,6 +147,7 @@ fun CVNavHost(
                     onDismiss = { isModalVisible = false },
                     onDeviceRegistrationClick = {
                         isModalVisible = false
+                        navController.navigateToCameraRegistAfterBarCode()
                     },
                     onPatientRegistrationClick = {
                         isModalVisible = false
@@ -269,7 +277,13 @@ fun CVNavHost(
                 navigateToAdminHome = {navController.navigateToAdminHome()},
                 onClickBack = { navController.popBackStack() }
             )
-
+            cameraRegistrationScreen(
+                viewModel = CameraRegistrationViewModel(),
+                navigateToCameraRegistrationInfo = {navController.navigateToCameraRegistrationInfo()},
+                navigateToCameraRegistFinish = {navController.navigateToCameraRegistFinish()},
+                onFinish = {navController.navigateToAdminHome()},
+                navigateToBack = {navController.popBackStack()},
+            )
         }
     }
 }

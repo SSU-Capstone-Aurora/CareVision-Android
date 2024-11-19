@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -17,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.aurora.carevision.app.ui.theme.Black
 import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.Gray100
@@ -24,21 +27,34 @@ import com.aurora.carevision.app.ui.theme.Red600
 import com.aurora.carevision.core.component.CVBasicTextField
 import com.aurora.carevision.core.component.CVLongButton
 import com.aurora.carevision.core.component.TopAppBarLeft
+import com.aurora.carevision.feature.admin.registration.camera.CameraRegistrationSideEffect
+import com.aurora.carevision.feature.admin.registration.camera.CameraRegistrationViewModel
 
 @Composable
 fun CameraRegistrationInfoScreen(
-    navigateToCheckCameraInfo: () -> Unit = {},
+    viewModel: CameraRegistrationViewModel = hiltViewModel(),
+    navigateToFinish: () -> Unit = {},
     navigateToScanningBarcode: () -> Unit = {},
     navigateToBack: () -> Unit = {},
 ) {
+    val state by viewModel.state.collectAsState()
 
+    LaunchedEffect(Unit) {
+        viewModel.sideEffect.collect { sideEffect ->
+            when (sideEffect) {
+                is CameraRegistrationSideEffect.NavigateToFinish -> navigateToFinish()
+                is CameraRegistrationSideEffect.NavigateToBack -> navigateToBack()
+                else -> {}
+            }
+        }
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Gray100)
     ) {
         TopAppBarLeft(
-            onClick = { navigateToBack() },
+            onClick = navigateToBack,
             title = "장치 추가",
         )
 
@@ -50,42 +66,36 @@ fun CameraRegistrationInfoScreen(
                 .padding(top = 16.dp, start = 24.dp, bottom = 24.dp)
         )
 
-        var text by remember { mutableStateOf("") } // TODO Move To viewModel
-        var wardText by remember { mutableStateOf("") }
-        var roomText by remember { mutableStateOf("") }
-        var bedText by remember { mutableStateOf("") }
-
         CVBasicTextField(
-            value = wardText,
+            value = state.wardNumber?: "",
             placeholder = "입원 병동 번호를 입력해주세요",
             label = "입원 병동",
-            onTextChanged = { newValue -> wardText = newValue },
+            onTextChanged = { newValue -> viewModel.updateWardNumber(newValue)},
             onFocusChanged = {},
             //trailingIcon = R.drawable.ic_patient_register_line,
             //onClickTailingIcon = navigateToScanningBarcode,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 24.dp, end = 24.dp),
+                .padding(start = 24.dp, end = 24.dp, bottom = 24.dp),
         )
-        val isDigitError = wardText.any { !it.isDigit() } // TODO Move To viewModel
-        Box(modifier = Modifier.height(30.dp)) {
-            if (isDigitError) {
-                Text(
-                    text = "잘못된 입력 형식입니다.",
-                    color = Red600,
-                    style = CVTheme.typography.captionRegular,
-                    modifier = Modifier
-                        .padding(horizontal = 24.dp, vertical = 8.dp)
-                        .fillMaxWidth()
-                )
-            }
-        }
+//        Box(modifier = Modifier.height(30.dp)) {
+//            if (state.wardNumber == null) {
+//                Text(
+//                    text = "잘못된 입력 형식입니다.",
+//                    color = Red600,
+//                    style = CVTheme.typography.captionRegular,
+//                    modifier = Modifier
+//                        .padding(horizontal = 24.dp, vertical = 8.dp)
+//                        .fillMaxWidth()
+//                )
+//            }
+//        }
 
         CVBasicTextField(
-            value = roomText,
+            value = state.roomNumber?: "",
             placeholder = "입원실 번호를 입력해주세요",
             label = "입원실 번호",
-            onTextChanged = { newValue -> roomText = newValue },
+            onTextChanged = { newValue -> viewModel.updateRoomNumber(newValue)},
             onFocusChanged = {},
             //trailingIcon = R.drawable.ic_patient_register_line,
             //onClickTailingIcon = navigateToScanningBarcode,
@@ -94,7 +104,7 @@ fun CameraRegistrationInfoScreen(
                 .padding(start = 24.dp, end = 24.dp),
         )
         Box(modifier = Modifier.height(30.dp)) {
-            if (roomText.isEmpty()) {
+            if (state.roomNumber == "") {
                 Text(
                     text = "*필수",
                     color = Red600,
@@ -107,10 +117,10 @@ fun CameraRegistrationInfoScreen(
         }
 
         CVBasicTextField(
-            value = bedText,
+            value = state.bedNumber?: "",
             placeholder = "베드 번호를 입력해주세요",
             label = "베드 번호",
-            onTextChanged = { newValue -> bedText = newValue },
+            onTextChanged = { newValue -> viewModel.updateBedNumber(newValue)},
             onFocusChanged = {},
             //trailingIcon = R.drawable.ic_patient_register_line,
             //onClickTailingIcon = navigateToScanningBarcode,
@@ -119,7 +129,7 @@ fun CameraRegistrationInfoScreen(
                 .padding(start = 24.dp, end = 24.dp),
         )
         Box(modifier = Modifier.height(30.dp)) {
-            if (bedText.isEmpty()) {
+            if (state.bedNumber == "") {
                 Text(
                     text = "*필수",
                     color = Red600,
@@ -132,8 +142,7 @@ fun CameraRegistrationInfoScreen(
         }
         CVLongButton(
             text = "다음",
-            //onClick = navigateToCheckPatientInfo,
-            onClick = {},
+            onClick = navigateToFinish,
             enabled = true,
             modifier = Modifier
                 .padding(top = 24.dp)
