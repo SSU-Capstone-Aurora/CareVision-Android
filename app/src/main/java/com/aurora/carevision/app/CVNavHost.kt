@@ -8,6 +8,9 @@ import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -24,6 +27,7 @@ import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.AdminBottomBar
 import com.aurora.carevision.core.component.AdminBottomNavItem
 import com.aurora.carevision.core.component.BottomNavItem
+import com.aurora.carevision.core.component.CVAdminRegistrationModal
 import com.aurora.carevision.core.component.NurseBottomBar
 import com.aurora.carevision.feature.admin.auth.login.adminLoginScreen
 import com.aurora.carevision.feature.admin.auth.login.navigateToAdminLogin
@@ -110,7 +114,10 @@ fun CVNavHost(
             }
             // AdminBottomBar 관련 코드 추가
                 else if (isAdminBottomNaviScreen(currentRoute)) {
-                    AdminBottomBar {
+                var isModalVisible by remember { mutableStateOf(false) }
+                    AdminBottomBar (
+                        onCenterButtonClick = {isModalVisible = true}
+                    ){
                         val navBackStackEntry by navController.currentBackStackEntryAsState()
                         val currentDestination = navBackStackEntry?.destination
                         adminTopLevelRoutes.forEach { topLevelRoute ->
@@ -128,6 +135,16 @@ fun CVNavHost(
                             )
                         }
                     }
+                CVAdminRegistrationModal(
+                    isVisible = isModalVisible,
+                    onDismiss = { isModalVisible = false },
+                    onDeviceRegistrationClick = {
+                        isModalVisible = false
+                    },
+                    onPatientRegistrationClick = {
+                        isModalVisible = false
+                    }
+                )
                 }
             //}
         }
