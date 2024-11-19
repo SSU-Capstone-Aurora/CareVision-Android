@@ -143,6 +143,7 @@ fun CVNavHost(
                     },
                     onPatientRegistrationClick = {
                         isModalVisible = false
+                        navController.navigateToEnterAdminPatientNumber()
                     }
                 )
                 }

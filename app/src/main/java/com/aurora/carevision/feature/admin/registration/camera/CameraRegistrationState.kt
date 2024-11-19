@@ -6,13 +6,7 @@ data class CameraRegistrationState(
     val isFieldVisible: Boolean = false,
     val wardNumber: Int,
     val bedNumber: Int,
+    val roomNumber: Int,
+    val isDigitError: Boolean = false,
 
-    //20211119
-    val isError: Boolean = false,
-    val department: String = "",
-    val userName: String = "",
-    val userId: String = "",
-    val password: String = "",
-    val nameDuplicate: Boolean = false,
-    val isHospitalSelected: Boolean = false,
 )
