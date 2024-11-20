@@ -4,19 +4,17 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class HospitalListResponse(
-    @SerialName("hospitals")
-    val hospitals: List<Hospital>,
+data class NurseDepartmentListResponse(
+    @SerialName("departments")
+    val departments: List<Department>,
     @SerialName("totalCount")
     val totalCount: Int
 ) {
     @Serializable
-    data class Hospital(
+    data class Department(
+        @SerialName("id")
+        val id: String,
         @SerialName("name")
         val name: String,
-        @SerialName("address")
-        val address: String,
-        @SerialName("ykiho")
-        val ykiho: String
     )
 }

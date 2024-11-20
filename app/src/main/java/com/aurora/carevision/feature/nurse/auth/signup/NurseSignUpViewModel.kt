@@ -21,11 +21,12 @@ class NurseSignUpViewModel @Inject constructor(
     val sideEffect: MutableStateFlow<NurseSignUpSideEffect?> = _sideEffect
 
     fun updateSelectedHospital(newHospitalName: String) {
-        _state.value = _state.value.copy(hospitalName = newHospitalName)
+        _state.value = _state.value.copy(selectedHospitalName = newHospitalName)
+        Log.d("NurseSignUpViewModel", "updatedHospital : ${_state.value.selectedHospitalName}")
     }
 
     fun updateSelectedDepartment(newDepartment: String) {
-        _state.value = _state.value.copy(department = newDepartment)
+        _state.value = _state.value.copy(selectedDepartment = newDepartment)
     }
 
     fun updateUserName(newUserName: String) {
@@ -40,7 +41,7 @@ class NurseSignUpViewModel @Inject constructor(
         _state.value = _state.value.copy(password = newPassword)
         Log.d(
             "NurseSignUpViewModel",
-            "updatedHospital : ${_state.value.hospitalName}, updatedDepartment : ${_state.value.department}, updatedUserName : ${_state.value.userName}, updatedUserId : ${_state.value.userId}, updatedPassword : ${_state.value.password}"
+            "updatedHospital : ${_state.value.selectedHospitalName}, updatedDepartment : ${_state.value.selectedDepartment}, updatedUserName : ${_state.value.userName}, updatedUserId : ${_state.value.userId}, updatedPassword : ${_state.value.password}"
         )
     }
 
@@ -64,6 +65,19 @@ class NurseSignUpViewModel @Inject constructor(
             }.onFailure {
                 _state.value = _state.value.copy(nameDuplicate = false)
                 Log.d("NurseSignUpViewModel", "checkIdValidation : onFailure")
+            }
+        }
+    }
+
+    fun loadHospitalList(){
+        viewModelScope.launch {
+            runCatching {
+                nurseAuthRepository.getNurseHospitalList()
+            }.onSuccess {
+                _state.value.hospitalList = it.hospitals
+                Log.d("NurseSignUpViewModel", "loadHospitalList : onSuccess ${it.hospitals}")
+            }.onFailure {
+                Log.d("NurseSignUpViewModel", "loadHospitalList : onFailure : ${it.message}")
             }
         }
     }

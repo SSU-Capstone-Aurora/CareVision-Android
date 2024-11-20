@@ -1,5 +1,6 @@
 package com.aurora.carevision.feature.nurse.auth.signup.select_hospital
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -51,6 +52,10 @@ fun NurseSignUpScreen(
     val state by viewModel.state.collectAsState()
 
     LaunchedEffect(Unit) {
+        viewModel.loadHospitalList()
+    }
+
+    LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
                 is NurseSignUpSideEffect.NavigateToName -> {
@@ -84,19 +89,18 @@ fun NurseSignUpScreen(
 
         ReviewDropdownMenu(
             placeholder = "병원 이름을 입력하세요",
-            menuItems = dummyMenuItems,
-            selectedItem = state.hospitalName,
+            menuItems = (state.hospitalList.map { it.name }),
+            selectedItem = state.selectedHospitalName,
             onMenuItemClick = { selected ->
                 viewModel.updateSelectedHospital(selected)
             }
         )
-
         Spacer(modifier = Modifier.height(24.dp))
 
         ReviewDropdownMenu(
             placeholder = "과를 선택해주세요",
             menuItems = dummyMenuItems,
-            selectedItem = state.department,
+            selectedItem = state.selectedDepartment,
             onMenuItemClick = { selected ->
                 viewModel.updateSelectedDepartment(selected)
             }
@@ -105,7 +109,7 @@ fun NurseSignUpScreen(
         CVLongButton(
             text = "다음",
             onClick = navigateToSignUpNameScreen,
-            enabled = state.hospitalName.isNotEmpty() && state.department.isNotEmpty(),
+            enabled = state.selectedHospitalName.isNotEmpty() && state.selectedDepartment.isNotEmpty(),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 24.dp)
