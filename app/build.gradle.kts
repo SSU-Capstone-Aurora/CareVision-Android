@@ -107,4 +107,7 @@ dependencies {
     // okhttp : Retrofit으로 받는 데이터를 로그로 확인하기 위해
     implementation(libs.okhttp3)
     implementation(libs.okhttp3.logging.interceptor)
+
+    // Timber
+    implementation (libs.timber)
 }

@@ -3,6 +3,7 @@ package com.aurora.carevision.feature.nurse.auth.signup
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.aurora.carevision.domain.nurse.model.auth.NurseUser
 import com.aurora.carevision.domain.nurse.repository.NurseAuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,13 +21,18 @@ class NurseSignUpViewModel @Inject constructor(
     val _sideEffect: MutableStateFlow<NurseSignUpSideEffect?> = MutableStateFlow(null)
     val sideEffect: MutableStateFlow<NurseSignUpSideEffect?> = _sideEffect
 
-    fun updateSelectedHospital(newHospitalName: String) {
-        _state.value = _state.value.copy(selectedHospitalName = newHospitalName)
-        Log.d("NurseSignUpViewModel", "updatedHospital : ${_state.value.selectedHospitalName}")
+    fun updateSelectedHospital(newHospitalName: String, newHospitalId: Int) {
+        _state.value = _state.value.copy(
+            selectedHospitalName = newHospitalName,
+            selectedHospitalId = newHospitalId
+        )
     }
 
-    fun updateSelectedDepartment(newDepartment: String) {
-        _state.value = _state.value.copy(selectedDepartment = newDepartment)
+    fun updateSelectedDepartment(newDepartmentName: String, newDepartmentId: Int) {
+        _state.value = _state.value.copy(
+            selectedDepartmentName = newDepartmentName,
+            selectedDepartmentId = newDepartmentId
+        )
     }
 
     fun updateUserName(newUserName: String) {
@@ -39,10 +45,6 @@ class NurseSignUpViewModel @Inject constructor(
 
     fun updatePassword(newPassword: String) {
         _state.value = _state.value.copy(password = newPassword)
-        Log.d(
-            "NurseSignUpViewModel",
-            "updatedHospital : ${_state.value.selectedHospitalName}, updatedDepartment : ${_state.value.selectedDepartment}, updatedUserName : ${_state.value.userName}, updatedUserId : ${_state.value.userId}, updatedPassword : ${_state.value.password}"
-        )
     }
 
     fun updateDoCheckNameDuplicate(newDoCheckNameDuplicate: Boolean) {
@@ -69,12 +71,12 @@ class NurseSignUpViewModel @Inject constructor(
         }
     }
 
-    fun loadHospitalList(){
+    fun loadHospitalList() {
         viewModelScope.launch {
             runCatching {
                 nurseAuthRepository.getNurseHospitalList()
             }.onSuccess {
-                _state.value.hospitalList = it.hospitals
+                _state.value = _state.value.copy(hospitalList = it.hospitals) // copy 사용
                 Log.d("NurseSignUpViewModel", "loadHospitalList : onSuccess ${it.hospitals}")
             }.onFailure {
                 Log.d("NurseSignUpViewModel", "loadHospitalList : onFailure : ${it.message}")
@@ -82,13 +84,38 @@ class NurseSignUpViewModel @Inject constructor(
         }
     }
 
-    fun requestSignUp() {
-        // 회원가입 API 호출
+    fun loadDepartmentList(selectedHospitalId: Int) {
+        viewModelScope.launch {
+            runCatching {
+                nurseAuthRepository.getNurseDepartmentList(selectedHospitalId)
+            }.onSuccess {
+                _state.value = _state.value.copy(departmentList = it.departments) // copy 사용
+                Log.d("NurseSignUpViewModel", "loadDepartmentList : onSuccess ${it.departments}")
+            }.onFailure {
+                Log.d("NurseSignUpViewModel", "loadDepartmentList : onFailure : ${it.message}")
+            }
+        }
     }
 
-    fun getHospitalList() {
-        // 병원명 조회 API 호출
+    fun requestSignUp() {
         viewModelScope.launch {
+            runCatching {
+                nurseAuthRepository.nurseSignUp(
+                    NurseUser(
+                        name = _state.value.userName,
+                        userId = _state.value.userId,
+                        password = _state.value.password,
+                        hospitalId = _state.value.selectedHospitalId,
+                        departmentId = _state.value.selectedDepartmentId
+                    )
+                )
+            }.onSuccess {
+                _sideEffect.value = NurseSignUpSideEffect.SignUpSuccess
+                Log.d("NurseSignUpViewModel", "requestSignUp : onSuccess")
+            }.onFailure {
+                _sideEffect.value = NurseSignUpSideEffect.ShowToast("회원가입에 실패했습니다.\n다시 시도해주세요.")
+                Log.d("NurseSignUpViewModel", "requestSignUp : onFailure : ${it.message}")
+            }
         }
     }
 }

@@ -6,4 +6,8 @@ sealed class NurseSignUpSideEffect {
     object NavigateToWaiting : NurseSignUpSideEffect()
     object NavigateToHome : NurseSignUpSideEffect()
     object NavigateToInitialLogin : NurseSignUpSideEffect()
+
+    data class ShowToast(val message: String) : NurseSignUpSideEffect()
+
+    object SignUpSuccess : NurseSignUpSideEffect()
 }
