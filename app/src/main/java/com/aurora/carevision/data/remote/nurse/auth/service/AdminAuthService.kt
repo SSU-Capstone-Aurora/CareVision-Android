@@ -1,7 +1,7 @@
 package com.aurora.carevision.data.remote.nurse.auth.service
 
 import com.aurora.carevision.core.network.response.BaseResponse
-import com.aurora.carevision.data.remote.nurse.auth.model.HospitalListResponse
+import com.aurora.carevision.data.remote.nurse.auth.model.NurseHospitalListResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -15,7 +15,7 @@ interface AdminAuthService {
 
     // 병원명 조회 api
     @GET("api/admin/hospitals")
-    suspend fun searchHospitalList(@Query ("search") searchText: String): BaseResponse<HospitalListResponse>
+    suspend fun searchHospitalList(@Query ("search") searchText: String): BaseResponse<NurseHospitalListResponse>
 
     // 병원 과 조회 api
 

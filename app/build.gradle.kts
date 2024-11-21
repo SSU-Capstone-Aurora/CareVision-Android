@@ -108,9 +108,6 @@ dependencies {
     implementation(libs.okhttp3)
     implementation(libs.okhttp3.logging.interceptor)
 
-    // google barcode scanner
-    implementation(libs.google.mlkit.barcode.scanning)
-
-    // permission
-    implementation(libs.google.permissions)
+    // Timber
+    implementation (libs.timber)
 }

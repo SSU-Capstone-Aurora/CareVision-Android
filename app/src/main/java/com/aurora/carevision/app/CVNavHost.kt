@@ -172,6 +172,7 @@ fun CVNavHost(
                         }
                     )
                 },
+                navigateToLogin = { navController.navigateToNurseLogin() },
                 navigateToBack = { navController.popBackStack() }
             )
 

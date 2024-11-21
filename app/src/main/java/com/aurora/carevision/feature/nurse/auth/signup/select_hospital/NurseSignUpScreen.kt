@@ -1,5 +1,6 @@
 package com.aurora.carevision.feature.nurse.auth.signup.select_hospital
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -31,24 +32,13 @@ import com.aurora.carevision.feature.nurse.auth.signup.NurseSignUpViewModel
 fun NurseSignUpScreen(
     viewModel: NurseSignUpViewModel = hiltViewModel(),
     navigateToBack: () -> Unit = {},
-    navigateToSignUpNameScreen: () -> Unit = {}
-){
-    val dummyMenuItems = listOf(
-        "내과",
-        "외과",
-        "소아과",
-        "피부과",
-        "안과",
-        "이비인후과",
-        "비뇨기과",
-        "정형외과",
-        "신경외과",
-        "치과",
-        "한의원",
-        "약국"
-    )
-
+    navigateToSignUpNameScreen: () -> Unit = {},
+) {
     val state by viewModel.state.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.loadHospitalList()
+    }
 
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
@@ -56,56 +46,71 @@ fun NurseSignUpScreen(
                 is NurseSignUpSideEffect.NavigateToName -> {
                     navigateToSignUpNameScreen()
                 }
+
                 is NurseSignUpSideEffect.NavigateToInitialLogin -> {
                     navigateToBack()
                 }
+
                 else -> {}
             }
         }
     }
 
-    Column (
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .background(White)
             .statusBarsPadding()
             .systemBarsPadding()
-    ){
+    ) {
         TopAppBarLeft(
-            onClick =  navigateToBack,
+            onClick = navigateToBack,
         )
         Text(
             text = "환영합니다!\n어디에서 근무 중이신가요?",
             style = CVTheme.typography.headingPrimary,
             color = Color.Black,
             modifier = Modifier
-                .padding(top=16.dp, start = 24.dp, end = 24.dp, bottom = 24.dp)
+                .padding(top = 16.dp, start = 24.dp, end = 24.dp, bottom = 24.dp)
         )
 
         ReviewDropdownMenu(
             placeholder = "병원 이름을 입력하세요",
-            menuItems = dummyMenuItems,
-            selectedItem = state.hospitalName,
+            menuItems = state.hospitalList.map { it.name },
+            selectedItem = state.selectedHospitalName.ifEmpty { "병원을 선택해주세요" },
             onMenuItemClick = { selected ->
-                viewModel.updateSelectedHospital(selected)
+                val selectedHospital = state.hospitalList.find { it.name == selected }
+                if (selectedHospital != null) {
+                    viewModel.updateSelectedHospital(selectedHospital.name, selectedHospital.id)
+                    viewModel.loadDepartmentList(selectedHospital.id)
+                    Log.d("NurseSignUpScreen1", "departmentList : ${state.departmentList}")
+                }
             }
         )
 
         Spacer(modifier = Modifier.height(24.dp))
 
+
+        Log.d("NurseSignUpScreen2", "departmentList : ${state.departmentList}")
         ReviewDropdownMenu(
             placeholder = "과를 선택해주세요",
-            menuItems = dummyMenuItems,
-            selectedItem = state.department,
+            menuItems = (state.departmentList.map { it.name }),
+            selectedItem = state.selectedDepartmentName.ifEmpty { "과를 선택해주세요" },
             onMenuItemClick = { selected ->
-                viewModel.updateSelectedDepartment(selected)
+                val selectedDepartment = state.departmentList.find { it.name == selected }
+                if (selectedDepartment != null) {
+                    viewModel.updateSelectedDepartment(
+                        selectedDepartment.name,
+                        selectedDepartment.id
+                    )
+                }
             }
         )
 
         CVLongButton(
             text = "다음",
             onClick = navigateToSignUpNameScreen,
-            enabled = state.hospitalName.isNotEmpty() && state.department.isNotEmpty(),
+            enabled = state.selectedHospitalName.isNotEmpty() && state.selectedDepartmentName.isNotEmpty(),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 24.dp)
@@ -115,13 +120,13 @@ fun NurseSignUpScreen(
 
 @Composable
 @Preview
-fun NurseSignUpScreenPreview(){
-    CVTheme{
+fun NurseSignUpScreenPreview() {
+    CVTheme {
         Column(
             modifier = Modifier
                 .background(White)
                 .fillMaxSize()
-        ){
+        ) {
             NurseSignUpScreen()
         }
     }
