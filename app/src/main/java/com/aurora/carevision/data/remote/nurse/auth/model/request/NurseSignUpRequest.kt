@@ -8,8 +8,6 @@ import kotlinx.serialization.Serializable
 data class NurseSignUpRequest(
     @SerialName("nurse")
     val nurse: Nurse,
-    @SerialName("hospital")
-    val hospitalId: Int,
     @SerialName("department")
     val departmentId: Int
 ){
@@ -31,7 +29,6 @@ fun NurseUser.toDataModel(): NurseSignUpRequest {
             userId = userId,
             password = password
         ),
-        hospitalId = hospitalId,
         departmentId = departmentId
     )
 }
