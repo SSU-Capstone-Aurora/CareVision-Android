@@ -18,6 +18,8 @@ kotlinx-serialization-json = "1.6.3"
 splash-api = "1.0.1"
 retrofit = "2.11.0"
 okhttp = "4.12.0"
+google-barcode-scanning = "17.3.0"
+google-permissions = "0.36.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -53,6 +55,9 @@ retrofit2-kotlin-serialization = { module = "com.squareup.retrofit2:converter-ko
 
 okhttp3 = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 okhttp3-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
+
+google-mlkit-barcode-scanning = { group = "com.google.mlkit", name = "barcode-scanning", version.ref = "google-barcode-scanning" }
+google-permissions = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "google-permissions" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
