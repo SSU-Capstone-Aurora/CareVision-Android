@@ -13,11 +13,11 @@ fun NavController.navigateToNurseMypage(navOptions: NavOptions? = null) =
     navigate(NurseMypage, navOptions)
 
 fun NavGraphBuilder.nurseMypageScreen(
-    //navigateToNurseLogin: () -> Unit,
+    navigateToNurseLogin: () -> Unit,
 ) {
     composable<NurseMypage> {
         MypageScreen(
-            //
+            onClickLogout = navigateToNurseLogin,
         )
     }
 }
