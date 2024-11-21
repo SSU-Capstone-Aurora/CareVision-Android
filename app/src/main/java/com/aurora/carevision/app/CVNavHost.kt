@@ -8,6 +8,9 @@ import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -24,6 +27,7 @@ import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.AdminBottomBar
 import com.aurora.carevision.core.component.AdminBottomNavItem
 import com.aurora.carevision.core.component.BottomNavItem
+import com.aurora.carevision.core.component.CVAdminRegistrationModal
 import com.aurora.carevision.core.component.NurseBottomBar
 import com.aurora.carevision.feature.admin.auth.login.adminLoginScreen
 import com.aurora.carevision.feature.admin.auth.login.navigateToAdminLogin
@@ -36,6 +40,17 @@ import com.aurora.carevision.feature.admin.auth.signup.adminSignUpHospitalScreen
 import com.aurora.carevision.feature.admin.home.navigation.AdminHome
 import com.aurora.carevision.feature.admin.home.navigation.adminHomeScreen
 import com.aurora.carevision.feature.admin.home.navigation.navigateToAdminHome
+import com.aurora.carevision.feature.admin.registration.camera.CameraRegistrationViewModel
+import com.aurora.carevision.feature.admin.registration.camera.cameraRegistrationScreen
+import com.aurora.carevision.feature.admin.registration.camera.navigateToCameraRegistAfterBarCode
+import com.aurora.carevision.feature.admin.registration.camera.navigateToCameraRegistFinish
+import com.aurora.carevision.feature.admin.registration.camera.navigateToCameraRegistrationInfo
+import com.aurora.carevision.feature.admin.registration.patient.adminPatientRegistrationScreen
+import com.aurora.carevision.feature.admin.registration.patient.navigateToAdminCameraListInfo
+import com.aurora.carevision.feature.admin.registration.patient.navigateToAdminCheckPatientName
+import com.aurora.carevision.feature.admin.registration.patient.navigateToAdminCheckTotalInfo
+import com.aurora.carevision.feature.admin.registration.patient.navigateToAdminPatientRegistrationDone
+import com.aurora.carevision.feature.admin.registration.patient.navigateToEnterAdminPatientNumber
 import com.aurora.carevision.feature.admin.request.AdminRequestAcceptance
 import com.aurora.carevision.feature.admin.request.adminRequestAcceptanceScreen
 import com.aurora.carevision.feature.intro.Intro
@@ -65,6 +80,7 @@ import com.aurora.carevision.feature.nurse.patient.registration.navigateToPatien
 import com.aurora.carevision.feature.nurse.patient.registration.navigateToPatientRegistrationDone
 import com.aurora.carevision.feature.nurse.patient.registration.navigateToScanningBarcode
 import com.aurora.carevision.feature.nurse.patient.registration.patientRegistrationScreen
+import dagger.hilt.android.lifecycle.HiltViewModel
 
 @Composable
 fun CVNavHost(
@@ -73,8 +89,10 @@ fun CVNavHost(
 ) {
     val nurseSignUpViewModel: NurseSignUpViewModel = hiltViewModel()
     val adminSignUpViewModel: AdminSignUpHospitalEntryViewModel = hiltViewModel()
+    val cameraRegistrationViewModel : CameraRegistrationViewModel = hiltViewModel()
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
 
+    var isModalVisible by remember { mutableStateOf(false) }
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
@@ -105,7 +123,9 @@ fun CVNavHost(
             }
             // AdminBottomBar 관련 코드 추가
                 else if (isAdminBottomNaviScreen(currentRoute)) {
-                    AdminBottomBar {
+                    AdminBottomBar (
+                        onCenterButtonClick = {isModalVisible = true}
+                    ){
                         val navBackStackEntry by navController.currentBackStackEntryAsState()
                         val currentDestination = navBackStackEntry?.destination
                         adminTopLevelRoutes.forEach { topLevelRoute ->
@@ -123,6 +143,18 @@ fun CVNavHost(
                             )
                         }
                     }
+                CVAdminRegistrationModal(
+                    isVisible = isModalVisible,
+                    onDismiss = { isModalVisible = false },
+                    onDeviceRegistrationClick = {
+                        isModalVisible = false
+                        navController.navigateToCameraRegistAfterBarCode()
+                    },
+                    onPatientRegistrationClick = {
+                        isModalVisible = false
+                        navController.navigateToEnterAdminPatientNumber()
+                    }
+                )
                 }
             //}
         }
@@ -237,6 +269,23 @@ fun CVNavHost(
             )
             adminRequestAcceptanceScreen(
                 navigateToBack = { navController.popBackStack() }
+            )
+
+            adminPatientRegistrationScreen(
+                navigateToAdminPatientRegistrationDone = { navController.navigateToAdminPatientRegistrationDone() },
+                navigateToEnterAdminPatientNumber = { navController.navigateToEnterAdminPatientNumber() },
+                navigateToAdminCheckPatientName = { navController.navigateToAdminCheckPatientName() },
+                navigateToAdminCameraListInfo = { navController.navigateToAdminCameraListInfo() },
+                navigateToAdminCheckTotalInfo = {navController.navigateToAdminCheckTotalInfo()},
+                navigateToAdminHome = {navController.navigateToAdminHome()},
+                onClickBack = { navController.popBackStack() }
+            )
+            cameraRegistrationScreen(
+                viewModel = CameraRegistrationViewModel(),
+                navigateToCameraRegistrationInfo = {navController.navigateToCameraRegistrationInfo()},
+                navigateToCameraRegistFinish = {navController.navigateToCameraRegistFinish()},
+                onFinish = {navController.navigateToAdminHome()},
+                navigateToBack = {navController.popBackStack()},
             )
         }
     }

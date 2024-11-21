@@ -57,7 +57,7 @@ fun CVHeadIconSearchBar(
         onValueChange = onValueChange,
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 24.dp)
+            .padding(horizontal = 12.dp)
             .border(if (borderVisible) 1.dp else 0.dp, Gray300, RoundedCornerShape(10.dp))
             .clip(shape = RoundedCornerShape(10.dp))
             .background(backgroundColor)

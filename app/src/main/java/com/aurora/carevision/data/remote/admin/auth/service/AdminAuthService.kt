@@ -2,6 +2,7 @@ package com.aurora.carevision.data.remote.nurse.auth.service
 
 import com.aurora.carevision.core.network.response.BaseResponse
 import com.aurora.carevision.data.remote.nurse.auth.model.NurseHospitalListResponse
+import com.aurora.carevision.data.remote.admin.auth.model.HospitalListResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

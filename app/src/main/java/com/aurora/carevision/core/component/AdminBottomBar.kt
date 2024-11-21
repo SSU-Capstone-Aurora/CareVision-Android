@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,7 +24,8 @@ import com.aurora.carevision.app.ui.theme.White
 
 @Composable
 fun AdminBottomBar(
-    content : @Composable RowScope.() -> Unit
+    onCenterButtonClick: () -> Unit = {},
+    content: @Composable RowScope.() -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -31,18 +33,27 @@ fun AdminBottomBar(
             .background(White)
             .height(64.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceBetween
+        verticalArrangement = Arrangement.Center
     ) {
-        Row(
-            modifier =  Modifier
-                .selectableGroup()
-                .fillMaxWidth()
-                .padding(start = 59.dp, end = 59.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-            content = content,
-        )
+        Box(modifier = Modifier.fillMaxSize()) {
+            Row(
+                modifier = Modifier
+                    .selectableGroup()
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+                    .padding(horizontal = 50.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+                content = content
+            )
 
+            AdminBottomCenterButton(
+                icon = R.drawable.ic_admin_registration_button,
+                isSelected = true,
+                onClick = { onCenterButtonClick() },
+                modifier = Modifier.align(Alignment.TopCenter)
+            )
+        }
     }
 }
 
@@ -57,7 +68,7 @@ fun AdminBottomNavItem(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
-        modifier = Modifier
+        modifier = modifier
             .padding(horizontal = 30.dp)
             .clickable { onClick() }
             .fillMaxHeight()
@@ -78,6 +89,30 @@ fun AdminBottomNavItem(
 }
 
 @Composable
+fun AdminBottomCenterButton(
+    icon: Int,
+    isSelected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .size(64.dp)
+            .background(Primary600, shape = CircleShape)
+            .clickable { onClick() }
+            .padding(16.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Icon(
+            painter = painterResource(id = icon),
+            contentDescription = "Center Button Icon",
+            tint = White,
+            modifier = Modifier.size(36.dp)
+        )
+    }
+}
+
+@Composable
 @Preview
 fun AdminBottomBarPreview() {
     CVTheme {
@@ -86,12 +121,13 @@ fun AdminBottomBarPreview() {
                 .background(White)
         ) {
             AdminBottomBar(
+                onCenterButtonClick = {},
                 content = {
                     AdminBottomNavItem(
                         icon = R.drawable.ic_home_line,
                         label = "홈",
                         isSelected = true,
-                        onClick = {}
+                        onClick = { }
                     )
 
                     AdminBottomNavItem(
