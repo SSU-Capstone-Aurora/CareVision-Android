@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
 
                 CVNavHost(
                     navController = navController,
-                    startDestination = AdminEnterPatientNumber,
+                    startDestination = Intro,
                 )
             }
         }

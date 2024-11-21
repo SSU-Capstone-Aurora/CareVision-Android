@@ -1,5 +1,4 @@
-package com.aurora.carevision.feature.admin.registration.patient
-
+package com.aurora.carevision.feature.admin.registration.patient.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -20,15 +19,13 @@ import androidx.compose.ui.unit.dp
 import com.aurora.carevision.R
 import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.Gray700
-import com.aurora.carevision.app.ui.theme.Primary200
-import com.aurora.carevision.app.ui.theme.Primary700
 import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.CVLongButton
 import com.aurora.carevision.core.component.TopAppBarLeft
 
 @Composable
-fun AdminCheckPatientNameScreen(
-    navigateToCameraListInfo: () -> Unit = {},
+fun AdminPatientRegistrationDone(
+    navigateToPatientInfo: () -> Unit = {},
     onClickBack: () -> Unit = {}
 ) {
 
@@ -46,10 +43,10 @@ fun AdminCheckPatientNameScreen(
         Spacer(modifier = Modifier
             .height(24.dp)
             .weight(1f))
-        Image(painter = painterResource(id = R.drawable.ic_heart), contentDescription = "Patient Registration Done", modifier = Modifier.size(170.dp))
-        Spacer(modifier = Modifier.height(24.dp))
+        Image(painter = painterResource(id = R.drawable.ic_signup_complete_icon), contentDescription = "Patient Registration Done", modifier = Modifier.size(120.dp))
+        Spacer(modifier = Modifier.height(36.dp))
         Text(
-            text = "$patientName 환자가 맞나요?",
+            text = "$patientName 환자가 등록되었습니다",
             style = CVTheme.typography.headingPrimary,
             color = Gray700,
         )
@@ -57,19 +54,10 @@ fun AdminCheckPatientNameScreen(
         Spacer(modifier = Modifier.height(24.dp))
 
         CVLongButton(
-            text = "맞아요",
-            onClick = navigateToCameraListInfo,
+            text = "확인",
+            onClick = navigateToPatientInfo,
             modifier = Modifier.fillMaxWidth()
         )
-        Spacer(modifier = Modifier.height(16.dp))
-        CVLongButton(
-            text = "아니에요",
-            onClick = onClickBack,
-            modifier = Modifier.fillMaxWidth(),
-            backgroundColor = Primary200,
-            textColor = Primary700
-        )
-
         Spacer(modifier = Modifier
             .height(24.dp)
             .weight(1f))
@@ -78,8 +66,9 @@ fun AdminCheckPatientNameScreen(
 
 @Composable
 @Preview
-fun CheckPatientNameScreenPreview(){
+fun PatientRegistrationDonePreview(){
     CVTheme{
-        AdminCheckPatientNameScreen()
+        AdminPatientRegistrationDone()
     }
 }
+

@@ -1,4 +1,4 @@
-package com.aurora.carevision.feature.admin.registration.patient
+package com.aurora.carevision.feature.admin.registration.patient.screen
 
 
 import androidx.compose.foundation.background

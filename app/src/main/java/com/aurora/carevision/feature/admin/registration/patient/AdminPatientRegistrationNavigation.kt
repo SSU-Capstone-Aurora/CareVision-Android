@@ -4,8 +4,11 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.aurora.carevision.feature.admin.home.navigation.AdminHome
-import com.aurora.carevision.feature.admin.home.CameraListScreen
+import com.aurora.carevision.feature.admin.registration.patient.screen.AdminCameraListScreen
+import com.aurora.carevision.feature.admin.registration.patient.screen.AdminCheckCameraInfoScreen
+import com.aurora.carevision.feature.admin.registration.patient.screen.AdminCheckPatientNameScreen
+import com.aurora.carevision.feature.admin.registration.patient.screen.AdminEnterPatientNumberScreen
+import com.aurora.carevision.feature.admin.registration.patient.screen.AdminPatientRegistrationDone
 import kotlinx.serialization.Serializable
 
 
