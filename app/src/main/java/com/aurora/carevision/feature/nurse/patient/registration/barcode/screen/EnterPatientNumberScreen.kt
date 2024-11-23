@@ -38,7 +38,7 @@ fun EnterPatientNumberScreen(
 ) {
     val state by viewModel.state.collectAsState()
 
-    viewModel.updatePatientScanBarcode(patientNumber ?: "default")
+    viewModel.updatePatientScanBarcode(patientNumber ?: "")
 
     Column(
         modifier = Modifier
