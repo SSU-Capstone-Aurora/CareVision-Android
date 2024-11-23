@@ -1,5 +1,6 @@
-package com.aurora.carevision.feature.nurse.patient.registration.barcode
+package com.aurora.carevision.feature.nurse.patient.registration.barcode.screen
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,7 +30,9 @@ fun EnterPatientNumberScreen(
     navigateToCheckPatientInfo: () -> Unit = {},
     navigateToScanningBarcode: () -> Unit = {},
     navigateToBack: () -> Unit = {},
+    patientNumber: String?,
 ) {
+    Log.d("EnterPatientNumberScreen", "patientNumber : $patientNumber")
 
     Column(
         modifier = Modifier
@@ -56,7 +59,9 @@ fun EnterPatientNumberScreen(
             value = text,
             placeholder = "환자번호를 입력해주세요",
             label = "환자번호",
-            onTextChanged = { newValue -> text = newValue },
+            onTextChanged = {
+                text = it
+            },
             onFocusChanged = {},
             trailingIcon = R.drawable.ic_patient_register_line,
             onClickTailingIcon = navigateToScanningBarcode,
@@ -64,6 +69,7 @@ fun EnterPatientNumberScreen(
                 .fillMaxWidth()
                 .padding(start = 24.dp, end = 24.dp),
         )
+
 
         val isLoginError = true // TODO Move To viewModel
         if (isLoginError) {
@@ -96,7 +102,7 @@ fun LoginScreenPreview() {
                 .background(Black)
                 .fillMaxSize()
         ) {
-            EnterPatientNumberScreen()
+            EnterPatientNumberScreen(patientNumber = "123456")
         }
     }
 }

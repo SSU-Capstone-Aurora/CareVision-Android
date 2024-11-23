@@ -191,11 +191,11 @@ fun CVNavHost(
                 navigateToPatientRegistrationDone = { navController.navigateToPatientRegistrationDone() },
                 navigateToPatientInfo = { navController.navigateToPatientInfo() },
                 navigateToPatientRegistration = { navController.navigateToPatientInfo() },
-                navigateToEnterPatientNumber = { navController.navigateToEnterPatientNumber() },
                 navigateToCheckPatientName = { navController.navigateToCheckPatientName() },
                 navigateToCameraListInfo = { navController.navigateToCameraListInfo() },
                 navigateToCheckTotalInfo = { navController.navigateToCheckTotalInfo() },
                 navigateToScanningBarcode = { navController.navigateToScanningBarcode() },
+                navController = navController,
                 onClickBack = { navController.popBackStack() }
             )
 

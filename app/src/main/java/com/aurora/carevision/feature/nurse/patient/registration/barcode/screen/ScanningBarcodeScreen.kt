@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalPermissionsApi::class)
 
-package com.aurora.carevision.feature.nurse.patient.registration.barcode
+package com.aurora.carevision.feature.nurse.patient.registration.barcode.screen
 
 import android.Manifest
 import android.net.Uri
@@ -22,6 +22,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.FileProvider
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.aurora.carevision.feature.nurse.patient.registration.barcode.SelfRegistrationViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
@@ -35,8 +37,11 @@ import java.io.File
 fun ScanningBarcodeScreen(
     onBarcodeScanned: (String) -> Unit = {},
     onScanError: (Exception) -> Unit = {},
-    navigateToEnterPatientNumber: () -> Unit = {}
+    navigateToEnterPatientNumber: (String) -> Unit = {},
+    viewModel: SelfRegistrationViewModel = hiltViewModel()
 ) {
+
+
     var photoUri by remember { mutableStateOf<Uri?>(null) }
     // 카메라로 찍은 사진의 변수를 저장
     Log.d("ScanningBarcodeScreen", "photo Uri : $photoUri")
@@ -56,9 +61,14 @@ fun ScanningBarcodeScreen(
                 onBarcodeScanned = { barcodes ->
                     barcodes.forEach { barcode ->
                         val barcodeValue = barcode.rawValue ?: "No value"
-                        Log.d("ScanningBarcodeScreen",": Scanned Barcode in Scan Function : $barcodeValue")
+                        Log.d(
+                            "ScanningBarcodeScreen",
+                            ": Scanned Barcode in Scan Function : $barcodeValue"
+                        )
                         onBarcodeScanned(barcodeValue) // 바코드 값이 있으면 onBarcodeScanned 함수 실행
-                        navigateToEnterPatientNumber() // 성공 시 환자 번호 입력 화면으로 이동
+                        viewModel.updatePatientScanBarcode(barcodeValue)
+                        viewModel.updateScanBarcodeSuccess(true)
+                        navigateToEnterPatientNumber(barcodeValue) // 성공 시 환자 번호 입력 화면으로 이동
                     }
                 },
                 onScanError = { exception ->
@@ -106,7 +116,7 @@ private fun scanBarcodes(
     scanner.process(image)
         // 성공 시
         .addOnSuccessListener { barcodes ->
-            Log.d("ScanningBarcodeScreen","barcode size: ${barcodes.size}") // 사진 업로드 디버깅
+            Log.d("ScanningBarcodeScreen", "barcode size: ${barcodes.size}") // 사진 업로드 디버깅
             onBarcodeScanned(barcodes)
         }
         // 실패 시
