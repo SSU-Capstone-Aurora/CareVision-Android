@@ -5,6 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
+import com.aurora.carevision.feature.nurse.patient.registration.barcode.SelfRegistrationViewModel
 import com.aurora.carevision.feature.nurse.patient.registration.barcode.screen.CameraListScreen
 import com.aurora.carevision.feature.nurse.patient.registration.barcode.screen.CheckCameraInfoScreen
 import com.aurora.carevision.feature.nurse.patient.registration.barcode.screen.CheckPatientNameScreen
@@ -60,6 +61,7 @@ fun NavController.navigateToScanningBarcode(navOptions: NavOptions? = null) =
 
 
 fun NavGraphBuilder.patientRegistrationScreen(
+    viewModel: SelfRegistrationViewModel,
     navigateToPatientRegistration: () -> Unit, // 환자 등록 화면으로 넘어가기
     navigateToPatientRegistrationDone: () -> Unit, // 확인 화면으로 넘어가기
     navigateToPatientInfo: () -> Unit, // 완료 후 환자 정보 화면으로 넘어가기
@@ -99,6 +101,7 @@ fun NavGraphBuilder.patientRegistrationScreen(
     composable<ScanningBarcode.ScanningBarcodeRoute.EnterPatientNumber> {
         val args = it.toRoute<ScanningBarcode.ScanningBarcodeRoute.EnterPatientNumber>()
         EnterPatientNumberScreen(
+            viewModel = viewModel,
             navigateToCheckPatientInfo = {
                 navigateToCheckPatientName()
             },
@@ -147,6 +150,7 @@ fun NavGraphBuilder.patientRegistrationScreen(
 
     composable<ScanningBarcode> {
         ScanningBarcodeScreen(
+            viewModel = viewModel,
             navigateToEnterPatientNumber = { scannedBarcodeNumber ->
                 navController.navigateToEnterPatientNumber(scannedBarcodeNumber)
             }

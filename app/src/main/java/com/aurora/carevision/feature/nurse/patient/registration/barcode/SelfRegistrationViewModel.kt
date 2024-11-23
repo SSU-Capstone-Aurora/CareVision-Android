@@ -1,8 +1,10 @@
 package com.aurora.carevision.feature.nurse.patient.registration.barcode
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -10,22 +12,23 @@ class SelfRegistrationViewModel @Inject constructor(
 
 ) : ViewModel(){
 
-    val state: MutableStateFlow<SelfRegistrationState> = MutableStateFlow(SelfRegistrationState())
-    val _state: MutableStateFlow<SelfRegistrationState> = state
+    private val _state: MutableStateFlow<SelfRegistrationState> = MutableStateFlow(SelfRegistrationState())
+    val state: StateFlow<SelfRegistrationState> = _state
 
-    val sideEffect: MutableStateFlow<SelfRegistrationSideEffect?> = MutableStateFlow(null)
-    val _sideEffect: MutableStateFlow<SelfRegistrationSideEffect?> = sideEffect
+    private val _sideEffect: MutableStateFlow<SelfRegistrationSideEffect?> = MutableStateFlow(null)
+    val sideEffect: StateFlow<SelfRegistrationSideEffect?> = _sideEffect
 
     fun updatePatientName(newPatientName: String){
-        state.value = state.value.copy(patientName = newPatientName)
+        _state.value = _state.value.copy(patientName = newPatientName)
     }
 
     fun updatePatientScanBarcode(newPatientScanBarcode: String){
-        state.value = state.value.copy(patientBarcodeNumber = newPatientScanBarcode)
+        _state.value = _state.value.copy(patientBarcodeNumber = newPatientScanBarcode)
+        Log.d("SelfRegistrationViewModel", "updatedPatientScanBarcode : ${state.value.patientBarcodeNumber}")
     }
 
     fun updateScanBarcodeSuccess(newScanBarcodeSuccess: Boolean){
-        state.value = state.value.copy(scanBarcodeSuccess = newScanBarcodeSuccess)
+        _state.value = _state.value.copy(scanBarcodeSuccess = newScanBarcodeSuccess)
     }
 
 }
