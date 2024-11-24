@@ -7,6 +7,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.aurora.carevision.app.ui.theme.CVTheme
+import com.aurora.carevision.feature.admin.home.navigation.AdminHome
+import com.aurora.carevision.feature.admin.registration.patient.AdminEnterPatientNumber
 import com.aurora.carevision.feature.intro.Intro
 import com.aurora.carevision.feature.nurse.home.navigation.NurseHome
 import com.aurora.carevision.navigation.CVNavHost

@@ -99,7 +99,7 @@ fun ReviewDropdownMenu(
                 .padding(horizontal = 24.dp)
                 .background(White)
                 .fillMaxWidth()
-                .height(if(menuItems.size > 3) 235.dp else 150.dp)
+                .height(if (menuItems.size > 3) 235.dp else 150.dp)
                 .clip(shape = RoundedCornerShape(10.dp))
                 .border(1.dp, Primary600, RoundedCornerShape(10.dp))
         ) {
@@ -127,6 +127,7 @@ fun ReviewDropdownMenu(
         }
     }
 }
+
 
 @Composable
 @Preview

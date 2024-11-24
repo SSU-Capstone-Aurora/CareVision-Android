@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -35,6 +36,7 @@ import com.aurora.carevision.app.ui.theme.Gray100
 import com.aurora.carevision.app.ui.theme.Gray300
 import com.aurora.carevision.app.ui.theme.Gray500
 import com.aurora.carevision.app.ui.theme.Gray700
+import com.aurora.carevision.app.ui.theme.Primary500
 import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.AdminPatientListItem
 import com.aurora.carevision.core.component.CVHeadIconSearchBar
@@ -132,18 +134,14 @@ fun PatientRegistrationScreen(
             Box(
                 modifier = Modifier
                     .clip(RoundedCornerShape(10.dp))
-                    .size(35.dp)
-                    .background(White)
-                    .border(1.dp, Gray300, shape = RoundedCornerShape(10.dp))
+                    .wrapContentSize()
+                    .background(Primary500)
+                    .padding(8.dp)
                     .clickable { onClickNavigateToSelfRegistration() },
 
                 contentAlignment = Alignment.Center
             ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_plus),
-                    contentDescription = "add patient",
-                    tint = Gray500
-                )
+                Text(text = "직접 등록", color = White, style = CVTheme.typography.captionImportance)
             }
         }
 
