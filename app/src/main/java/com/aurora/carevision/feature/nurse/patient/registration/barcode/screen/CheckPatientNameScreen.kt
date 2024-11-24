@@ -1,4 +1,4 @@
-package com.aurora.carevision.feature.nurse.patient.registration.barcode
+package com.aurora.carevision.feature.nurse.patient.registration.barcode.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

@@ -1,5 +1,6 @@
-package com.aurora.carevision.feature.nurse.patient.registration.barcode
+package com.aurora.carevision.feature.nurse.patient.registration.barcode.screen
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -15,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.aurora.carevision.R
 import com.aurora.carevision.app.ui.theme.Black
 import com.aurora.carevision.app.ui.theme.CVTheme
@@ -23,13 +26,19 @@ import com.aurora.carevision.app.ui.theme.Red600
 import com.aurora.carevision.core.component.CVBasicTextField
 import com.aurora.carevision.core.component.CVLongButton
 import com.aurora.carevision.core.component.TopAppBarLeft
+import com.aurora.carevision.feature.nurse.patient.registration.barcode.SelfRegistrationViewModel
 
 @Composable
 fun EnterPatientNumberScreen(
+    viewModel: SelfRegistrationViewModel = hiltViewModel(),
     navigateToCheckPatientInfo: () -> Unit = {},
     navigateToScanningBarcode: () -> Unit = {},
     navigateToBack: () -> Unit = {},
+    patientNumber: String?,
 ) {
+    val state by viewModel.state.collectAsState()
+
+    viewModel.updatePatientScanBarcode(patientNumber ?: "")
 
     Column(
         modifier = Modifier
@@ -49,14 +58,13 @@ fun EnterPatientNumberScreen(
                 .padding(top = 16.dp, start = 24.dp, bottom = 24.dp)
         )
 
-        var text by remember { mutableStateOf("") } // TODO Move To viewModel
-
-
         CVBasicTextField(
-            value = text,
+            value = state.patientBarcodeNumber,
             placeholder = "환자번호를 입력해주세요",
             label = "환자번호",
-            onTextChanged = { newValue -> text = newValue },
+            onTextChanged = {
+                viewModel.updatePatientScanBarcode(it)
+            },
             onFocusChanged = {},
             trailingIcon = R.drawable.ic_patient_register_line,
             onClickTailingIcon = navigateToScanningBarcode,
@@ -64,6 +72,8 @@ fun EnterPatientNumberScreen(
                 .fillMaxWidth()
                 .padding(start = 24.dp, end = 24.dp),
         )
+        Log.d("EnterPatientNumberScreen", "Patient Number : ${state.patientBarcodeNumber}")
+
 
         val isLoginError = true // TODO Move To viewModel
         if (isLoginError) {
@@ -96,7 +106,7 @@ fun LoginScreenPreview() {
                 .background(Black)
                 .fillMaxSize()
         ) {
-            EnterPatientNumberScreen()
+            EnterPatientNumberScreen(patientNumber = "123456")
         }
     }
 }
