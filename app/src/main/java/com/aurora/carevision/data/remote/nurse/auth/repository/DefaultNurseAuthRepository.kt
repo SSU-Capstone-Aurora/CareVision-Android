@@ -6,6 +6,7 @@ import com.aurora.carevision.data.remote.nurse.auth.model.NurseDepartmentListRes
 import com.aurora.carevision.data.remote.nurse.auth.model.NurseHospitalListResponse
 import com.aurora.carevision.data.remote.nurse.auth.model.request.NurseSignUpRequest
 import com.aurora.carevision.data.remote.nurse.auth.model.request.toDataModel
+import com.aurora.carevision.data.remote.nurse.auth.model.request.toDataNurseLoginModel
 import com.aurora.carevision.data.remote.nurse.auth.model.toDomainModel
 import com.aurora.carevision.domain.nurse.model.auth.DepartmentList
 import com.aurora.carevision.domain.nurse.model.auth.HospitalList
@@ -29,4 +30,6 @@ class DefaultNurseAuthRepository @Inject constructor(
     }
 
     override suspend fun nurseSignUp(nurseUserRequest: NurseUser) = remoteDataSource.nurseSignUp(nurseUserRequest.toDataModel()).result.toDomainModel()
+
+    override suspend fun nurseLogin(nurseUserRequest: NurseUser) = remoteDataSource.nurseLogin(nurseUserRequest.toDataNurseLoginModel()).result.toDomainModel()
 }

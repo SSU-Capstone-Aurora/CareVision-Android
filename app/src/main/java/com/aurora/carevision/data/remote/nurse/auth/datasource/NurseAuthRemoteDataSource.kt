@@ -3,7 +3,9 @@ package com.aurora.carevision.data.remote.nurse.auth.datasource
 import com.aurora.carevision.core.network.response.BaseResponse
 import com.aurora.carevision.data.remote.nurse.auth.model.NurseDepartmentListResponse
 import com.aurora.carevision.data.remote.nurse.auth.model.NurseHospitalListResponse
+import com.aurora.carevision.data.remote.nurse.auth.model.NurseLoginResponse
 import com.aurora.carevision.data.remote.nurse.auth.model.NurseSignUpResponse
+import com.aurora.carevision.data.remote.nurse.auth.model.request.NurseLoginRequest
 import com.aurora.carevision.data.remote.nurse.auth.model.request.NurseSignUpRequest
 
 interface NurseAuthRemoteDataSource {
@@ -11,4 +13,5 @@ interface NurseAuthRemoteDataSource {
     suspend fun getNurseHospitalList(): BaseResponse<NurseHospitalListResponse>
     suspend fun getNurseDepartmentList(hospitalId: Int): BaseResponse<NurseDepartmentListResponse>
     suspend fun nurseSignUp(nurseSignUpRequest: NurseSignUpRequest): BaseResponse<NurseSignUpResponse>
+    suspend fun nurseLogin(nurseLoginRequest: NurseLoginRequest): BaseResponse<NurseLoginResponse>
 }
