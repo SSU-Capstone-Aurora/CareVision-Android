@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class HospitalListResponse(
+data class AdminHospitalListResponse(
     @SerialName("hospitals")
     val hospitals: List<Hospital>,
     @SerialName("totalCount")

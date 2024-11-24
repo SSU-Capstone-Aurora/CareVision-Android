@@ -14,6 +14,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -160,17 +162,123 @@ fun CVTailIconSearchBar(
                     painter = painterResource(id = tailIcon),
                     contentDescription = "search icon",
                     tint = Gray500,
-                    modifier = Modifier.clickable { onSearchClick() }
+                    modifier = Modifier.clickable {
+                        onSearchClick()
+                    }
                 )
             }
         }
     )
 }
 
+@Composable
+fun SearchBarDropdownMenu(
+    value: String,
+    onValueChange: (String) -> Unit,
+    menuItems: List<String>,
+    onMenuItemClick: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    placeholder: String = "병원 이름을 입력하세요",
+    backgroundColor: Color = White,
+    tailIcon: Int = R.drawable.ic_search_gray_24,
+    borderVisible: Boolean = false,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
+    onTextChanged: (String) -> Unit,
+    onFocusChanged: (Boolean) -> Unit,
+    onSearchClick: () -> Unit,
+) {
+    var isFocused by remember { mutableStateOf(false) }
+    val focusRequester = remember { FocusRequester() }
+    val focusManager = LocalFocusManager.current
+    var isDropdownVisible by remember { mutableStateOf(false) }
+
+    Column(modifier = modifier.fillMaxWidth()) {
+        BasicTextField(
+            value = value,
+            onValueChange = {
+                onValueChange(it)
+                onTextChanged(it)
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(shape = RoundedCornerShape(10.dp))
+                .background(backgroundColor)
+                .padding(horizontal = 24.dp)
+                .border(1.dp, Gray300, RoundedCornerShape(10.dp))
+                .padding(16.dp)
+                .focusRequester(focusRequester)
+                .onFocusChanged { focusState ->
+                    isFocused = focusState.isFocused
+                    onFocusChanged(isFocused)
+                },
+            singleLine = true,
+            textStyle = CVTheme.typography.textBody1Medium.copy(color = Gray500),
+            keyboardOptions = keyboardOptions,
+            keyboardActions = keyboardActions,
+            decorationBox = { innerTextField ->
+                Row(
+                    verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Box(
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    ) {
+                        innerTextField()
+
+                        if (value.isEmpty()) {
+                            Text(
+                                text = placeholder,
+                                color = Gray500,
+                                style = CVTheme.typography.textBody1Medium,
+                            )
+                        }
+                    }
+
+                    Icon(
+                        painter = painterResource(id = tailIcon),
+                        contentDescription = "search icon",
+                        tint = Gray500,
+                        modifier = Modifier.clickable {
+                            onSearchClick()
+                            isDropdownVisible = true
+                        }
+                    )
+                }
+            }
+        )
+
+        if (isDropdownVisible && menuItems.isNotEmpty()) {
+            DropdownMenu(
+                expanded = isDropdownVisible,
+                onDismissRequest = { isDropdownVisible = false },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+                    .background(White)
+            ) {
+                menuItems.forEach { menuItem ->
+                    DropdownMenuItem(
+                        text = { Text(menuItem) },
+                        onClick = {
+                            onMenuItemClick(menuItem)
+                            isDropdownVisible = false // 항목 선택 후 DropdownMenu 닫기
+                        }
+                    )
+                }
+            }
+        }
+    }
+}
+
+
 @Preview(showBackground = true)
 @Composable
 fun PreviewCVSearchBar() {
     CVTheme {
+        var searchQuery by remember { mutableStateOf("") }
+        val menuItems = listOf("A", "B", "C", "D")
+        var selectedItem by remember { mutableStateOf("") }
         var searchBarText by rememberSaveable { mutableStateOf("") }
         Column(
             modifier = Modifier.background(White),
@@ -190,6 +298,17 @@ fun PreviewCVSearchBar() {
                 onTextChanged = {},
                 onFocusChanged = {},
                 onSearchClick = {},
+            )
+            SearchBarDropdownMenu(
+                value = searchQuery,
+                onValueChange = { query -> searchQuery = query },
+                menuItems = menuItems,
+                onMenuItemClick = { selected ->
+                    selectedItem = selected
+                },
+                onTextChanged = { /* 검색어 변경 처리 */ },
+                onFocusChanged = { /* 포커스 변경 처리 */ },
+                onSearchClick = { /* 검색 처리 */ }
             )
         }
     }

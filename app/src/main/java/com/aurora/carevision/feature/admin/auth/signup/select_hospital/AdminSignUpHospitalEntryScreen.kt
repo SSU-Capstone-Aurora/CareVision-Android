@@ -1,5 +1,6 @@
 package com.aurora.carevision.feature.admin.auth.signup.select_hospital
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -10,11 +11,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -26,9 +32,9 @@ import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.CVLongButton
 import com.aurora.carevision.core.component.CVTailIconSearchBar
 import com.aurora.carevision.core.component.ReviewDropdownMenu
+import com.aurora.carevision.core.component.SearchBarDropdownMenu
 import com.aurora.carevision.core.component.TopAppBarLeft
 import com.aurora.carevision.feature.admin.auth.signup.AdminSignUpHospitalEntrySideEffect
-import com.aurora.carevision.feature.admin.auth.signup.AdminSignUpHospitalEntryState
 import com.aurora.carevision.feature.admin.auth.signup.AdminSignUpHospitalEntryViewModel
 
 @Composable
@@ -37,23 +43,14 @@ fun AdminSignUpHospitalEntryScreen(
     navigateToSignUpNameScreen: () -> Unit = {},
     navigateToBack:() -> Unit = {},
 ) {
-    val dummyMenuItems = listOf(
-        "내과",
-        "외과",
-        "소아과",
-        "피부과",
-        "안과",
-        "이비인후과",
-        "비뇨기과",
-        "정형외과",
-        "신경외과",
-        "치과",
-        "한의원",
-        "약국"
-    )
 
     val state by viewModel.state.collectAsState()
     val context = LocalContext.current
+    var showDropdown by remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        viewModel.performHospitalSearch(state.searchQuery)
+    }
 
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
@@ -87,40 +84,68 @@ fun AdminSignUpHospitalEntryScreen(
                 .padding(top = 16.dp, start = 24.dp, end = 24.dp, bottom = 24.dp)
         )
 
-        CVTailIconSearchBar(
-            modifier = Modifier
-                .padding(start=24.dp, end=24.dp),
-            value = state.hospitalName,
-            onValueChange = {viewModel.updateSelectedHospital(it)},
-            placeholder = "병원 이름을 입력하세요",
-            onTextChanged = { query->
-                viewModel.performHospitalSearch(query)
+        SearchBarDropdownMenu(
+            value = state.searchQuery,
+            onValueChange = { query ->
+                viewModel.updateSearchQuery(query)
             },
-            onFocusChanged = { //focused ->
-                //if (!focused) viewModel.updateSelectedHospital("")
+            menuItems = state.hospitalList.map { it.name },
+            onMenuItemClick = { selected ->
+                val selectedHospital = state.hospitalList.find { it.name == selected }
+                if (selectedHospital != null) {
+                    viewModel.updateSelectedHospital(selectedHospital.name, selectedHospital.id)
+                    viewModel.loadDepartmentList(selectedHospital.id)
+
+                }
             },
             onSearchClick = {
-                if (state.hospitalName.isNotEmpty()) {
-                    viewModel.performHospitalSearch(state.hospitalName)
+                if (state.searchQuery.isNotEmpty()) {
+                    viewModel.performHospitalSearch(state.searchQuery)
+                    showDropdown = true
                 }
-            }
+            },
+            onFocusChanged = {},
+            onTextChanged = {}
         )
-        Spacer(modifier = Modifier.height(24.dp))
+//        if (state.hospitalList.isNotEmpty()) {
+//            ReviewDropdownMenu(
+//                menuItems = state.hospitalList.map { it.name },
+//                selectedItem = state.selectedHospitalName.ifEmpty { "병원을 선택해주세요" },
+//                placeholder = "병원을 선택해주세요",
+//                onMenuItemClick = { selected ->
+//                    val selectedHospital = state.hospitalList.find { it.name == selected }
+//                    if (selectedHospital != null) {
+//                        viewModel.updateSelectedHospital(selectedHospital.name, selectedHospital.id)
+//                        viewModel.loadDepartmentList(selectedHospital.id)
+//                        showDropdown = false
+//                    }
+//                }
+//            )
+//        }
 
-        if(state.isHospitalSelected) {
+
+        Spacer(modifier = Modifier.height(24.dp))
+        if(state.isHospitalSelected && state.departmentList.isNotEmpty()) {
             ReviewDropdownMenu(
                 placeholder = "과를 선택해주세요",
-                menuItems = dummyMenuItems,
-                selectedItem = state.department,
+                menuItems = (state.departmentList.map { it.name }),
+                selectedItem = state.selectedDepartmentName.ifEmpty { "과를 선택해주세요" },
                 onMenuItemClick = { selected ->
-                    viewModel.updateSelectedDepartment(selected)
+                    val selectedDepartment = state.departmentList.find { it.name == selected }
+                    if (selectedDepartment != null) {
+                        viewModel.updateSelectedDepartment(
+                            selectedDepartment.name,
+                            selectedDepartment.id
+                        )
+                    }
                 }
             )
         }
         CVLongButton(
             text = "다음",
             onClick = navigateToSignUpNameScreen,
-            enabled = true,//state.hospitalName.isNotEmpty() && state.department.isNotEmpty(),
+            //enabled = state.selectedHospitalName.isNotEmpty() && state.selectedDepartmentName.isNotEmpty(),
+            enabled = true,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 24.dp)

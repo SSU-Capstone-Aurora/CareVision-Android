@@ -76,6 +76,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.play.services.mlkit.barcode.scanning)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -110,4 +111,6 @@ dependencies {
 
     // Timber
     implementation (libs.timber)
+
+    implementation(libs.accompanist.permissions)
 }

@@ -2,17 +2,22 @@ package com.aurora.carevision.feature.admin.auth.signup
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.aurora.carevision.data.remote.admin.auth.model.toDomainModel
+import com.aurora.carevision.data.remote.admin.auth.response.AdminHospitalListResponse
+import com.aurora.carevision.domain.admin.model.auth.AdminUser
+import com.aurora.carevision.domain.admin.model.auth.HospitalList
+import com.aurora.carevision.domain.admin.repository.AdminAuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class AdminSignUpHospitalEntryViewModel @Inject constructor(
-
+    private val adminAuthRepository: AdminAuthRepository
 ): ViewModel(){
 
     val _state : MutableStateFlow<AdminSignUpHospitalEntryState> = MutableStateFlow(AdminSignUpHospitalEntryState())
@@ -22,12 +27,24 @@ class AdminSignUpHospitalEntryViewModel @Inject constructor(
     val _sideEffect: MutableStateFlow<AdminSignUpHospitalEntrySideEffect?> = MutableStateFlow(null)
     val sideEffect: MutableStateFlow<AdminSignUpHospitalEntrySideEffect?> = _sideEffect
 
-    fun updateSelectedHospital(newHospitalName: String) {
-        _state.value = _state.value.copy(hospitalName = newHospitalName, isHospitalSelected = true)
+    fun updateSelectedHospital(newHospitalName: String, newHospitalId: Int) {
+//        _state.value = _state.value.copy(
+//            selectedHospitalName = newHospitalName,
+//            selectedHospitalId = newHospitalId,
+//        )
+        _state.update {
+            it.copy(
+                selectedHospitalName = newHospitalName,
+                selectedHospitalId = newHospitalId
+            )
+        }
     }
 
-    fun updateSelectedDepartment(newDepartment: String) {
-        _state.value = _state.value.copy(department = newDepartment)
+    fun updateSelectedDepartment(newDepartmentName: String, newDepartmentId: Int) {
+        _state.value = _state.value.copy(
+            selectedDepartmentName = newDepartmentName,
+            selectedDepartmentId = newDepartmentId
+        )
     }
 
     fun updateUserName(newUserName: String) {
@@ -40,7 +57,6 @@ class AdminSignUpHospitalEntryViewModel @Inject constructor(
 
     fun updatePassword(newPassword: String) {
         _state.value = _state.value.copy(password = newPassword)
-        Log.d("AdminignUpViewModel", "updatedHospital : ${_state.value.hospitalName}, updatedDepartment : ${_state.value.department}, updatedUserName : ${_state.value.userName}, updatedUserId : ${_state.value.userId}, updatedPassword : ${_state.value.password}")
     }
 
     fun checkPwValidation(): Boolean {
@@ -48,19 +64,105 @@ class AdminSignUpHospitalEntryViewModel @Inject constructor(
         return pattern.matches(_state.value.password)
     }
 
+    fun updateDoCheckNameDuplicate(newDoCheckNameDuplicate: Boolean) {
+        _state.value = _state.value.copy(nameDuplicate = newDoCheckNameDuplicate)
+    }
+
     // Check ID validation (dummy for now)
-    fun checkIdValidation(): Boolean {
-        // 중복확인 API 호출 등 필요 시 사용
-        return false
+    fun checkIdValidation() {
+        viewModelScope.launch {
+            runCatching {
+                adminAuthRepository.checkUsername(_state.value.userName)
+                _state.value = _state.value.copy(nameDuplicate = true)
+            }.onSuccess {
+                _state.value = _state.value.copy(nameDuplicate = true)
+                Log.d("AdminSignUpViewModel", "checkIdValidation : onSuccess")
+            }.onFailure {
+                _state.value = _state.value.copy(nameDuplicate = false)
+                Log.d("AdminSignUpViewModel", "checkIdValidation : onFailure")
+            }
+        }
     }
 
     fun performHospitalSearch(query: String) {
-        val results = listOf("seoul", "soongsil")
-        _state.value = _state.value.copy(searchResults = results)
-        // 병원 정보 조회 API 호출
+        viewModelScope.launch {
+            runCatching {
+                adminAuthRepository.getHospitalList(searchText = query)
+            }.onSuccess { response ->
+                val hospitalList = response.result.toDomainModel().hospitals
+                _state.update { currentState ->
+                    currentState.copy(hospitalList = hospitalList)
+                }
+                _state.update { currentState ->
+                    currentState.copy(hospitalList = emptyList())
+                }
+                Log.d("AdminSignUpViewModel", "loadHospitalList : onSuccess ${hospitalList}")
+
+            }.onFailure {
+                _state.update { currentState ->
+                    currentState.copy(hospitalList = emptyList())
+                }
+                Log.d("AdminSignUpViewModel", "loadHospitalList : onFailure : ${it.message}")
+            }
+        }
+    }
+
+//    fun loadHospitalList(selectedHospitalList: String) {
+//        viewModelScope.launch {
+//            runCatching {
+//                adminAuthRepository.getHospitalList("")
+//            }.onSuccess { response ->
+//                //_state.value = _state.value.copy(hospitalList = ) // copy 사용
+//                val hospitals = response.result.hospitals.map{
+//                    HospitalList.Hospital(it.id, it.name)
+//                }
+//                _state.update { currentState ->
+//                    currentState.copy(hospitalList = hospitals)
+//
+//                }
+//                Log.d("AdminSignUpViewModel", "loadDepartmentList : onSuccess ${hospitals}")
+//            }.onFailure {
+//                Log.d("AdminSignUpViewModel", "loadDepartmentList : onFailure : ${it.message}")
+//            }
+//        }
+//    }
+
+    fun loadDepartmentList(selectedHospitalId: Int) {
+        viewModelScope.launch {
+            runCatching {
+                adminAuthRepository.getAdminDepartmentList(selectedHospitalId)
+            }.onSuccess {
+                _state.value = _state.value.copy(departmentList = it.departments) // copy 사용
+                Log.d("AdminSignUpViewModel", "loadDepartmentList : onSuccess ${it.departments}")
+            }.onFailure {
+                Log.d("AdminSignUpViewModel", "loadDepartmentList : onFailure : ${it.message}")
+            }
+        }
     }
 
     fun requestSignUp() {
-        // 실제 회원가입 API 호출
+        viewModelScope.launch {
+            runCatching {
+                adminAuthRepository.adminSignUp(
+                    AdminUser(
+                        name = _state.value.userName,
+                        userId = _state.value.userId,
+                        password = _state.value.password,
+                        hospitalId = _state.value.selectedHospitalId,
+                        departmentId = _state.value.selectedDepartmentId
+                    )
+                )
+            }.onSuccess {
+                _sideEffect.value = AdminSignUpHospitalEntrySideEffect.SignUpSuccess
+                Log.d("AdminSignUpViewModel", "requestSignUp : onSuccess")
+            }.onFailure {
+                _sideEffect.value = AdminSignUpHospitalEntrySideEffect.ShowToast("회원가입에 실패했습니다.\n다시 시도해주세요.")
+                Log.d("AdminSignUpViewModel", "requestSignUp : onFailure : ${it.message}")
+            }
+        }
+    }
+    fun updateSearchQuery(query: String){
+        //_state.value = _state.value.copy(searchQuery = query)
+        _state.update { it.copy(searchQuery = query) }
     }
 }
