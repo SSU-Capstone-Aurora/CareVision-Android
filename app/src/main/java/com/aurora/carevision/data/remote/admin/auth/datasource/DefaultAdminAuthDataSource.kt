@@ -20,8 +20,8 @@ class DefaultAdminAuthDataSource @Inject constructor(
         return adminAuthService.getAdminHospitalList(searchText)
     }
 
-    override suspend fun getAdminDepartmentList(hospitalId: Int): BaseResponse<AdminDepartmentListResponse> {
-        return adminAuthService.getAdminDepartmentList(hospitalId.toString())
+    override suspend fun getAdminDepartmentList(hospitalId: String): BaseResponse<AdminDepartmentListResponse> {
+        return adminAuthService.getAdminDepartmentList(hospitalId)
     }
 
     override suspend fun adminSignUp(adminSignUpRequest: AdminSignUpRequest): BaseResponse<AdminSignUpResponse> {

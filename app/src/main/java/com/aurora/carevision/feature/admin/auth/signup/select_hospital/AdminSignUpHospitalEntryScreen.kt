@@ -85,7 +85,7 @@ fun AdminSignUpHospitalEntryScreen(
         )
 
         SearchBarDropdownMenu(
-            value = state.searchQuery,
+            value = if(state.departmentList.isNotEmpty()) state.selectedHospitalName else state.searchQuery,
             onValueChange = { query ->
                 viewModel.updateSearchQuery(query)
             },
@@ -93,8 +93,8 @@ fun AdminSignUpHospitalEntryScreen(
             onMenuItemClick = { selected ->
                 val selectedHospital = state.hospitalList.find { it.name == selected }
                 if (selectedHospital != null) {
-                    viewModel.updateSelectedHospital(selectedHospital.name, selectedHospital.id)
-                    viewModel.loadDepartmentList(selectedHospital.id)
+                    viewModel.updateSelectedHospital(selectedHospital.name, selectedHospital.ykiho)
+                    viewModel.loadDepartmentList(selectedHospital.ykiho)
 
                 }
             },
@@ -128,14 +128,13 @@ fun AdminSignUpHospitalEntryScreen(
         if(state.isHospitalSelected && state.departmentList.isNotEmpty()) {
             ReviewDropdownMenu(
                 placeholder = "과를 선택해주세요",
-                menuItems = (state.departmentList.map { it.name }),
+                menuItems = (state.departmentList),
                 selectedItem = state.selectedDepartmentName.ifEmpty { "과를 선택해주세요" },
                 onMenuItemClick = { selected ->
-                    val selectedDepartment = state.departmentList.find { it.name == selected }
+                    val selectedDepartment = state.departmentList.find { it == selected }
                     if (selectedDepartment != null) {
                         viewModel.updateSelectedDepartment(
-                            selectedDepartment.name,
-                            selectedDepartment.id
+                            selectedDepartment
                         )
                     }
                 }

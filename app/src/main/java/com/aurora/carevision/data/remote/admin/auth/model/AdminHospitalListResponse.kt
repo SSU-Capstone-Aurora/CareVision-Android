@@ -29,7 +29,7 @@ fun AdminHospitalListResponse.toDomainModel(): HospitalList {
     return HospitalList(
         hospitals = this.hospitals.map { hospital ->
             HospitalList.Hospital(
-                id = hospital.ykiho.hashCode(),
+                ykiho = hospital.ykiho,
                 name = hospital.name,
                 address = hospital.address
             )

@@ -12,7 +12,7 @@ interface AdminAuthRemoteDataSource {
 
     suspend fun checkUsername(username: String): Boolean
     suspend fun getAdminHospitalList(searchText: String): BaseResponse<AdminHospitalListResponse>
-    suspend fun getAdminDepartmentList(hospitalId: Int): BaseResponse<AdminDepartmentListResponse>
+    suspend fun getAdminDepartmentList(hospitalId: String): BaseResponse<AdminDepartmentListResponse>
     suspend fun adminSignUp(adminSignUpRequest: AdminSignUpRequest): BaseResponse<AdminSignUpResponse>
 
 }

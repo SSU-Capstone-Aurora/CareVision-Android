@@ -7,27 +7,14 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class AdminDepartmentListResponse(
     @SerialName("departments")
-    val departments: List<Department>,
+    val departments: List<String>,
     @SerialName("totalCount")
     val totalCount: Int
-) {
-    @Serializable
-    data class Department(
-        @SerialName("id")
-        val id: Int,
-        @SerialName("name")
-        val name: String,
-    )
-}
+)
 
 fun AdminDepartmentListResponse.toDomainModel(): DepartmentList {
     return DepartmentList(
-        departments = this.departments.map { department ->
-            DepartmentList.Department(
-                id = department.id,
-                name = department.name
-            )
-        },
+        departments = this.departments,
         totalCount = this.totalCount
     )
 }

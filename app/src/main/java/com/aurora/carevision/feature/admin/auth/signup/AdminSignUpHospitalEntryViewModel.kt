@@ -4,9 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aurora.carevision.data.remote.admin.auth.model.toDomainModel
-import com.aurora.carevision.data.remote.admin.auth.response.AdminHospitalListResponse
 import com.aurora.carevision.domain.admin.model.auth.AdminUser
-import com.aurora.carevision.domain.admin.model.auth.HospitalList
 import com.aurora.carevision.domain.admin.repository.AdminAuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,24 +25,20 @@ class AdminSignUpHospitalEntryViewModel @Inject constructor(
     val _sideEffect: MutableStateFlow<AdminSignUpHospitalEntrySideEffect?> = MutableStateFlow(null)
     val sideEffect: MutableStateFlow<AdminSignUpHospitalEntrySideEffect?> = _sideEffect
 
-    fun updateSelectedHospital(newHospitalName: String, newHospitalId: Int) {
-//        _state.value = _state.value.copy(
-//            selectedHospitalName = newHospitalName,
-//            selectedHospitalId = newHospitalId,
-//        )
-        _state.update {
-            it.copy(
+    fun updateSelectedHospital(newHospitalName: String, newHospitalYkiho: String) {
+        _state.value = _state.value.copy(
                 selectedHospitalName = newHospitalName,
-                selectedHospitalId = newHospitalId
+                selectedHospitalykiho = newHospitalYkiho,
+                isHospitalSelected = true
             )
-        }
+        Log.d("AdminSignUpViewModel", "updateSelectedHospital : ${newHospitalName}, ${newHospitalYkiho}")
     }
 
-    fun updateSelectedDepartment(newDepartmentName: String, newDepartmentId: Int) {
+    fun updateSelectedDepartment(newDepartmentName: String) {
         _state.value = _state.value.copy(
             selectedDepartmentName = newDepartmentName,
-            selectedDepartmentId = newDepartmentId
         )
+        Log.d("AdminSignUpViewModel", "updateSelectedDepartment : ${newDepartmentName}")
     }
 
     fun updateUserName(newUserName: String) {
@@ -90,12 +84,13 @@ class AdminSignUpHospitalEntryViewModel @Inject constructor(
                 adminAuthRepository.getHospitalList(searchText = query)
             }.onSuccess { response ->
                 val hospitalList = response.result.toDomainModel().hospitals
-                _state.update { currentState ->
-                    currentState.copy(hospitalList = hospitalList)
-                }
-                _state.update { currentState ->
-                    currentState.copy(hospitalList = emptyList())
-                }
+//                _state.update { currentState ->
+//                    currentState.copy(hospitalList = hospitalList)
+//                }
+//                _state.update { currentState ->
+//                    currentState.copy(hospitalList = emptyList())
+//                }
+                _state.value = _state.value.copy(hospitalList = hospitalList)
                 Log.d("AdminSignUpViewModel", "loadHospitalList : onSuccess ${hospitalList}")
 
             }.onFailure {
@@ -127,7 +122,7 @@ class AdminSignUpHospitalEntryViewModel @Inject constructor(
 //        }
 //    }
 
-    fun loadDepartmentList(selectedHospitalId: Int) {
+    fun loadDepartmentList(selectedHospitalId: String) {
         viewModelScope.launch {
             runCatching {
                 adminAuthRepository.getAdminDepartmentList(selectedHospitalId)
@@ -148,7 +143,7 @@ class AdminSignUpHospitalEntryViewModel @Inject constructor(
                         name = _state.value.userName,
                         userId = _state.value.userId,
                         password = _state.value.password,
-                        hospitalId = _state.value.selectedHospitalId,
+                        hospitalYkifo = _state.value.selectedHospitalykiho,
                         departmentId = _state.value.selectedDepartmentId
                     )
                 )

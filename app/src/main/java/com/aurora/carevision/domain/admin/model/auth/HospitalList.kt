@@ -5,7 +5,7 @@ data class HospitalList(
     val totalCount: Int
 ) {
     data class Hospital(
-        val id: Int,
+        val ykiho: String,
         val name: String,
         val address: String
     )

@@ -9,7 +9,7 @@ import com.aurora.carevision.domain.admin.model.auth.DepartmentList
 interface AdminAuthRepository {
     suspend fun checkUsername(username: String): Boolean
     suspend fun getHospitalList(searchText: String): BaseResponse<AdminHospitalListResponse>
-    suspend fun getAdminDepartmentList(hospitalId: Int): DepartmentList
+    suspend fun getAdminDepartmentList(hospitalId: String): DepartmentList
     suspend fun adminSignUp(adminUserRequest: AdminUser): AdminUser
 
 }

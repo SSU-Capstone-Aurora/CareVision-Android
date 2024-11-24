@@ -1,15 +1,14 @@
 package com.aurora.carevision.feature.admin.auth.signup
 
-import com.aurora.carevision.data.remote.admin.auth.model.AdminHospitalListResponse
 import com.aurora.carevision.domain.admin.model.auth.DepartmentList
 import com.aurora.carevision.domain.admin.model.auth.HospitalList
 
 data class AdminSignUpHospitalEntryState(
     var searchQuery: String ="",
     var hospitalList: List<HospitalList.Hospital> = emptyList(),
-    var departmentList: List<DepartmentList.Department> = emptyList(),
+    var departmentList: List<String> = emptyList(),
     var selectedHospitalName: String = "",
-    var selectedHospitalId: Int = 0,
+    var selectedHospitalykiho: String = "",
     var selectedDepartmentName: String = "",
     var selectedDepartmentId: Int = 0,
     val isTyping: Boolean = false,
