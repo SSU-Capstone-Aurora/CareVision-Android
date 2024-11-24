@@ -1,13 +1,19 @@
 package com.aurora.carevision.feature.admin.auth.signup
 
+import com.aurora.carevision.domain.admin.model.auth.DepartmentList
+import com.aurora.carevision.domain.admin.model.auth.HospitalList
+
 data class AdminSignUpHospitalEntryState(
-    var hospitalName: String = "",
+    var searchQuery: String ="",
+    var hospitalList: List<HospitalList.Hospital> = emptyList(),
+    var departmentList: List<String> = emptyList(),
+    var selectedHospitalName: String = "",
+    var selectedHospitalykiho: String = "",
+    var selectedDepartmentName: String = "",
+    var selectedDepartmentId: Int = 0,
     val isTyping: Boolean = false,
     val isFieldVisible: Boolean = false,
-    val selectedItem: String = "",
-    val searchResults: List<String> = emptyList(),
     val isError: Boolean = false,
-    val department: String = "",
     val userName: String = "",
     val userId: String = "",
     val password: String = "",

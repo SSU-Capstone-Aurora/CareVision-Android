@@ -76,6 +76,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.play.services.mlkit.barcode.scanning)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -108,9 +109,8 @@ dependencies {
     implementation(libs.okhttp3)
     implementation(libs.okhttp3.logging.interceptor)
 
-    // google barcode scanner
-    implementation(libs.google.mlkit.barcode.scanning)
+    // Timber
+    implementation (libs.timber)
 
-    // permission
-    implementation(libs.google.permissions)
+    implementation(libs.accompanist.permissions)
 }

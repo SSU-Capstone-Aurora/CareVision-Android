@@ -36,6 +36,7 @@ fun NavGraphBuilder.nurseSignUpScreen(
     navigateToNurseSignUpWaiting: () -> Unit,
     navigateToHome: () -> Unit,
     navigateToBack: () -> Unit,
+    navigateToLogin: () -> Unit
 ) {
     composable<NurseSignUp> {
         NurseSignUpScreen(
@@ -57,7 +58,8 @@ fun NavGraphBuilder.nurseSignUpScreen(
         NurseSignUpIdPwScreen(
             navigateToBack = navigateToNurseSignUpName,
             navigateToSignUpWaitingScreen = navigateToNurseSignUpWaiting,
-            viewModel = viewModel
+            viewModel = viewModel,
+            navigateToLogin = navigateToLogin
         )
     }
 

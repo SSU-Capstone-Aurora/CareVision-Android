@@ -1,5 +1,6 @@
 package com.aurora.carevision.feature.admin.auth.signup.info
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -17,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -28,7 +31,9 @@ import com.aurora.carevision.core.component.CVDuplicateCheckTextField
 import com.aurora.carevision.core.component.CVLongButton
 import com.aurora.carevision.core.component.CVSignInPasswordTextField
 import com.aurora.carevision.core.component.TopAppBarLeft
+import com.aurora.carevision.feature.admin.auth.signup.AdminSignUpHospitalEntrySideEffect
 import com.aurora.carevision.feature.admin.auth.signup.AdminSignUpHospitalEntryViewModel
+import com.aurora.carevision.feature.nurse.auth.signup.NurseSignUpSideEffect
 
 @Composable
 fun AdminIDPasswordInfoScreen(
@@ -38,6 +43,36 @@ fun AdminIDPasswordInfoScreen(
 ){
 
     val state = viewModel.state.collectAsState()
+    val context = LocalContext.current
+
+    LaunchedEffect(Unit) {
+        viewModel.sideEffect.collect { sideEffect ->
+            when (sideEffect) {
+                is AdminSignUpHospitalEntrySideEffect.NavigateToInitialLogin -> {
+                    navigateToBack()
+                }
+
+                is AdminSignUpHospitalEntrySideEffect.ShowToast -> {
+                    Toast.makeText(
+                        context,
+                        sideEffect.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                is AdminSignUpHospitalEntrySideEffect.SignUpSuccess -> {
+                    navigateToSignUpWaitingScreen()
+                    Toast.makeText(
+                        context,
+                        "회원가입이 완료되었습니다.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                else -> {}
+            }
+        }
+    }
 
     Column (
         modifier = Modifier
@@ -60,14 +95,17 @@ fun AdminIDPasswordInfoScreen(
             value = state.value.userId,
             placeholder = "아이디를 입력해주세요",
             label = "아이디",
-            onTextChanged = {viewModel.updateUserId(it)},
+            onTextChanged = {
+                viewModel.updateUserId(it)
+                viewModel.updateDoCheckNameDuplicate(false)
+                            },
             onFocusChanged = {},
-            onDuplicateCheck = {},
+            onDuplicateCheck = {viewModel.checkIdValidation()},
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 24.dp, end = 24.dp, bottom = 24.dp)
         )
-        if (!viewModel.checkIdValidation()) {
+        if (!state.value.nameDuplicate) {
             Text(
                 text = "* 아이디가 중복됩니다.",
                 color = Red600,
@@ -115,14 +153,10 @@ fun AdminIDPasswordInfoScreen(
         CVLongButton(
             text = "완료",
             onClick = {
-                navigateToSignUpWaitingScreen()
+                //navigateToSignUpWaitingScreen()
                 viewModel.requestSignUp()
             },
-            enabled = (state.value.userId.isNotEmpty() &&
-                    state.value.password.isNotEmpty() &&
-                    state.value.password.length >= 8 &&
-                    viewModel.checkPwValidation() &&
-                    !viewModel.checkIdValidation()),
+            enabled = (state.value.userId.isNotEmpty() && state.value.password.isNotEmpty() && state.value.password.length >= 8 && viewModel.checkPwValidation() && state.value.nameDuplicate && state.value.nameDuplicate),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 24.dp)

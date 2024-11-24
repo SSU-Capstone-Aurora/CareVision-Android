@@ -1,10 +1,10 @@
-package com.aurora.carevision.data.remote.nurse.auth.model
+package com.aurora.carevision.data.remote.admin.auth.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class HospitalListResponse(
+data class AdminHospitalListResponse(
     @SerialName("hospitals")
     val hospitals: List<Hospital>,
     @SerialName("totalCount")

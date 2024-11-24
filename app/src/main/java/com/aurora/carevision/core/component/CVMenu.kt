@@ -99,7 +99,7 @@ fun ReviewDropdownMenu(
                 .padding(horizontal = 24.dp)
                 .background(White)
                 .fillMaxWidth()
-                .height(235.dp)
+                .height(if (menuItems.size > 3) 235.dp else 150.dp)
                 .clip(shape = RoundedCornerShape(10.dp))
                 .border(1.dp, Primary600, RoundedCornerShape(10.dp))
         ) {
@@ -128,6 +128,7 @@ fun ReviewDropdownMenu(
     }
 }
 
+
 @Composable
 @Preview
 fun ReviewDropdownMenuPreview() {
@@ -142,16 +143,6 @@ fun ReviewDropdownMenuPreview() {
             val menuItems = listOf(
                 "내과",
                 "외과",
-                "소아과",
-                "피부과",
-                "안과",
-                "이비인후과",
-                "비뇨기과",
-                "정형외과",
-                "신경외과",
-                "치과",
-                "한의원",
-                "약국"
             )
             ReviewDropdownMenu(
                 menuItems = menuItems,

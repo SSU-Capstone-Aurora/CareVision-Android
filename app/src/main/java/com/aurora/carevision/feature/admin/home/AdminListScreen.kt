@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -15,13 +16,14 @@ import androidx.compose.ui.unit.dp
 import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.Gray100
 import com.aurora.carevision.app.ui.theme.White
+import com.aurora.carevision.core.component.AdminBottomCenterButton
 import com.aurora.carevision.core.component.AdminHospitalListItem
+import com.aurora.carevision.core.component.CVAdminRegistrationModal
 import com.aurora.carevision.core.component.CVTabs
 
 @Composable
 fun AdminListScreen() {
     var selectedTab by rememberSaveable { mutableStateOf("Nurse") }
-
     Box(
         modifier = Modifier
             .fillMaxSize()
