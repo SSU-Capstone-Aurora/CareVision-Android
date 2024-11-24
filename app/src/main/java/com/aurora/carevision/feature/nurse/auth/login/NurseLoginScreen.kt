@@ -50,6 +50,7 @@ fun NurseLoginScreen(
                     Toast.makeText(context, sideEffect.text, Toast.LENGTH_SHORT).show()
                 }
                 is NurseLoginSideEffect.LoginSuccess -> {
+                    Toast.makeText(context, "로그인 성공", Toast.LENGTH_SHORT).show()
                     navigateToHome()
                 }
                 else -> {}
