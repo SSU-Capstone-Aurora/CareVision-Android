@@ -57,7 +57,8 @@ fun AdminPatientListItem(
         Row(
             modifier = modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(5.dp))
+                .clip(RoundedCornerShape(8.dp))
+                .padding(vertical = 12.dp, horizontal = 12.dp)
                 .background(White)
                 .clickable {
                     onClick()
@@ -118,7 +119,7 @@ fun AdminNurseListItem(
         modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 12.dp, horizontal = 12.dp)
-            .clip(RoundedCornerShape(5.dp))
+            .clip(RoundedCornerShape(8.dp))
             .background(White),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -204,7 +205,8 @@ fun AdminCameraListItem(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(5.dp))
+            .padding(vertical = 12.dp, horizontal = 12.dp)
+            .clip(RoundedCornerShape(8.dp))
             .background(White)
             .clickable {
                 onClick()

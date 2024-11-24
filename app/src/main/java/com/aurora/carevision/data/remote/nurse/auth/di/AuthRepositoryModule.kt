@@ -1,5 +1,7 @@
 package com.aurora.carevision.data.remote.nurse.auth.di
 
+import com.aurora.carevision.data.remote.admin.auth.datasource.AdminAuthRemoteDataSource
+import com.aurora.carevision.data.remote.admin.auth.datasource.DefaultAdminAuthDataSource
 import com.aurora.carevision.data.remote.nurse.auth.datasource.DefaultNurseAuthDataSource
 import com.aurora.carevision.data.remote.nurse.auth.datasource.NurseAuthRemoteDataSource
 import com.aurora.carevision.data.remote.nurse.auth.repository.DefaultNurseAuthRepository
@@ -22,7 +24,7 @@ abstract class AuthRepositoryModule {
 
     @Binds
     @Singleton
-    abstract fun bindNurseAuthRepository(
+    abstract fun bindAdminAuthRepository(
         defaultNurseAuthRepository: DefaultNurseAuthRepository
     ): NurseAuthRepository
 }
