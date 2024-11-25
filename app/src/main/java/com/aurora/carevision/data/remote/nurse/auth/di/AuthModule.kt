@@ -23,10 +23,4 @@ object AuthModule {
     // @Unsecured 어노테이션이 붙은 Retrofit 객체를 사용
     // provideLoginApi 사용되는 곳은 viewModel, repository 등 필요한 곳
     fun provideNurseAuthApi(@Unsecured retrofit: Retrofit): NurseAuthService = retrofit.create()
-
-    @Provides
-    @Singleton
-    fun provideTokenProvider(sharedPreferences: SharedPreferences): TokenProvider {
-        return TokenProvider(sharedPreferences)
-    }
 }
