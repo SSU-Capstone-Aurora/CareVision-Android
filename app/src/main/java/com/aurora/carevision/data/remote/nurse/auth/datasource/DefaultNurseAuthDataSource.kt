@@ -3,7 +3,9 @@ package com.aurora.carevision.data.remote.nurse.auth.datasource
 import com.aurora.carevision.core.network.response.BaseResponse
 import com.aurora.carevision.data.remote.nurse.auth.model.NurseDepartmentListResponse
 import com.aurora.carevision.data.remote.nurse.auth.model.NurseHospitalListResponse
+import com.aurora.carevision.data.remote.nurse.auth.model.NurseLoginResponse
 import com.aurora.carevision.data.remote.nurse.auth.model.NurseSignUpResponse
+import com.aurora.carevision.data.remote.nurse.auth.model.request.NurseLoginRequest
 import com.aurora.carevision.data.remote.nurse.auth.model.request.NurseSignUpRequest
 import com.aurora.carevision.data.remote.nurse.auth.service.NurseAuthService
 import javax.inject.Inject
@@ -26,5 +28,9 @@ class DefaultNurseAuthDataSource @Inject constructor(
 
     override suspend fun nurseSignUp(nurseSignUpRequest: NurseSignUpRequest): BaseResponse<NurseSignUpResponse> {
         return nurseAuthService.nurseSignUp(nurseSignUpRequest)
+    }
+
+    override suspend fun nurseLogin(nurseLoginRequest: NurseLoginRequest): BaseResponse<NurseLoginResponse> {
+        return nurseAuthService.nurseLogin(nurseLoginRequest)
     }
 }

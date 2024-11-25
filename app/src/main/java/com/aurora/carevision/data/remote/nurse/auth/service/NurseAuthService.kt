@@ -3,7 +3,9 @@ package com.aurora.carevision.data.remote.nurse.auth.service
 import com.aurora.carevision.core.network.response.BaseResponse
 import com.aurora.carevision.data.remote.nurse.auth.model.NurseDepartmentListResponse
 import com.aurora.carevision.data.remote.nurse.auth.model.NurseHospitalListResponse
+import com.aurora.carevision.data.remote.nurse.auth.model.NurseLoginResponse
 import com.aurora.carevision.data.remote.nurse.auth.model.NurseSignUpResponse
+import com.aurora.carevision.data.remote.nurse.auth.model.request.NurseLoginRequest
 import com.aurora.carevision.data.remote.nurse.auth.model.request.NurseSignUpRequest
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -24,7 +26,10 @@ interface NurseAuthService {
     @GET("api/hospitals/departments")
     suspend fun getHospitalDepartmentList(@Query ("hospitalId") hospitalId: Int): BaseResponse<NurseDepartmentListResponse>
 
-    // 로그인 api
+    // 회원가입 api
     @POST("api/sign-up")
     suspend fun nurseSignUp(@Body nurseSignUpRequest : NurseSignUpRequest): BaseResponse<NurseSignUpResponse>
+
+    @POST("api/login")
+    suspend fun nurseLogin(@Body nurseLoginRequest : NurseLoginRequest): BaseResponse<NurseLoginResponse>
 }

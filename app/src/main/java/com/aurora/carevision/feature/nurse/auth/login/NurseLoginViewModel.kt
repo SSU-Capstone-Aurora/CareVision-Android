@@ -3,6 +3,9 @@ package com.aurora.carevision.feature.nurse.auth.login
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.aurora.carevision.data.local.auth.TokenProvider
+import com.aurora.carevision.domain.nurse.model.auth.NurseUser
+import com.aurora.carevision.domain.nurse.repository.NurseAuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -10,7 +13,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NurseLoginViewModel @Inject constructor(
-
+    private val nurseAuthRepository: NurseAuthRepository,
+    private val tokenProvider: TokenProvider
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(NurseLoginState())
@@ -29,17 +33,19 @@ class NurseLoginViewModel @Inject constructor(
         Log.d("NurseLoginViewModel", "onPasswordChange: ${_state.value.password}")
     }
 
-    // TODO 서버통신 적용
-    fun nurseLogin() {
+    fun nurseLogin(userId: String, password: String) {
         viewModelScope.launch {
-            Log.d("NurseLoginViewModel", "nurseLogin: ${_state.value.userId} ${_state.value.password}")
-
-            if (_state.value.userId.isNotBlank() && _state.value.password.isNotBlank()) {
-                _sideEffect.emit(NurseLoginSideEffect.NavigateToHome)
-                _sideEffect.emit(NurseLoginSideEffect.ShowToast("로그인 클릭"))
-            } else {
-                _state.value = _state.value.copy(isLoginError = true)
-                _sideEffect.emit(NurseLoginSideEffect.ShowToast("아이디 또는 비밀번호가 잘못되었습니다"))
+            runCatching {
+                nurseAuthRepository.nurseLogin(NurseUser(userId = userId, password = password))
+            }.onSuccess{
+                _sideEffect.value = NurseLoginSideEffect.LoginSuccess
+                tokenProvider.saveAccessToken(it.accessToken)
+                tokenProvider.saveRefreshToken(it.refreshToken)
+                Log.d("NurseLoginViewModel", "nurseLogin: ${_state.value.userId} ${_state.value.password}")
+                Log.d("NurseLoginViewModel", "Token: ${it.accessToken} ${it.refreshToken}")
+            }.onFailure {
+                _sideEffect.value = NurseLoginSideEffect.ShowToast("로그인에 실패했습니다.\n다시 시도해주세요.")
+                Log.d("NurseLoginViewModel", "nurseLogin: ${_state.value.userId} ${_state.value.password}")
             }
         }
     }

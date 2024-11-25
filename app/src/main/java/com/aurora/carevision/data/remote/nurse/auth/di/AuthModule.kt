@@ -1,10 +1,14 @@
 package com.aurora.carevision.data.remote.nurse.auth.di
 
+import android.content.Context
+import android.content.SharedPreferences
 import com.aurora.carevision.core.network.qualifier.Unsecured
+import com.aurora.carevision.data.local.auth.TokenProvider
 import com.aurora.carevision.data.remote.nurse.auth.service.NurseAuthService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.create

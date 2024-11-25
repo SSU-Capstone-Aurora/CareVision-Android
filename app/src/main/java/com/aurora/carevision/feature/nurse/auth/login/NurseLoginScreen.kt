@@ -46,11 +46,12 @@ fun NurseLoginScreen(
                 is NurseLoginSideEffect.OnSignUpClick -> navigateToSignUp()
                 is NurseLoginSideEffect.OnBackClick -> navigateToBack()
                 is NurseLoginSideEffect.NavigateToHome -> navigateToHome()
-                is NurseLoginSideEffect.OnLoginClick -> {
-                    viewModel.nurseLogin()
-                }
                 is NurseLoginSideEffect.ShowToast -> {
                     Toast.makeText(context, sideEffect.text, Toast.LENGTH_SHORT).show()
+                }
+                is NurseLoginSideEffect.LoginSuccess -> {
+                    Toast.makeText(context, "로그인 성공", Toast.LENGTH_SHORT).show()
+                    navigateToHome()
                 }
                 else -> {}
             }
@@ -110,7 +111,7 @@ fun NurseLoginScreen(
 
         CVLongButton(
             text = "로그인",
-            onClick = navigateToHome,
+            onClick = { viewModel.nurseLogin(state.userId, state.password) },
             enabled = state.userId.isNotBlank() && state.password.isNotBlank(),
             modifier = Modifier
                 .padding(top = 24.dp)

@@ -7,4 +7,6 @@ data class NurseUser(
     val password: String = "",
     val hospitalId: Int = 0,
     val departmentId: Int = 0,
+    val accessToken: String = "",
+    val refreshToken: String = "",
 )

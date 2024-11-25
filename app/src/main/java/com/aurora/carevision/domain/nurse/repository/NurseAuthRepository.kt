@@ -13,4 +13,5 @@ interface NurseAuthRepository {
     suspend fun getNurseHospitalList(): HospitalList
     suspend fun getNurseDepartmentList(hospitalId: Int): DepartmentList
     suspend fun nurseSignUp(nurseUserRequest: NurseUser): NurseUser
+    suspend fun nurseLogin(nurseUserRequest: NurseUser): NurseUser
 }

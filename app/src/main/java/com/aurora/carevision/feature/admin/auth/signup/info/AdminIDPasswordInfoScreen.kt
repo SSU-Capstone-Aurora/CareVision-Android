@@ -38,7 +38,7 @@ import com.aurora.carevision.feature.nurse.auth.signup.NurseSignUpSideEffect
 @Composable
 fun AdminIDPasswordInfoScreen(
     viewModel: AdminSignUpHospitalEntryViewModel = hiltViewModel(),
-    navigateToSignUpWaitingScreen: () -> Unit = {},
+    navigateToAdminLogin:() ->Unit = {},
     navigateToBack:() -> Unit = {},
 ){
 
@@ -61,7 +61,7 @@ fun AdminIDPasswordInfoScreen(
                 }
 
                 is AdminSignUpHospitalEntrySideEffect.SignUpSuccess -> {
-                    navigateToSignUpWaitingScreen()
+                    navigateToAdminLogin()
                     Toast.makeText(
                         context,
                         "회원가입이 완료되었습니다.",

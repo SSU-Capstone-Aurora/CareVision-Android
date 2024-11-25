@@ -5,16 +5,16 @@ import com.aurora.carevision.data.remote.admin.auth.model.AdminDepartmentListRes
 import com.aurora.carevision.data.remote.admin.auth.model.AdminSignUpResponse
 import com.aurora.carevision.data.remote.admin.auth.model.request.AdminSignUpRequest
 import com.aurora.carevision.data.remote.admin.auth.model.AdminHospitalListResponse
-import com.aurora.carevision.data.remote.nurse.auth.model.NurseDepartmentListResponse
-import com.aurora.carevision.data.remote.nurse.auth.model.NurseSignUpResponse
-import com.aurora.carevision.data.remote.nurse.auth.model.request.NurseSignUpRequest
+import com.aurora.carevision.data.remote.admin.auth.model.AdminLoginResponse
+import com.aurora.carevision.data.remote.admin.auth.model.request.AdminLoginRequest
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
 interface AdminAuthService {
     // 로그인 api
-
+    @POST("api/admin/login")
+    suspend fun adminLogin(@Body adminLoginRequest: AdminLoginRequest): BaseResponse<AdminLoginResponse>
     // 회원가입
     // 닉네임 중복 확인 api
     @GET("api/admin/check-username")
