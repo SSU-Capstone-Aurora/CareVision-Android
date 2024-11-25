@@ -8,27 +8,48 @@ import kotlinx.serialization.Serializable
 data class AdminSignUpRequest(
     @SerialName("admin")
     val admin: Admin,
+    @SerialName("hospital")
+    val hospital: Hospital,
     @SerialName("department")
-    val departmentId: Int
-){
+    val department: Department
+) {
     @Serializable
     data class Admin(
-        @SerialName("name")
-        val username: String,
         @SerialName("username")
-        val userId: String,
+        val username: String,
         @SerialName("password")
         val password: String
     )
-}
 
-fun AdminUser.toDataModel(): AdminSignUpRequest {
-    return AdminSignUpRequest(
-        AdminSignUpRequest.Admin(
-            username = name,
-            userId = userId,
-            password = password
-        ),
-        departmentId = departmentId
+    @Serializable
+    data class Hospital(
+        @SerialName("ykiho")
+        val ykiho: String,
+        @SerialName("name")
+        val name: String
+    )
+
+    @Serializable
+    data class Department(
+        @SerialName("name")
+        val name: String
     )
 }
+
+// Domain Model에서 Request Model로 변환하는 Mapper
+fun AdminUser.toDataModel(): AdminSignUpRequest {
+    return AdminSignUpRequest(
+        admin = AdminSignUpRequest.Admin(
+            username = userId,
+            password = password
+        ),
+        hospital = AdminSignUpRequest.Hospital(
+            ykiho = hospitalYkifo,
+            name = hospitalName
+        ),
+        department = AdminSignUpRequest.Department(
+            name = departmentName
+        )
+    )
+}
+

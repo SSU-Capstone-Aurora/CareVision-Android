@@ -27,10 +27,10 @@ class AdminSignUpHospitalEntryViewModel @Inject constructor(
 
     fun updateSelectedHospital(newHospitalName: String, newHospitalYkiho: String) {
         _state.value = _state.value.copy(
-                selectedHospitalName = newHospitalName,
-                selectedHospitalykiho = newHospitalYkiho,
-                isHospitalSelected = true
-            )
+            selectedHospitalName = newHospitalName,
+            selectedHospitalykiho = newHospitalYkiho,
+            isHospitalSelected = true
+        )
         Log.d("AdminSignUpViewModel", "updateSelectedHospital : ${newHospitalName}, ${newHospitalYkiho}")
     }
 
@@ -84,12 +84,7 @@ class AdminSignUpHospitalEntryViewModel @Inject constructor(
                 adminAuthRepository.getHospitalList(searchText = query)
             }.onSuccess { response ->
                 val hospitalList = response.result.toDomainModel().hospitals
-//                _state.update { currentState ->
-//                    currentState.copy(hospitalList = hospitalList)
-//                }
-//                _state.update { currentState ->
-//                    currentState.copy(hospitalList = emptyList())
-//                }
+
                 _state.value = _state.value.copy(hospitalList = hospitalList)
                 Log.d("AdminSignUpViewModel", "loadHospitalList : onSuccess ${hospitalList}")
 
@@ -144,7 +139,8 @@ class AdminSignUpHospitalEntryViewModel @Inject constructor(
                         userId = _state.value.userId,
                         password = _state.value.password,
                         hospitalYkifo = _state.value.selectedHospitalykiho,
-                        departmentId = _state.value.selectedDepartmentId
+                        hospitalName = _state.value.selectedHospitalName,
+                        departmentName = _state.value.selectedDepartmentName
                     )
                 )
             }.onSuccess {
