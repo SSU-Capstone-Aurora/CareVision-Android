@@ -35,7 +35,7 @@ fun NavGraphBuilder.adminSignUpHospitalScreen(
     navigateToAdminSignUpHospital: () -> Unit,
     navigateToAdminSignUpName: () -> Unit,
     navigateToAdminSignUpIdPw: () -> Unit,
-    navigateToAdminSignUpWaiting: () -> Unit,
+    navigateToAdminLogin: () ->Unit,
     navigateToHome: () -> Unit,
     navigateToBack: () -> Unit,
 ) {
@@ -57,7 +57,7 @@ fun NavGraphBuilder.adminSignUpHospitalScreen(
     composable<AdminSignUpIdPw> {
         AdminIDPasswordInfoScreen(
             navigateToBack = navigateToAdminSignUpName,
-            navigateToSignUpWaitingScreen = navigateToAdminSignUpWaiting,
+            navigateToAdminLogin =navigateToAdminLogin,
             viewModel = viewModel
             )
     }
