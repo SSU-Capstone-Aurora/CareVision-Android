@@ -57,8 +57,9 @@ fun AdminLoginScreen(
                 is AdminLoginSideEffect.NavigateToHome -> navigateToHome()
                 is AdminLoginSideEffect.OnSignUpClick -> navigateToSignUp()
                 is AdminLoginSideEffect.OnBackClick -> navigateToBack()
-                is AdminLoginSideEffect.OnLoginClick -> {
-                    viewModel.adminLogin()
+                is AdminLoginSideEffect.LoginSuccess ->{
+                    Toast.makeText(context, "로그인 성공", Toast.LENGTH_SHORT).show()
+                    navigateToHome()
                 }
                 else -> {}
             }
@@ -116,7 +117,7 @@ fun AdminLoginScreen(
 
         CVLongButton(
             text = "로그인",
-            onClick = navigateToHome,
+            onClick = {viewModel.adminLogin(state.userId, state.password)},
             enabled = state.userId.isNotBlank() && state.password.isNotBlank(),
             modifier = Modifier
                 .padding(top = 24.dp)

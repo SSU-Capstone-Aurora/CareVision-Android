@@ -5,18 +5,18 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import androidx.lifecycle.viewModelScope
-import com.aurora.carevision.feature.nurse.auth.login.NurseLoginSideEffect
+import com.aurora.carevision.data.local.auth.TokenProvider
+import com.aurora.carevision.domain.admin.model.auth.AdminUser
+import com.aurora.carevision.domain.admin.repository.AdminAuthRepository
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 
 
 @HiltViewModel
 class AdminLoginViewModel @Inject constructor(
-
-) : ViewModel(){
+    private  val adminAuthRepository: AdminAuthRepository,
+    private val tokenProvider: TokenProvider
+) : ViewModel() {
 
     private val _state = MutableStateFlow(AdminLoginState())
     val state: MutableStateFlow<AdminLoginState> = _state
@@ -34,18 +34,25 @@ class AdminLoginViewModel @Inject constructor(
         Log.d("AdminLoginViewModel", "onPasswordChange: ${_state.value.password}")
     }
 
-    fun adminLogin() {
+    fun adminLogin(userId: String, password: String) {
         viewModelScope.launch {
-            Log.d(
-                "adminLoginViewModel",
-                "adminLogin: ${_state.value.userId} ${_state.value.password}"
-            )
-            if (_state.value.userId.isNotBlank() && _state.value.password.isNotBlank()) {
-                _sideEffect.emit(AdminLoginSideEffect.NavigateToHome)
-                _sideEffect.emit(AdminLoginSideEffect.ShowToast("로그인 클릭"))
-            } else {
-                _state.value = _state.value.copy(isLoginError = true)
-                _sideEffect.emit(AdminLoginSideEffect.ShowToast("아이디 또는 비밀번호가 잘못되었습니다"))
+            runCatching {
+                adminAuthRepository.adminLogin(AdminUser(userId = userId, password = password))
+            }.onSuccess {
+                _sideEffect.value = AdminLoginSideEffect.LoginSuccess
+                tokenProvider.saveAccessToken(it.accessToken)
+                tokenProvider.saveRefreshToken(it.refreshToken)
+                Log.d(
+                    "AdminLoginViewModel",
+                    "adminLogin: ${_state.value.userId} ${_state.value.password}"
+                )
+                Log.d("AdminLoginViewModel", "Token: ${it.accessToken} ${it.refreshToken}")
+            }.onFailure {
+                _sideEffect.value = AdminLoginSideEffect.ShowToast("로그인에 실패했습니다.\n다시 시도해주세요.")
+                Log.d(
+                    "AdminLoginViewModel",
+                    "adminLogin: ${_state.value.userId} ${_state.value.password}"
+                )
             }
         }
     }

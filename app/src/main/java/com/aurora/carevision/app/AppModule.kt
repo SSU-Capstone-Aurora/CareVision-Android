@@ -2,6 +2,7 @@ package com.aurora.carevision.app
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.aurora.carevision.data.local.auth.TokenProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,5 +19,11 @@ object AppModule {
     @Singleton
     fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
         return context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTokenProvider(sharedPreferences: SharedPreferences): TokenProvider {
+        return TokenProvider(sharedPreferences)
     }
 }

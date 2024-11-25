@@ -256,7 +256,7 @@ fun CVNavHost(
                 navigateToAdminSignUpHospital = { navController.navigateToAdminSignUp() },
                 navigateToAdminSignUpName = { navController.navigationToAdminSignUpName() },
                 navigateToAdminSignUpIdPw = { navController.navigationToAdminSignUpIdPw() },
-                navigateToAdminSignUpWaiting = { navController.navigationToAdminSignupWaiting() },
+                navigateToAdminLogin = {navController.navigateToAdminLogin()},
                 navigateToHome = {
                     navController.navigateToAdminHome(navOptions {
                         popUpTo(navController.graph.findStartDestination().id) { inclusive = true }
