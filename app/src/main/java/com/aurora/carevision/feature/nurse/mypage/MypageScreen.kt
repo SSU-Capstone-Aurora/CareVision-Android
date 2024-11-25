@@ -1,7 +1,5 @@
 package com.aurora.carevision.feature.nurse.mypage
 
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -17,16 +15,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.aurora.carevision.R
 import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.Gray100
@@ -34,30 +28,17 @@ import com.aurora.carevision.app.ui.theme.Gray500
 import com.aurora.carevision.app.ui.theme.Gray700
 import com.aurora.carevision.app.ui.theme.Primary600
 import com.aurora.carevision.app.ui.theme.White
-import kotlinx.coroutines.flow.collect
 
 @Composable
 fun MypageScreen(
-    onClickLogout: () -> Unit = {},
-    viewModel: MypageViewModel = hiltViewModel()
+    onClickLogout: () -> Unit = {}
 ) {
 
-    val state = viewModel.state.collectAsState().value
-    val context = LocalContext.current
+    val userName = "김김김"
+    val joinDate = "2024.09.30"
+    val hospitalName = "병원명"
+    val department = "부서명"
 
-    LaunchedEffect(key1 = Unit) {
-        viewModel.sideEffect.collect{
-            when(it){
-                is NurseMypageSideEffect.GetNurseMypageSuccess -> {
-                    // success
-                }
-                is NurseMypageSideEffect.GetNurseMypageFailure -> {
-                    Toast.makeText(context, "네트워크 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
-                }
-                else -> {}
-            }
-        }
-    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -71,7 +52,7 @@ fun MypageScreen(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = state.nurseName, style = CVTheme.typography.headingPrimary, color = Gray700)
+            Text(text = userName, style = CVTheme.typography.headingPrimary, color = Gray700)
             Text(
                 text = "로그아웃",
                 style = CVTheme.typography.captionImportance,
@@ -79,14 +60,11 @@ fun MypageScreen(
                 modifier = Modifier
                     .clip(RoundedCornerShape(16.dp))
                     .background(Gray100)
-                    .padding(5.dp)
                     .clickable { onClickLogout() }
             )
         }
 
-        if(!state.registeredAt.isNullOrBlank()) {
-            Text(text = "${state.registeredAt} 가입", style = CVTheme.typography.textBody1Medium, color = Gray500, modifier = Modifier.padding(top = 4.dp))
-        }
+        Text(text = "$joinDate 가입", style = CVTheme.typography.textBody1Medium, color = Gray500, modifier = Modifier.padding(top = 4.dp))
 
         Spacer(modifier = Modifier.padding(top = 24.dp))
 
@@ -103,8 +81,8 @@ fun MypageScreen(
                 Image(painter = painterResource(id = R.drawable.ic_hopital_icon), contentDescription = "hospital image")
                 Spacer(modifier = Modifier.width(12.dp))
                 Column {
-                    Text(text = state.hospitalName, style = CVTheme.typography.textBody1Importance, color = White)
-                    Text(text = state.department, style = CVTheme.typography.textBody2Medium, color = White)
+                    Text(text = hospitalName, style = CVTheme.typography.textBody1Importance, color = White)
+                    Text(text = department, style = CVTheme.typography.textBody2Medium, color = White)
                 }
             }
         }
