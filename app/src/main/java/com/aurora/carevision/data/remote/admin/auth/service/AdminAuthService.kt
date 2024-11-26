@@ -6,6 +6,7 @@ import com.aurora.carevision.data.remote.admin.auth.model.AdminSignUpResponse
 import com.aurora.carevision.data.remote.admin.auth.model.request.AdminSignUpRequest
 import com.aurora.carevision.data.remote.admin.auth.model.AdminHospitalListResponse
 import com.aurora.carevision.data.remote.admin.auth.model.AdminLoginResponse
+import com.aurora.carevision.data.remote.admin.nurserequest.model.AdminNurseRequestResponse
 import com.aurora.carevision.data.remote.admin.auth.model.request.AdminLoginRequest
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -30,5 +31,4 @@ interface AdminAuthService {
     // 회원가입 api
     @POST("api/admin/sign-up")
     suspend fun adminSignUp(@Body adminSignUpRequest : AdminSignUpRequest): BaseResponse<AdminSignUpResponse>
-
 }

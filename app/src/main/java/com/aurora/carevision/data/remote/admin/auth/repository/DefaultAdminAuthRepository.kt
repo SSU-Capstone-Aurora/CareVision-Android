@@ -6,7 +6,7 @@ import com.aurora.carevision.data.remote.admin.auth.model.AdminHospitalListRespo
 import com.aurora.carevision.data.remote.admin.auth.model.request.toDataAdminLoginModel
 import com.aurora.carevision.data.remote.admin.auth.model.request.toDataModel
 import com.aurora.carevision.data.remote.admin.auth.model.toDomainModel
-import com.aurora.carevision.data.remote.admin.auth.response.NurseListResponse
+import com.aurora.carevision.data.remote.admin.nurserequest.model.toDomainModel
 import com.aurora.carevision.domain.admin.model.auth.AdminUser
 import com.aurora.carevision.domain.admin.model.auth.DepartmentList
 import com.aurora.carevision.domain.admin.repository.AdminAuthRepository
@@ -31,6 +31,4 @@ class DefaultAdminAuthRepository @Inject constructor(
         remoteDataSource.adminSignUp(adminUserRequest.toDataModel()).result.toDomainModel()
 
     override suspend fun adminLogin(adminUserRequest: AdminUser) = remoteDataSource.adminLogin(adminUserRequest.toDataAdminLoginModel()).result.toDomainModel()
-
-
 }
