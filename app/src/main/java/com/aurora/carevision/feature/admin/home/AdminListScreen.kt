@@ -17,7 +17,7 @@ import com.aurora.carevision.app.ui.theme.Gray100
 import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.AdminHospitalListItem
 import com.aurora.carevision.core.component.CVTabs
-import com.aurora.carevision.feature.admin.home.nurselist.NurseListScreen
+import com.aurora.carevision.feature.admin.home.patientlist.PatientListScreen
 
 @Composable
 fun AdminListScreen() {
