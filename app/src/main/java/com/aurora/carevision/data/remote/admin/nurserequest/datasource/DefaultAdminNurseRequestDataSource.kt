@@ -12,4 +12,8 @@ class DefaultAdminNurseRequestDataSource @Inject constructor(
     override suspend fun getNurseRequests(): BaseResponse<AdminNurseRequestResponse> {
         return nurseRequestService.getNurseRequests()
     }
+
+    override suspend fun acceptNurseRequests(nurseId: Int): BaseResponse<Unit> {
+        return nurseRequestService.acceptNurseRequest(nurseId)
+    }
 }

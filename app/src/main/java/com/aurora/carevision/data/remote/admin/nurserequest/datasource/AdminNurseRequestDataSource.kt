@@ -5,4 +5,5 @@ import com.aurora.carevision.data.remote.admin.nurserequest.model.AdminNurseRequ
 
 interface AdminNurseRequestDataSource {
     suspend fun getNurseRequests(): BaseResponse<AdminNurseRequestResponse>
+    suspend fun acceptNurseRequests(nurseId : Int): BaseResponse<Unit>
 }

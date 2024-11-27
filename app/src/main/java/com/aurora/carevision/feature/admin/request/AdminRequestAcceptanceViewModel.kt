@@ -35,5 +35,19 @@ class AdminRequestAcceptanceViewModel @Inject constructor(
             }
         }
     }
+
+    fun acceptNurseRequest(nurseId: Int){
+        viewModelScope.launch {
+            runCatching {
+                adminNurseRequestRepository.acceptNurseRequests(nurseId)
+            }.onSuccess {
+                _sideEffect.value = AdminRequestAcceptanceSideEffect.RequestAccepted
+                Log.d("AdminRequestAcceptanceViewModel", "SuccessAcceptNurse : onSuccess ${it}")
+            }.onFailure {
+                _sideEffect.value = AdminRequestAcceptanceSideEffect.Error(it.message)
+                Log.d("AdminRequestAcceptanceViewModel", "FailAcceptNurse : onSuccess ${it.message}")
+            }
+        }
+    }
 }
 

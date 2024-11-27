@@ -13,4 +13,9 @@ class DefaultAdminNurseRequestRepository @Inject constructor(
     override suspend fun getNurseRequests(): NurseRequestList {
         return adminNurseRequestDataSource.getNurseRequests().result.toDomainModel()
     }
+
+    override suspend fun acceptNurseRequests(nurseId: Int): Boolean {
+        val response = adminNurseRequestDataSource.acceptNurseRequests(nurseId)
+        return response.isSuccess
+    }
 }

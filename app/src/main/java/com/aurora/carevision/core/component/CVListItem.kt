@@ -530,7 +530,7 @@ fun AdminPatientListItemPreview() {
             AdminRequestItem(
                 nurseRequestName = "최강록",
                 requestTime = "어제",
-                nurseId = "간호사 번호",
+                nurseId = "간호사 아이디",
             )
             AdminVideoListItem(
                 recordedDate = "2024.10.08",

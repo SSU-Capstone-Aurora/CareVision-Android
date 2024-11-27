@@ -6,3 +6,9 @@ data class AdminRequestAcceptanceState(
     val requestCount: Int = 0,
     val requests: List<NurseRequestList.NurseRequest> = emptyList()
 )
+
+data class NurseRequest(
+    val nurseId: Int,
+    val name: String,
+    val requestTime: String
+)

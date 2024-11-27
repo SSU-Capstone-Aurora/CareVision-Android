@@ -17,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.aurora.carevision.R
 import com.aurora.carevision.app.ui.theme.Black
 import com.aurora.carevision.app.ui.theme.CVTheme
@@ -25,6 +26,7 @@ import com.aurora.carevision.app.ui.theme.Gray700
 import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.AdminRequestItem
 import com.aurora.carevision.core.component.CVTopAppBar
+import com.aurora.carevision.domain.admin.model.nurserequest.NurseRequestList
 
 @Composable
 fun AdminRequestAcceptanceScreen(
@@ -47,16 +49,28 @@ fun AdminRequestAcceptanceScreen(
             if (state.requests.isEmpty()) {
                 AdminRequestNullContent()
             } else {
-                AdminRequestContent(state.requestCount, state.requests.map{
-                    it.name to it.requestTime
-                })
+                AdminRequestContent(
+                    requestCount = state.requestCount,
+                    requests = state.requests,
+                    onAcceptClick = {nurseId ->
+                        viewModel.acceptNurseRequest(nurseId)
+                    },
+                    onRejectClick = {nurseId ->
+                        viewModel.acceptNurseRequest(nurseId) //TODO reject 구현 필요
+                    }
+                )
             }
         }
     }
 }
 
 @Composable
-fun AdminRequestContent(requestCount: Int, requests: List<Pair<String, String>>) {
+fun AdminRequestContent(
+    requestCount: Int,
+    requests:  List<NurseRequestList.NurseRequest>,
+    onAcceptClick:(Int)-> Unit,
+    onRejectClick:(Int)-> Unit,
+) {
     Column(
         modifier = Modifier
             .background(Gray100)
@@ -73,11 +87,13 @@ fun AdminRequestContent(requestCount: Int, requests: List<Pair<String, String>>)
             modifier = Modifier.padding(horizontal = 12.dp, vertical = 16.dp)
         ) {
             items(requests.size) { index ->
-                val (nurseName, requestTime) = requests[index]
+                val (nurseId, nurseName, userName, requestTime) = requests[index]
                 AdminRequestItem(
                     nurseRequestName = nurseName,
-                    nurseId = "$index",
-                    requestTime = requestTime
+                    nurseId = userName,
+                    requestTime = requestTime,
+                    onAcceptClick = {onAcceptClick(nurseId) },
+                    onRejectClick = {onRejectClick(nurseId)},
                 )
                 Spacer(modifier = Modifier.height(8.dp))
             }
