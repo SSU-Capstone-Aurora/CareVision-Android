@@ -14,6 +14,6 @@ data class AdminSignUpResponse(
 fun AdminSignUpResponse.toDomainModel() = AdminUser(
     id = id,
     name = name,
-    hospitalName = hospitalName,
-    departmentName = departmentName
+    hospitalId = hospitalName,
+    departmentId = departmentName
 )

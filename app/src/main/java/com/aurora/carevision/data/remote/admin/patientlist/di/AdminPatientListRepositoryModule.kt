@@ -2,9 +2,7 @@ package com.aurora.carevision.data.remote.admin.patientlist.di
 
 import com.aurora.carevision.data.remote.admin.patientlist.datasource.AdminPatientListDataSource
 import com.aurora.carevision.data.remote.admin.patientlist.datasource.DefaultAdminPatientListDataSource
-import com.aurora.carevision.data.remote.admin.patientlist.datasource.DefaultAdminPatientListDataSource_Factory
 import com.aurora.carevision.data.remote.admin.patientlist.repository.DefaultAdminPatientListRepository
-import com.aurora.carevision.data.remote.admin.patientlist.repository.DefaultAdminPatientListRepository_Factory
 import com.aurora.carevision.domain.admin.repository.AdminPatientListRepository
 import dagger.Binds
 import dagger.Module
