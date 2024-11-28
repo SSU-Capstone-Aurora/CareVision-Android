@@ -4,7 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.aurora.carevision.feature.nurse.home.HomeScreen
+import com.aurora.carevision.feature.nurse.home.home.HomeScreen
 import kotlinx.serialization.Serializable
 
 @Serializable
