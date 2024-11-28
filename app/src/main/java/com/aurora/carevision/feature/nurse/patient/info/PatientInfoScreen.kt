@@ -20,6 +20,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,6 +29,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.aurora.carevision.R
 import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.Gray100
@@ -40,40 +43,15 @@ import com.aurora.carevision.domain.nurse.model.Patient
 
 @Composable
 fun PatientInfoScreen(
-    onClickNavigateToPatientRegistration: () -> Unit = {}
+    onClickNavigateToPatientRegistration: () -> Unit = {},
+    viewModel: PatientInfoViewModel = hiltViewModel()
 ) {
+    val state = viewModel.state.collectAsState().value
+    val username = "김나나"
 
-    val userName = "오로라"
-    val dummyList = listOf(
-        Patient(
-            patientId = 1,
-            patientName = "오로라",
-            patientNum = "07-FJw144",
-            patientRoom = "2동 101호 4번 베드",
-            registrationDate = "2021.10.01"
-        ),
-        Patient(
-            patientId = 1,
-            patientName = "오로라",
-            patientNum = "07-FJw144",
-            patientRoom = "2동 101호 4번 베드",
-            registrationDate = "2021.10.01"
-        ),
-        Patient(
-            patientId = 1,
-            patientName = "오로라",
-            patientNum = "07-FJw144",
-            patientRoom = "2동 101호 4번 베드",
-            registrationDate = "2021.10.01"
-        ),
-        Patient(
-            patientId = 1,
-            patientName = "오로라",
-            patientNum = "07-FJw144",
-            patientRoom = "2동 101호 4번 베드",
-            registrationDate = "2021.10.01"
-        ),
-    )
+    LaunchedEffect(key1 = Unit) {
+        viewModel.getPatientList()
+    }
 
     Column(
         modifier = Modifier
@@ -82,7 +60,7 @@ fun PatientInfoScreen(
     ) {
         Spacer(modifier = Modifier.height(20.dp))
         Text(
-            text = userName,
+            text = username,
             color = Gray500,
             style = CVTheme.typography.textBody2Importance,
             modifier = Modifier
@@ -126,11 +104,11 @@ fun PatientInfoScreen(
                 .fillMaxSize()
                 .padding(horizontal = 24.dp),
         ) {
-            items(dummyList) { patient ->
+            items(state.patientInfoList) { patient ->
                 MyPatientListItem(
                     patientName = patient.patientName,
-                    patientNum = patient.patientNum,
-                    patientRoom = patient.patientRoom,
+                    patientNum = patient.patientCode,
+                    patientRoom = patient.patientRoom.toString(),
                     registrationDate = patient.registrationDate,
                     onClick = {},
                 )
