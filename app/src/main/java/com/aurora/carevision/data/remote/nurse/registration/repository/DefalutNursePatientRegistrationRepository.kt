@@ -3,6 +3,7 @@ package com.aurora.carevision.data.remote.nurse.registration.repository
 import com.aurora.carevision.data.remote.nurse.registration.datasource.NursePatientRegistrationDataSource
 import com.aurora.carevision.data.remote.nurse.registration.model.request.toDataModel
 import com.aurora.carevision.data.remote.nurse.registration.model.response.toDomainModel
+import com.aurora.carevision.domain.nurse.model.Patient
 import com.aurora.carevision.domain.nurse.repository.NursePatientRegistrationRepository
 import javax.inject.Inject
 
@@ -14,4 +15,8 @@ class DefalutNursePatientRegistrationRepository @Inject constructor(
     }
 
     override suspend fun getUnlinkedCameras() = nursePatientRegistrationDataSource.getUnlinkedCameras().result.toDomainModel()
+
+    override suspend fun getUnlinkedPatients(): List<Patient> {
+        return nursePatientRegistrationDataSource.getUnlinkedPatients().result.toDomainModel()
+    }
 }

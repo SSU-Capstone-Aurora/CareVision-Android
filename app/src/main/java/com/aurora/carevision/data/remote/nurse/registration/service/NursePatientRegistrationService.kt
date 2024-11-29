@@ -4,6 +4,7 @@ import com.aurora.carevision.core.network.response.BaseResponse
 import com.aurora.carevision.data.remote.nurse.registration.model.request.GetPatientNameRequest
 import com.aurora.carevision.data.remote.nurse.registration.model.response.GetPatientNameResponse
 import com.aurora.carevision.data.remote.nurse.registration.model.response.UnlinkedCameraListResponse
+import com.aurora.carevision.data.remote.nurse.registration.model.response.UnlinkedPatientsListResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -14,4 +15,7 @@ interface NursePatientRegistrationService {
 
     @GET("api/cameras/unlinked")
     suspend fun getUnlinkedCameras(): BaseResponse<UnlinkedCameraListResponse>
+
+    @GET("api/patients/unlinked")
+    suspend fun getUnlinkedPatients(): BaseResponse<UnlinkedPatientsListResponse>
 }
