@@ -42,9 +42,10 @@ fun AdminCheckCameraInfoScreen(
     ){
         val patientName = "오로라"
         val cameraName = Camera(
-            cameraId = 1,
-            cameraNum = "07-FJw144",
-            bedInfo = "2동 101호 4번 베드",
+            cameraCode = "07-FJw144",
+            inpatientWardNumber = 2,
+            patientRoomNumber = 101,
+            bedNumber = 4,
         )
 
         TopAppBarLeft("환자 등록", onClick = onClickBack)
@@ -99,7 +100,7 @@ fun AdminCheckCameraInfoScreen(
                 )
 
                 Text(
-                    text = "${cameraName.bedInfo}",
+                    text = "${cameraName.bedNumber}",
                     style = CVTheme.typography.textBody1Medium,
                     color = Gray600,
                 )
@@ -117,7 +118,7 @@ fun AdminCheckCameraInfoScreen(
                 )
 
                 Text(
-                    text = "${cameraName.cameraNum}",
+                    text = "${cameraName.patientRoomNumber}",
                     style = CVTheme.typography.textBody1Medium,
                     color = Gray600,
                     modifier = Modifier

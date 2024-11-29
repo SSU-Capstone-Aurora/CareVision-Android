@@ -25,6 +25,15 @@ class SelfRegistrationViewModel @Inject constructor(
         _state.value = _state.value.copy(patientName = newPatientName)
     }
 
+    fun selectedCameraInfo(cameraCode: String, inpatientWardNumber: Int, patientRoomNumber: Int, bedNumber: Int){
+        _state.value = _state.value.copy(
+            selectedCameraCode = cameraCode,
+            selectedInpatientWardNumber = inpatientWardNumber,
+            selectedPatientRoomNumber = patientRoomNumber,
+            selectedBedNumber = bedNumber
+        )
+    }
+
     fun updatePatientScanBarcode(newPatientScanBarcode: String){
         _state.value = _state.value.copy(patientBarcodeNumber = newPatientScanBarcode)
         Log.d("SelfRegistrationViewModel", "updatedPatientScanBarcode : ${state.value.patientBarcodeNumber}")
@@ -48,4 +57,16 @@ class SelfRegistrationViewModel @Inject constructor(
         }
     }
 
+    fun getUnlinkedCameras(){
+        viewModelScope.launch {
+            runCatching {
+                nursePatientRegistrationRepository.getUnlinkedCameras()
+            }.onSuccess {
+                _state.value = _state.value.copy(cameraList = it)
+                _sideEffect.value = SelfRegistrationSideEffect.GetUnlinkedCamerasSuccess
+            }.onFailure {
+                _sideEffect.value = SelfRegistrationSideEffect.GetUnlinkedCamerasFailure
+            }
+        }
+    }
 }

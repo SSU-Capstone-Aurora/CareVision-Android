@@ -12,11 +12,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.Gray100
 import com.aurora.carevision.app.ui.theme.Gray500
@@ -26,12 +28,15 @@ import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.CVLongButton
 import com.aurora.carevision.core.component.TopAppBarLeft
 import com.aurora.carevision.domain.nurse.model.Camera
+import com.aurora.carevision.feature.nurse.patient.registration.barcode.SelfRegistrationViewModel
 
 @Composable
 fun CheckCameraInfoScreen(
     navigateToDone: () -> Unit = {},
-    onClickBack: () -> Unit = {}
+    onClickBack: () -> Unit = {},
+    viewModel: SelfRegistrationViewModel = viewModel()
 ) {
+    val state = viewModel.state.collectAsState().value
 
     Column(
         modifier = Modifier
@@ -40,16 +45,12 @@ fun CheckCameraInfoScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.Start
     ){
-        val patientName = "오로라"
-        val cameraName = Camera(
-            cameraId = 1,
-            cameraNum = "07-FJw144",
-            bedInfo = "2동 101호 4번 베드",
-        )
 
         TopAppBarLeft("환자 등록", onClick = onClickBack)
 
-        Spacer(modifier = Modifier.height(28.dp).weight(0.5f))
+        Spacer(modifier = Modifier
+            .height(28.dp)
+            .weight(0.5f))
 
         Text(
             text = "등록할 환자의\n정보를 확인해주세요",
@@ -82,14 +83,16 @@ fun CheckCameraInfoScreen(
                 )
 
                 Text(
-                    text = "$patientName",
+                    text = "${state.patientName}",
                     style = CVTheme.typography.textBody1Medium,
                     color = Gray600,
                 )
             }
 
             Row(
-                modifier = Modifier.fillMaxWidth().padding(top = 4.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 4.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
@@ -99,14 +102,16 @@ fun CheckCameraInfoScreen(
                 )
 
                 Text(
-                    text = "${cameraName.bedInfo}",
+                    text = "${state.selectedInpatientWardNumber}동 ${state.selectedPatientRoomNumber}호 ${state.selectedBedNumber}베드",
                     style = CVTheme.typography.textBody1Medium,
                     color = Gray600,
                 )
             }
 
             Row(
-                modifier = Modifier.fillMaxWidth().padding(top = 4.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 4.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
@@ -117,7 +122,7 @@ fun CheckCameraInfoScreen(
                 )
 
                 Text(
-                    text = "${cameraName.cameraNum}",
+                    text = "${state.selectedCameraCode}",
                     style = CVTheme.typography.textBody1Medium,
                     color = Gray600,
                     modifier = Modifier
@@ -133,7 +138,9 @@ fun CheckCameraInfoScreen(
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(modifier = Modifier.height(28.dp).weight(1f))
+        Spacer(modifier = Modifier
+            .height(28.dp)
+            .weight(1f))
     }
 }
 

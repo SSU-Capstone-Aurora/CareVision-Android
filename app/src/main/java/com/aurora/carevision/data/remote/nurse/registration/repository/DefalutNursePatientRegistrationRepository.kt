@@ -12,4 +12,6 @@ class DefalutNursePatientRegistrationRepository @Inject constructor(
     override suspend fun getRegistrationPatientName(patientCode: String): String {
         return nursePatientRegistrationDataSource.getRegistrationPatientName(patientCode.toDataModel()).result.toDomainModel()
     }
+
+    override suspend fun getUnlinkedCameras() = nursePatientRegistrationDataSource.getUnlinkedCameras().result.toDomainModel()
 }
