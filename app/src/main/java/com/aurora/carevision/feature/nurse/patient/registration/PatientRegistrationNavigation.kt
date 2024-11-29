@@ -122,7 +122,8 @@ fun NavGraphBuilder.patientRegistrationScreen(
             },
             onClickBack = {
                 onClickBack()
-            }
+            },
+            viewModel = viewModel
         )
     }
 

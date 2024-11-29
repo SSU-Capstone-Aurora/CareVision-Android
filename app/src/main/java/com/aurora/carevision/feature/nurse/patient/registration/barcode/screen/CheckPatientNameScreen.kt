@@ -11,11 +11,15 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.aurora.carevision.R
 import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.Gray700
@@ -24,12 +28,15 @@ import com.aurora.carevision.app.ui.theme.Primary700
 import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.CVLongButton
 import com.aurora.carevision.core.component.TopAppBarLeft
+import com.aurora.carevision.feature.nurse.patient.registration.barcode.SelfRegistrationViewModel
 
 @Composable
 fun CheckPatientNameScreen(
     navigateToCameraListInfo: () -> Unit = {},
-    onClickBack: () -> Unit = {}
+    onClickBack: () -> Unit = {},
+    viewModel: SelfRegistrationViewModel = hiltViewModel()
 ) {
+    val state by viewModel.state.collectAsState()
 
     Column(
         modifier = Modifier
@@ -38,7 +45,6 @@ fun CheckPatientNameScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
-        val patientName = "오로라"
 
         TopAppBarLeft("환자 등록", onClick = onClickBack)
 
@@ -48,7 +54,7 @@ fun CheckPatientNameScreen(
         Image(painter = painterResource(id = R.drawable.img_patient_register_done), contentDescription = "Patient Registration Done", modifier = Modifier.size(170.dp))
         Spacer(modifier = Modifier.height(24.dp))
         Text(
-            text = "$patientName 환자가 맞나요?",
+            text = if(state.patientNameValidation) "${state.patientName} 환자가 맞나요?" else "해당하는 환자가 없습니다.",
             style = CVTheme.typography.headingPrimary,
             color = Gray700,
         )
@@ -58,7 +64,8 @@ fun CheckPatientNameScreen(
         CVLongButton(
             text = "맞아요",
             onClick = navigateToCameraListInfo,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            enabled = state.enabledNextButton
         )
         Spacer(modifier = Modifier.height(16.dp))
         CVLongButton(

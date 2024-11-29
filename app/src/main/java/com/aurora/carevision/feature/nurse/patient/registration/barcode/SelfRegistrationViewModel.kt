@@ -2,14 +2,17 @@ package com.aurora.carevision.feature.nurse.patient.registration.barcode
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.aurora.carevision.data.remote.nurse.registration.repository.DefalutNursePatientRegistrationRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SelfRegistrationViewModel @Inject constructor(
-
+    private val nursePatientRegistrationRepository: DefalutNursePatientRegistrationRepository
 ) : ViewModel(){
 
     private val _state: MutableStateFlow<SelfRegistrationState> = MutableStateFlow(SelfRegistrationState())
@@ -29,6 +32,20 @@ class SelfRegistrationViewModel @Inject constructor(
 
     fun updateScanBarcodeSuccess(newScanBarcodeSuccess: Boolean){
         _state.value = _state.value.copy(scanBarcodeSuccess = newScanBarcodeSuccess)
+    }
+
+    fun getCheckPatientName(){
+        viewModelScope.launch {
+            runCatching {
+                nursePatientRegistrationRepository.getRegistrationPatientName(_state.value.patientBarcodeNumber)
+            }.onSuccess {
+                _state.value = _state.value.copy(patientName = it, patientNameValidation = true, enabledNextButton = true)
+                _sideEffect.value = SelfRegistrationSideEffect.GetPatientNameSuccess
+            }.onFailure {
+                _state.value = _state.value.copy(patientNameValidation = false, enabledNextButton = false)
+                _sideEffect.value = SelfRegistrationSideEffect.GetPatientNameFailure
+            }
+        }
     }
 
 }

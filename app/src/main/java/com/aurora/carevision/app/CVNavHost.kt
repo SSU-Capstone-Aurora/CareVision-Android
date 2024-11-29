@@ -90,6 +90,7 @@ fun CVNavHost(
 ) {
     val nurseSignUpViewModel: NurseSignUpViewModel = hiltViewModel()
     val adminSignUpViewModel: AdminSignUpHospitalEntryViewModel = hiltViewModel()
+    val selfRegistrationViewModel: SelfRegistrationViewModel = hiltViewModel()
     val cameraRegistrationViewModel : CameraRegistrationViewModel = hiltViewModel()
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
 
@@ -222,7 +223,7 @@ fun CVNavHost(
             )
 
             patientRegistrationScreen(
-                viewModel = SelfRegistrationViewModel(),
+                viewModel = selfRegistrationViewModel,
                 navigateToPatientRegistrationDone = { navController.navigateToPatientRegistrationDone() },
                 navigateToPatientInfo = { navController.navigateToPatientInfo() },
                 navigateToPatientRegistration = { navController.navigateToPatientInfo() },
