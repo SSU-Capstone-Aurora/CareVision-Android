@@ -7,4 +7,6 @@ interface NursePatientRegistrationRepository {
     suspend fun getRegistrationPatientName(patientCode: String): String
     suspend fun getUnlinkedCameras():List<Camera>
     suspend fun getUnlinkedPatients():List<Patient>
+    suspend fun postNewPatient(patient: Patient): Unit
+    suspend fun postAlreadyPatient(patientId: Int): Unit
 }

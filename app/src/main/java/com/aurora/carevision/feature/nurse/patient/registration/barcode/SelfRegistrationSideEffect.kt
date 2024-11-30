@@ -5,5 +5,7 @@ sealed class SelfRegistrationSideEffect{
     object GetPatientNameFailure: SelfRegistrationSideEffect()
     object GetUnlinkedCamerasSuccess: SelfRegistrationSideEffect()
     object GetUnlinkedCamerasFailure: SelfRegistrationSideEffect()
+    object PostNewPatientSuccess: SelfRegistrationSideEffect()
+    object PostNewPatientFailure: SelfRegistrationSideEffect()
 
 }

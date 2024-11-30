@@ -35,7 +35,6 @@ import com.aurora.carevision.feature.admin.auth.signup.AdminSignUpHospitalEntryV
 import com.aurora.carevision.feature.admin.auth.signup.navigateToAdminSignUp
 import com.aurora.carevision.feature.admin.auth.signup.navigationToAdminSignUpIdPw
 import com.aurora.carevision.feature.admin.auth.signup.navigationToAdminSignUpName
-import com.aurora.carevision.feature.admin.auth.signup.navigationToAdminSignupWaiting
 import com.aurora.carevision.feature.admin.auth.signup.adminSignUpHospitalScreen
 import com.aurora.carevision.feature.admin.home.navigation.AdminHome
 import com.aurora.carevision.feature.admin.home.navigation.adminHomeScreen
@@ -76,12 +75,11 @@ import com.aurora.carevision.feature.nurse.patient.registration.barcode.SelfRegi
 import com.aurora.carevision.feature.nurse.patient.registration.navigateToCameraListInfo
 import com.aurora.carevision.feature.nurse.patient.registration.navigateToCheckTotalInfo
 import com.aurora.carevision.feature.nurse.patient.registration.navigateToCheckPatientName
-import com.aurora.carevision.feature.nurse.patient.registration.navigateToEnterPatientNumber
 import com.aurora.carevision.feature.nurse.patient.registration.navigateToPatientRegistration
 import com.aurora.carevision.feature.nurse.patient.registration.navigateToPatientRegistrationDone
 import com.aurora.carevision.feature.nurse.patient.registration.navigateToScanningBarcode
 import com.aurora.carevision.feature.nurse.patient.registration.patientRegistrationScreen
-import dagger.hilt.android.lifecycle.HiltViewModel
+import com.aurora.carevision.feature.nurse.patient.registration.search.PatientRegistrationViewModel
 
 @Composable
 fun CVNavHost(
@@ -92,6 +90,7 @@ fun CVNavHost(
     val adminSignUpViewModel: AdminSignUpHospitalEntryViewModel = hiltViewModel()
     val selfRegistrationViewModel: SelfRegistrationViewModel = hiltViewModel()
     val cameraRegistrationViewModel : CameraRegistrationViewModel = hiltViewModel()
+    val patientRegistrationViewModel: PatientRegistrationViewModel = hiltViewModel()
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
 
     var isModalVisible by remember { mutableStateOf(false) }
@@ -223,7 +222,8 @@ fun CVNavHost(
             )
 
             patientRegistrationScreen(
-                viewModel = selfRegistrationViewModel,
+                selfRegistrationViewModel = selfRegistrationViewModel,
+                registrationViewModel = patientRegistrationViewModel,
                 navigateToPatientRegistrationDone = { navController.navigateToPatientRegistrationDone() },
                 navigateToPatientInfo = { navController.navigateToPatientInfo() },
                 navigateToPatientRegistration = { navController.navigateToPatientInfo() },

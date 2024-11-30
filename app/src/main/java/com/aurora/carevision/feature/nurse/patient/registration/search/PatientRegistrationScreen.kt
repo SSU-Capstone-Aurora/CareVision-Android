@@ -1,5 +1,6 @@
 package com.aurora.carevision.feature.nurse.patient.registration.search
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -107,11 +108,13 @@ fun PatientRegistrationScreen(
                 AdminPatientListItem(
                     patientId = patient.patientCode,
                     patientName = patient.patientName,
-                    patientInfo = patient.patientRoom.toString(),
+                    patientInfo = "${patient.inpatientWardNumber}동 ${patient.patientRoom}호 ${patient.bedNumber}번 침대",
                     isSelected = selectedPatientId == patient.patientId,
                     onClick = {
                         selectedPatientId =
                             if (selectedPatientId == patient.patientId) null else patient.patientId
+                        viewModel.updateSelectedPatient(patient)
+                        Log.d("PatientRegistrationScreen", "selectedPatientId: ${state.selectedPatient?.patientId}")
                     }
                 )
                 Spacer(modifier = Modifier.height(8.dp))

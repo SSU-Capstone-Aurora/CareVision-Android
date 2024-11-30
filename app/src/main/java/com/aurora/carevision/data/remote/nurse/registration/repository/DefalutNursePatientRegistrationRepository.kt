@@ -19,4 +19,12 @@ class DefalutNursePatientRegistrationRepository @Inject constructor(
     override suspend fun getUnlinkedPatients(): List<Patient> {
         return nursePatientRegistrationDataSource.getUnlinkedPatients().result.toDomainModel()
     }
+
+    override suspend fun postNewPatient(patient: Patient): Unit {
+        return nursePatientRegistrationDataSource.postNewPatient(patient.toDataModel()).result
+    }
+
+    override suspend fun postAlreadyPatient(patientId: Int): Unit {
+        return nursePatientRegistrationDataSource.postAlreadyPatient(patientId).result
+    }
 }

@@ -1,5 +1,6 @@
 package com.aurora.carevision.feature.nurse.patient.registration.barcode.screen
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,10 +13,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -28,6 +31,7 @@ import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.CVLongButton
 import com.aurora.carevision.core.component.TopAppBarLeft
 import com.aurora.carevision.domain.nurse.model.Camera
+import com.aurora.carevision.feature.nurse.patient.registration.barcode.SelfRegistrationSideEffect
 import com.aurora.carevision.feature.nurse.patient.registration.barcode.SelfRegistrationViewModel
 
 @Composable
@@ -37,7 +41,21 @@ fun CheckCameraInfoScreen(
     viewModel: SelfRegistrationViewModel = viewModel()
 ) {
     val state = viewModel.state.collectAsState().value
+    val context = LocalContext.current
 
+    LaunchedEffect(key1 = Unit) {
+        viewModel.sideEffect.collect {
+            when(it){
+                SelfRegistrationSideEffect.PostNewPatientSuccess -> {
+                    navigateToDone()
+                }
+                SelfRegistrationSideEffect.PostNewPatientFailure -> {
+                    Toast.makeText(context, "환자 등록에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                }
+                else -> {}
+            }
+        }
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -134,7 +152,9 @@ fun CheckCameraInfoScreen(
 
         CVLongButton(
             text = "확인",
-            onClick = navigateToDone,
+            onClick = {
+                viewModel.postNewPatient()
+            },
             modifier = Modifier.fillMaxWidth()
         )
 

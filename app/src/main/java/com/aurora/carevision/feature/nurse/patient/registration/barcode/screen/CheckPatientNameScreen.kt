@@ -63,7 +63,9 @@ fun CheckPatientNameScreen(
 
         CVLongButton(
             text = "맞아요",
-            onClick = navigateToCameraListInfo,
+            onClick = {
+                navigateToCameraListInfo()
+            },
             modifier = Modifier.fillMaxWidth(),
             enabled = state.enabledNextButton
         )

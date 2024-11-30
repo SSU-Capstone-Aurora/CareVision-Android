@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aurora.carevision.data.remote.nurse.registration.repository.DefalutNursePatientRegistrationRepository
+import com.aurora.carevision.domain.nurse.model.Patient
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -66,6 +67,27 @@ class SelfRegistrationViewModel @Inject constructor(
                 _sideEffect.value = SelfRegistrationSideEffect.GetUnlinkedCamerasSuccess
             }.onFailure {
                 _sideEffect.value = SelfRegistrationSideEffect.GetUnlinkedCamerasFailure
+            }
+        }
+    }
+
+    fun postNewPatient(){
+        viewModelScope.launch {
+            runCatching {
+                nursePatientRegistrationRepository.postNewPatient(
+                    Patient(
+                        patientName = state.value.patientName,
+                        patientCode = state.value.patientBarcodeNumber,
+                        inpatientWardNumber = state.value.selectedInpatientWardNumber,
+                        patientRoom = state.value.selectedPatientRoomNumber,
+                        bedNumber = state.value.selectedBedNumber,
+                        cameraId = state.value.selectedCameraCode
+                    )
+                )
+            }.onSuccess {
+                _sideEffect.value = SelfRegistrationSideEffect.PostNewPatientSuccess
+            }.onFailure {
+                _sideEffect.value = SelfRegistrationSideEffect.PostNewPatientFailure
             }
         }
     }
