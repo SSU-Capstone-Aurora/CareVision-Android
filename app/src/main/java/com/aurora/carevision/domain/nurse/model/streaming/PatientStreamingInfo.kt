@@ -4,12 +4,8 @@ data class PatientStreamingInfo(
     val patientId: Int,
     val patientName: String,
     val thumbnailImage: String,
-    val bedInfo: List<BedInfo>,
+    val inpatientWardNumber: Int,
+    val patientRoomNumber: Int,
+    val bedNumber: Int,
     //val savedVideo: List<SavedVideo>,
-){
-    data class BedInfo(
-        val inpatientWardNumber: Int,
-        val patientRoomNumber: Int,
-        val bedNumber: Int,
-    )
-}
+)

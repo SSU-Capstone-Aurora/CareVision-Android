@@ -20,7 +20,7 @@ data class StreamingResponse(
         @SerialName("thumbnail")
         val thumbnail: String,
         @SerialName("bedInfo")
-        val bedInfo: List<BedInfo>,
+        val bedInfo: BedInfo,
     ) {
         @Serializable
         data class BedInfo(
@@ -40,13 +40,9 @@ fun StreamingResponse.toDomainModel(): List<PatientStreamingInfo> {
             patientId = it.patientId,
             patientName = it.patientName,
             thumbnailImage = it.thumbnail,
-            bedInfo = it.bedInfo.map { bedInfo ->
-                PatientStreamingInfo.BedInfo(
-                    inpatientWardNumber = bedInfo.inpatientWardNumber,
-                    patientRoomNumber = bedInfo.patientRoomNumber,
-                    bedNumber = bedInfo.bedNumber
-                )
-            }
+            bedNumber = it.bedInfo.bedNumber,
+            inpatientWardNumber = it.bedInfo.inpatientWardNumber,
+            patientRoomNumber = it.bedInfo.patientRoomNumber
         )
     }
 }

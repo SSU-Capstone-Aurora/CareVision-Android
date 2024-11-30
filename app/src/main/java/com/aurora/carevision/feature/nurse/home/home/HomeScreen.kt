@@ -1,5 +1,6 @@
 package com.aurora.carevision.feature.nurse.home.home
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -94,9 +95,9 @@ fun HomeScreen(
                     onClickCard = {},
                     patientName = state.patientStreamingList[it].patientName,
                     imageUrl = state.patientStreamingList[it].thumbnailImage,
-                    inpatientWardNumber = state.patientStreamingList[it].bedInfo[it].inpatientWardNumber.toString(),
-                    patientRoomNumber = state.patientStreamingList[it].bedInfo[it].patientRoomNumber.toString(),
-                    bedNumber = state.patientStreamingList[it].bedInfo[it].bedNumber.toString()
+                    inpatientWardNumber = state.patientStreamingList[it].inpatientWardNumber.toString(),
+                    patientRoomNumber = state.patientStreamingList[it].patientRoomNumber.toString(),
+                    bedNumber = state.patientStreamingList[it].bedNumber.toString()
                 )
             }
         }
