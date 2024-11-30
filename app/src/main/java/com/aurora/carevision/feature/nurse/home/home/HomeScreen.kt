@@ -137,8 +137,12 @@ fun VideoCardView(
                     .fillMaxWidth(),
                 contentScale = ContentScale.Crop,
                 placeholder = painterResource(id = R.drawable.image_card_default),
-                error = painterResource(id = R.drawable.image_card_default)
+                error = painterResource(id = R.drawable.image_card_default),
+                onError = { error ->
+                    Log.e("AsyncImage", "Image load failed: ${error.result.throwable}")
+                }
             )
+
 
             Row(
                 modifier = Modifier.padding(start = 12.dp, end = 12.dp, top = 12.dp, bottom = 4.dp),
