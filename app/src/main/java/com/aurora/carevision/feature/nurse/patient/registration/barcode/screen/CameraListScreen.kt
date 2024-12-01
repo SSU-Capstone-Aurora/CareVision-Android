@@ -50,7 +50,7 @@ fun CameraListScreen(
             .fillMaxSize()
             .background(Gray100)
     ) {
-        TopAppBarLeft("환자 등록", onClick = onClickNavigateToBack)
+        TopAppBarLeft("카메라 연결", onClick = onClickNavigateToBack)
 
         Column(
             modifier = Modifier
@@ -58,7 +58,7 @@ fun CameraListScreen(
                 .padding(top = 26.dp, start = 24.dp, end = 24.dp)
         ) {
             Text(
-                text = "연결할 환자를 선택해주세요",
+                text = "연결할 카메라를 선택해주세요",
                 color = Gray700,
                 style = CVTheme.typography.headingSecondary,
                 modifier = Modifier
