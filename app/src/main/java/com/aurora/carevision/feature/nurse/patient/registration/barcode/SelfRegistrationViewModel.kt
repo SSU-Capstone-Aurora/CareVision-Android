@@ -78,6 +78,7 @@ class SelfRegistrationViewModel @Inject constructor(
                     Patient(
                         patientName = state.value.patientName,
                         patientCode = state.value.patientBarcodeNumber,
+                        //patientCode = "P041",
                         inpatientWardNumber = state.value.selectedInpatientWardNumber,
                         patientRoom = state.value.selectedPatientRoomNumber,
                         bedNumber = state.value.selectedBedNumber,
