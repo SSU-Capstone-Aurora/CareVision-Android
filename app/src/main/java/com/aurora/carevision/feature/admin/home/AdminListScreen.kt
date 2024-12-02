@@ -20,6 +20,7 @@ import com.aurora.carevision.app.ui.theme.Gray100
 import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.AdminHospitalListItem
 import com.aurora.carevision.core.component.CVTabs
+import com.aurora.carevision.feature.admin.home.cameralist.CameraListScreen
 import com.aurora.carevision.feature.admin.home.patientlist.PatientListScreen
 
 
