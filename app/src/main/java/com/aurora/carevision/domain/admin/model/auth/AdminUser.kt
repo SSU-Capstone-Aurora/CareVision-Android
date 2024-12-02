@@ -6,6 +6,8 @@ data class AdminUser(
     val userId: String = "",
     val hospitalYkifo: String = "",
     val password: String = "",
+    val hospitalId: String = "",
+    val departmentId: String = "",
     val hospitalName: String ="",
     val departmentName: String = "",
     val accessToken: String = "",

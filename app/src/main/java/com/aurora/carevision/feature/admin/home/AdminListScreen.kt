@@ -2,7 +2,10 @@
 package com.aurora.carevision.feature.admin.home
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -17,7 +20,9 @@ import com.aurora.carevision.app.ui.theme.Gray100
 import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.AdminHospitalListItem
 import com.aurora.carevision.core.component.CVTabs
-import com.aurora.carevision.feature.admin.home.nurselist.NurseListScreen
+import com.aurora.carevision.feature.admin.home.cameralist.CameraListScreen
+import com.aurora.carevision.feature.admin.home.patientlist.PatientListScreen
+
 
 @Composable
 fun AdminListScreen() {

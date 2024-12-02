@@ -139,8 +139,8 @@ class AdminSignUpHospitalEntryViewModel @Inject constructor(
                         userId = _state.value.userId,
                         password = _state.value.password,
                         hospitalYkifo = _state.value.selectedHospitalykiho,
-                        hospitalName = _state.value.selectedHospitalName,
-                        departmentName = _state.value.selectedDepartmentName
+                        hospitalId = _state.value.selectedHospitalName,
+                        departmentId = _state.value.selectedDepartmentName
                     )
                 )
             }.onSuccess {

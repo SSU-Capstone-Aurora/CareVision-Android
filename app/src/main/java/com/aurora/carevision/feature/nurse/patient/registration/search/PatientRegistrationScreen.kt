@@ -1,7 +1,6 @@
 package com.aurora.carevision.feature.nurse.patient.registration.search
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,12 +11,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -27,14 +24,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.aurora.carevision.R
 import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.Gray100
-import com.aurora.carevision.app.ui.theme.Gray300
-import com.aurora.carevision.app.ui.theme.Gray500
 import com.aurora.carevision.app.ui.theme.Gray700
 import com.aurora.carevision.app.ui.theme.Primary500
 import com.aurora.carevision.app.ui.theme.White
@@ -56,59 +49,48 @@ fun PatientRegistrationScreen(
         Patient(
             patientId = 1,
             patientName = "오로라",
-            patientNum = "07-FJw144",
-            patientRoom = "2동 101호 4번 베드",
-            registrationDate = "2021.10.01"
+            patientCode = "07-FJw144",
+            patientRoom = 4,
+            registrationDate = "2021.10.01",
+            inpatientWardNumber = 4,
+            bedNumber = 4,
         ),
         Patient(
             patientId = 2,
             patientName = "오로라",
-            patientNum = "07-FJw144",
-            patientRoom = "2동 101호 4번 베드",
-            registrationDate = "2021.10.01"
+            patientCode = "07-FJw144",
+            patientRoom = 4,
+            registrationDate = "2021.10.01",
+            inpatientWardNumber = 4,
+            bedNumber = 4,
         ),
         Patient(
             patientId = 3,
             patientName = "오로라",
-            patientNum = "07-FJw144",
-            patientRoom = "2동 101호 4번 베드",
-            registrationDate = "2021.10.01"
+            patientCode = "07-FJw144",
+            patientRoom = 4,
+            registrationDate = "2021.10.01",
+            inpatientWardNumber = 4,
+            bedNumber = 4,
         ),
         Patient(
             patientId = 4,
             patientName = "오로라",
-            patientNum = "07-FJw144",
-            patientRoom = "2동 101호 4번 베드",
-            registrationDate = "2021.10.01"
+            patientCode = "07-FJw144",
+            patientRoom = 4,
+            registrationDate = "2021.10.01",
+            inpatientWardNumber = 4,
+            bedNumber = 4,
         ),
         Patient(
             patientId = 5,
             patientName = "오로라",
-            patientNum = "07-FJw144",
-            patientRoom = "2동 101호 4번 베드",
-            registrationDate = "2021.10.01"
+            patientCode = "07-FJw144",
+            patientRoom = 4,
+            registrationDate = "2021.10.01",
+            inpatientWardNumber = 4,
+            bedNumber = 4,
         ),
-        Patient(
-            patientId = 6,
-            patientName = "오로라",
-            patientNum = "07-FJw144",
-            patientRoom = "2동 101호 4번 베드",
-            registrationDate = "2021.10.01"
-        ),
-        Patient(
-            patientId = 7,
-            patientName = "오로라",
-            patientNum = "07-FJw144",
-            patientRoom = "2동 101호 4번 베드",
-            registrationDate = "2021.10.01"
-        ),
-        Patient(
-            patientId = 8,
-            patientName = "오로라",
-            patientNum = "07-FJw144",
-            patientRoom = "2동 101호 4번 베드",
-            registrationDate = "2021.10.01"
-        )
     )
     Column(
         modifier = Modifier
@@ -159,9 +141,9 @@ fun PatientRegistrationScreen(
         ) {
             items(dummyList) { patient ->
                 AdminPatientListItem(
-                    patientId = patient.patientNum,
+                    patientId = patient.patientCode,
                     patientName = patient.patientName,
-                    patientInfo = patient.patientRoom,
+                    patientInfo = patient.patientRoom.toString(),
                     isSelected = selectedPatientId == patient.patientId,
                     onClick = {
                         selectedPatientId =
