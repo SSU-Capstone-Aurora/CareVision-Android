@@ -78,7 +78,6 @@ class SelfRegistrationViewModel @Inject constructor(
                     Patient(
                         patientName = state.value.patientName,
                         patientCode = state.value.patientBarcodeNumber,
-                        //patientCode = "P041",
                         inpatientWardNumber = state.value.selectedInpatientWardNumber,
                         patientRoom = state.value.selectedPatientRoomNumber,
                         bedNumber = state.value.selectedBedNumber,
@@ -89,6 +88,7 @@ class SelfRegistrationViewModel @Inject constructor(
                 _sideEffect.value = SelfRegistrationSideEffect.PostNewPatientSuccess
             }.onFailure {
                 _sideEffect.value = SelfRegistrationSideEffect.PostNewPatientFailure
+                Log.d("SelfRegistrationViewModel", "${it.message}")
             }
         }
     }
