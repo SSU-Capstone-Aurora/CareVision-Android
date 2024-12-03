@@ -1,5 +1,6 @@
 package com.aurora.carevision.feature.admin.home.nurselist
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aurora.carevision.domain.admin.repository.AdminNurseListRepository
@@ -26,9 +27,11 @@ class NurseListScreenViewModel @Inject constructor(
             runCatching {
                 nurseListRepository.getNurseList()
             }.onSuccess {
-                _state.value = _state.value.copy(nurses = it.result.nurses)
-            }.onFailure { throwable ->
-                _state.update { it.copy(isLoading = false, error = throwable.message) }
+                _state.value = state.value.copy(nurses = it)
+                Log.d("NurseListViewModel", "getNurseList : ${it.size}")
+                _sideEffect.value = NurseListScreenSideEffect.GetNurseListSuccess
+            }.onFailure {
+                _sideEffect.value = NurseListScreenSideEffect.GetNurseListFailure
             }
         }
     }

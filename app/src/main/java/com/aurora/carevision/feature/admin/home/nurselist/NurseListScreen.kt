@@ -12,23 +12,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.aurora.carevision.app.ui.theme.Black
 import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.core.component.AdminNurseListItem
 import com.aurora.carevision.core.component.CVHeadIconSearchBar
-import kotlinx.coroutines.flow.collect
 
 @Composable
 fun NurseListScreen(
     viewModel: NurseListScreenViewModel = hiltViewModel()
 ) {
-    val state by viewModel.state.collectAsState()
-    val sideEffect by viewModel.sideEffect.collectAsState()
+    val state = viewModel.state.collectAsState().value
     //val nurseList by viewModel.adminNurseListState.collectAsState()
     //val dummyNurseList = listOf("안셰프" to "aurora1128")
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(key1 = Unit) {
         viewModel.loadNurseList()
     }
 

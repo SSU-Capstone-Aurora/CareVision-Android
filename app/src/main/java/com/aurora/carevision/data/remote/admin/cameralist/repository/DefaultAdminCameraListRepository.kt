@@ -3,7 +3,6 @@ package com.aurora.carevision.data.remote.admin.cameralist.repository
 import com.aurora.carevision.domain.admin.repository.AdminCameraListRepository
 import com.aurora.carevision.data.remote.admin.cameralist.datasource.AdminCameraListDataSource
 import com.aurora.carevision.data.remote.admin.cameralist.model.toDomainModel
-import com.aurora.carevision.data.remote.admin.patientlist.datasource.AdminPatientListDataSource
 import com.aurora.carevision.domain.admin.model.camera.Camera
 import javax.inject.Inject
 

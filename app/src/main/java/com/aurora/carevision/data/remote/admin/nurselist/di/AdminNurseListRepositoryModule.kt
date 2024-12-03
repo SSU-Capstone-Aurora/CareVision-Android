@@ -1,6 +1,5 @@
 package com.aurora.carevision.data.remote.admin.nurselist.di
 
-import com.aurora.carevision.data.remote.admin.auth.datasource.AdminAuthRemoteDataSource
 import com.aurora.carevision.data.remote.admin.nurselist.datasource.AdminNurseListRemoteDataSource
 import com.aurora.carevision.data.remote.admin.nurselist.datasource.DefaultNurseListDataSource
 import com.aurora.carevision.data.remote.admin.nurselist.repository.DefaultNurseListRepository

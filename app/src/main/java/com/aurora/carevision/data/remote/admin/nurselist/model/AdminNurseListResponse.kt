@@ -1,18 +1,18 @@
 package com.aurora.carevision.data.remote.admin.nurselist.model
 
-import com.aurora.carevision.domain.admin.model.nurserequest.NurseList
+import com.aurora.carevision.domain.admin.model.nurse.NurseList
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class NurseListResponse(
-    @SerialName("nurses")
-    val nurses: List<NurseResponse>,
+    @SerialName("nurseList")
+    val nurses: List<Nurse> = emptyList(),
     @SerialName("count")
-    val count: Int,
+    val count: Int = 0
 ) {
     @Serializable
-    data class NurseResponse(
+    data class Nurse(
         @SerialName("id")
         val id: String,
         @SerialName("name")
@@ -20,15 +20,12 @@ data class NurseListResponse(
     )
 }
 
-fun NurseListResponse.toDomainModel(): NurseList {
-    return NurseList(
-        nurseList = this.nurses.map { nurses ->
-            NurseList.NurseList(
-                id = nurses.id,
-                name = nurses.name
-            )
-        },
-        count = this.count
-    )
+fun NurseListResponse.toDomainModel(): List<NurseList> {
+    return nurses.map {
+        NurseList(
+            id = it.id,
+            name = it.name
+        )
+    }
 }
 

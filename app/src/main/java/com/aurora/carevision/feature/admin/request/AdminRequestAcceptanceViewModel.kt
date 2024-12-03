@@ -4,10 +4,10 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aurora.carevision.data.remote.admin.nurserequest.repository.DefaultAdminNurseRequestRepository
-import com.aurora.carevision.domain.admin.repository.AdminAuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -36,12 +36,38 @@ class AdminRequestAcceptanceViewModel @Inject constructor(
         }
     }
 
-    fun acceptNurseRequest(nurseId: Int){
+    fun setSelectedNurseName(nurseName: String){
+        _state.value = _state.value.copy(selectedNurseName = nurseName)
+    }
+
+    fun showDialog(nurseId : Int, nurseName: String){
+        _state.update {
+            it.copy(
+                isDialogVisible = true,
+                selectedNurseId = nurseId,
+                selectedNurseName = nurseName,
+            )
+        }
+    }
+
+    fun dismissDialog(){
+        _state.update {
+            it.copy(
+                isDialogVisible = false,
+                selectedNurseId = 0
+            )
+        }
+    }
+    fun acceptNurseRequest(){
+        val nurseId = state.value.selectedNurseId
         viewModelScope.launch {
             runCatching {
                 adminNurseRequestRepository.acceptNurseRequests(nurseId)
             }.onSuccess {
-                _sideEffect.value = AdminRequestAcceptanceSideEffect.RequestAccepted
+
+                _sideEffect.emit(AdminRequestAcceptanceSideEffect.NavigateToNurseList)
+                dismissDialog()
+                loadNurseRequests()
                 Log.d("AdminRequestAcceptanceViewModel", "SuccessAcceptNurse : onSuccess ${it}")
             }.onFailure {
                 _sideEffect.value = AdminRequestAcceptanceSideEffect.Error(it.message)

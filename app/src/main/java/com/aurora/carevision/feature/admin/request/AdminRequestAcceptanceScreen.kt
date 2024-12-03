@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,9 +24,12 @@ import com.aurora.carevision.app.ui.theme.Black
 import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.Gray100
 import com.aurora.carevision.app.ui.theme.Gray700
+import com.aurora.carevision.app.ui.theme.Primary400
+import com.aurora.carevision.app.ui.theme.Primary600
 import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.AdminRequestItem
 import com.aurora.carevision.core.component.CVTopAppBar
+import com.aurora.carevision.core.component.CVTwoButtonDialog
 import com.aurora.carevision.domain.admin.model.nurserequest.NurseRequestList
 
 @Composable
@@ -34,7 +38,6 @@ fun AdminRequestAcceptanceScreen(
 ) {
     val state by viewModel.state.collectAsState()
 
-    //val requests = remember { listOf("안셰프" to "5분 전") }
     LaunchedEffect(Unit) {
         viewModel.loadNurseRequests()
     }
@@ -52,14 +55,36 @@ fun AdminRequestAcceptanceScreen(
                 AdminRequestContent(
                     requestCount = state.requestCount,
                     requests = state.requests,
-                    onAcceptClick = {nurseId ->
-                        viewModel.acceptNurseRequest(nurseId)
+//                    onAcceptClick = {nurseId ->
+//                        viewModel.acceptNurseRequest(nurseId)
+//                    },
+                    onAcceptClick = {nurseId, nurseName ->
+                        if (nurseName != null) {
+                            viewModel.showDialog(nurseId, nurseName)
+                        }
                     },
                     onRejectClick = {nurseId ->
-                        viewModel.acceptNurseRequest(nurseId) //TODO reject 구현 필요
+                        viewModel.acceptNurseRequest() //TODO reject 구현 필요
                     }
                 )
             }
+        }
+
+        if (state.isDialogVisible) {
+            CVTwoButtonDialog(
+                negativeButtonText = "취소",
+                positiveButtonText = "확인",
+                onNegativeButtonClicked = {
+                    viewModel.dismissDialog()
+                },
+                onPositiveButtonClicked = {
+                    viewModel.acceptNurseRequest()
+                    viewModel.dismissDialog()
+                },
+                title = "${state.selectedNurseName} 간호사의 가입 요청을\n수락하시겠습니까?",
+                iconColor = Primary400,
+                positiveButtonColor = Primary600
+            )
         }
     }
 }
@@ -68,7 +93,7 @@ fun AdminRequestAcceptanceScreen(
 fun AdminRequestContent(
     requestCount: Int,
     requests:  List<NurseRequestList.NurseRequest>,
-    onAcceptClick:(Int)-> Unit,
+    onAcceptClick:(Int, String?)-> Unit,
     onRejectClick:(Int)-> Unit,
 ) {
     Column(
@@ -92,7 +117,7 @@ fun AdminRequestContent(
                     nurseRequestName = nurseName,
                     nurseId = userName,
                     requestTime = requestTime,
-                    onAcceptClick = {onAcceptClick(nurseId) },
+                    onAcceptClick = {onAcceptClick(nurseId, nurseName) },
                     onRejectClick = {onRejectClick(nurseId)},
                 )
                 Spacer(modifier = Modifier.height(8.dp))

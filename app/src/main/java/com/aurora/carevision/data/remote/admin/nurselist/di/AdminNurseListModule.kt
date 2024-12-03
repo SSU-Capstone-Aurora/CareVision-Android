@@ -1,8 +1,6 @@
 package com.aurora.carevision.data.remote.admin.nurselist.di
 
 import com.aurora.carevision.core.network.qualifier.Secured
-import com.aurora.carevision.core.network.qualifier.Unsecured
-import com.aurora.carevision.data.remote.admin.auth.service.AdminAuthService
 import com.aurora.carevision.data.remote.admin.nurselist.service.NurseListService
 import dagger.Module
 import dagger.Provides
@@ -18,5 +16,5 @@ import javax.inject.Singleton
 object AdminNurseListModule {
     @Provides
     @Singleton
-    fun provideNurseListApi(@Unsecured retrofit: Retrofit): NurseListService = retrofit.create()
+    fun provideNurseListApi(@Secured retrofit: Retrofit): NurseListService = retrofit.create()
 }
