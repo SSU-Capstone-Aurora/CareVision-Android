@@ -8,4 +8,5 @@ interface PatientStreamingRepository {
     suspend fun getPatientVideoList(): List<PatientStreamingInfo>
     suspend fun getSpecifyPatientStreamingUri(patientId: Int): StreamingSpecifyPatientInfo
     suspend fun getSavedVideos(patientId: Int): List<SavedVideoInfo>
+    suspend fun getVideoUri(videoId: Int): String
 }

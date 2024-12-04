@@ -24,6 +24,13 @@ class HomeViewModel @Inject constructor(
         _state.value = state.value.copy(clickedPatientInfo = patientInfo)
     }
 
+    fun updateClickedSavedVideoInfo(videoId: Int, clickedSavedVideoDate: String){
+        _state.value = state.value.copy(
+            clickedSavedVideoId = videoId,
+            clickedSavedVideoDate = clickedSavedVideoDate
+        )
+    }
+
     fun getPatientStreamingList(){
         viewModelScope.launch {
             runCatching {
@@ -71,6 +78,21 @@ class HomeViewModel @Inject constructor(
             }.onFailure {
                 _sideEffect.value = HomeSideEffect.GetSavedVideosFailure
                 Log.d("HomeViewModel", "getSavedVideos: ${it}")
+            }
+        }
+    }
+
+    fun getSpecifyPatientSavedVideoUri(videoId: Int){
+        viewModelScope.launch {
+            runCatching {
+                patientStreamingRepository.getVideoUri(videoId)
+            }.onSuccess {
+                _state.value = state.value.copy(specifyPatientSavedVideoUri = it)
+                _sideEffect.value = HomeSideEffect.GetSpecifyPatientSavedVideoUriSuccess
+                Log.d("HomeViewModel", "getSpecifyPatientSavedVideoUri: ${it}")
+            }.onFailure {
+                _sideEffect.value = HomeSideEffect.GetSpecifyPatientSavedVideoUriFailure
+                Log.d("HomeViewModel", "getSpecifyPatientSavedVideoUri: ${it}")
             }
         }
     }

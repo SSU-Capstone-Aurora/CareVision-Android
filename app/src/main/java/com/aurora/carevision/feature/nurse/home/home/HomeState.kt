@@ -12,4 +12,7 @@ data class HomeState(
     val liveStreamingPatientRoomNumber : Int = 0,
     val liveStreamingPatientBedNumber : Int = 0,
     val savedVideoList: List<SavedVideoInfo> = emptyList(),
+    val specifyPatientSavedVideoUri: String = "",
+    val clickedSavedVideoId: Int = 0,
+    val clickedSavedVideoDate: String = ""
 )

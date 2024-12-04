@@ -1,6 +1,7 @@
 package com.aurora.carevision.data.remote.nurse.video.datasource
 
 import com.aurora.carevision.core.network.response.BaseResponse
+import com.aurora.carevision.data.remote.nurse.video.model.response.SavedVideoUrlResponse
 import com.aurora.carevision.data.remote.nurse.video.model.response.SpecifyLiveStreamingResponse
 import com.aurora.carevision.data.remote.nurse.video.model.response.StreamingResponse
 import com.aurora.carevision.data.remote.nurse.video.model.response.toDomainModel
@@ -19,4 +20,6 @@ class DefaultPatientStreamingDataSource @Inject constructor(
 
     override suspend fun getSavedVideos(patientId: Int) =
         patientStreamingService.getSavedVideos(patientId)
+
+    override suspend fun getVideoUri(videoId: Int): BaseResponse<SavedVideoUrlResponse> = patientStreamingService.getVideoUri(videoId)
 }

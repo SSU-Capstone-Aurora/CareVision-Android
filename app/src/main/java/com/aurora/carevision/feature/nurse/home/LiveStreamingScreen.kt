@@ -34,13 +34,11 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.rtsp.RtspMediaSource
 import androidx.media3.exoplayer.source.MediaSource
 import androidx.media3.ui.PlayerView
-import com.aurora.carevision.R
 import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.Gray100
 import com.aurora.carevision.app.ui.theme.Gray700
 import com.aurora.carevision.core.component.AdminVideoListItem
 import com.aurora.carevision.core.component.TopAppBarLeft
-import com.aurora.carevision.domain.nurse.model.streaming.SavedVideo
 import com.aurora.carevision.feature.nurse.home.home.HomeViewModel
 
 @Composable
@@ -97,7 +95,10 @@ fun LiveStreamingScreen(
                     imageUrl = savedVideo.thumbnail,
                     recordedDate = savedVideo.videoDate,
                     videoPlayTime = savedVideo.videoLength,
-                    onClick = { navigateToSavedVideoScreen() },
+                    onClick = {
+                        navigateToSavedVideoScreen()
+                        viewModel.updateClickedSavedVideoInfo(savedVideo.videoId, savedVideo.videoDate)
+                              },
                 )
                 Spacer(modifier = Modifier.height(8.dp))
             }

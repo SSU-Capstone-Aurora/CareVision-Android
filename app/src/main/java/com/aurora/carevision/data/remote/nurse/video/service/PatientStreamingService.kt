@@ -2,6 +2,7 @@ package com.aurora.carevision.data.remote.nurse.video.service
 
 import com.aurora.carevision.core.network.response.BaseResponse
 import com.aurora.carevision.data.remote.nurse.video.model.response.SavedVideoListResponse
+import com.aurora.carevision.data.remote.nurse.video.model.response.SavedVideoUrlResponse
 import com.aurora.carevision.data.remote.nurse.video.model.response.SpecifyLiveStreamingResponse
 import com.aurora.carevision.data.remote.nurse.video.model.response.StreamingResponse
 import retrofit2.http.GET
@@ -17,4 +18,7 @@ interface PatientStreamingService {
 
     @GET("api/patients/{patientId}/videos")
     suspend fun getSavedVideos(@Path("patientId") patientId: Int): BaseResponse<SavedVideoListResponse>
+
+    @GET("api/videos/{videoId}")
+    suspend fun getVideoUri(@Path("videoId") videoId: Int): BaseResponse<SavedVideoUrlResponse>
 }

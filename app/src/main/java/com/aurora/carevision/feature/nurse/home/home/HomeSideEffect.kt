@@ -7,4 +7,6 @@ sealed class HomeSideEffect {
     object GetSpecifyPatientStreamingUriFailure : HomeSideEffect()
     object GetSavedVideosSuccess : HomeSideEffect()
     object GetSavedVideosFailure : HomeSideEffect()
+    object GetSpecifyPatientSavedVideoUriSuccess : HomeSideEffect()
+    object GetSpecifyPatientSavedVideoUriFailure : HomeSideEffect()
 }
