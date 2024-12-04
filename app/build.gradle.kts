@@ -87,6 +87,7 @@ dependencies {
 
     // coil
     implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
 
     // hilt
     implementation(libs.hilt.android)
@@ -112,5 +113,9 @@ dependencies {
     // Timber
     implementation (libs.timber)
 
+    // streaming & videoView
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.ui)
+    implementation(libs.rstp)
     implementation(libs.accompanist.permissions)
 }

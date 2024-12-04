@@ -45,10 +45,10 @@ fun AdminUser.toDataModel(): AdminSignUpRequest {
         ),
         hospital = AdminSignUpRequest.Hospital(
             ykiho = hospitalYkifo,
-            name = hospitalName
+            name = hospitalId
         ),
         department = AdminSignUpRequest.Department(
-            name = departmentName
+            name = departmentId
         )
     )
 }

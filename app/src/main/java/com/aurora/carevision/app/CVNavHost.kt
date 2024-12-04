@@ -63,8 +63,11 @@ import com.aurora.carevision.feature.nurse.auth.signup.navigationToNurseSignupId
 import com.aurora.carevision.feature.nurse.auth.signup.navigationToNurseSignupName
 import com.aurora.carevision.feature.nurse.auth.signup.navigationToNurseSignupWaiting
 import com.aurora.carevision.feature.nurse.auth.signup.nurseSignUpScreen
+import com.aurora.carevision.feature.nurse.home.home.HomeViewModel
 import com.aurora.carevision.feature.nurse.home.navigation.NurseHome
 import com.aurora.carevision.feature.nurse.home.navigation.navigateToNurseHome
+import com.aurora.carevision.feature.nurse.home.navigation.navigateToNurseSavedVideo
+import com.aurora.carevision.feature.nurse.home.navigation.navigateToNurseStreaming
 import com.aurora.carevision.feature.nurse.home.navigation.nurseHomeScreen
 import com.aurora.carevision.feature.nurse.mypage.NurseMypage
 import com.aurora.carevision.feature.nurse.mypage.nurseMypageScreen
@@ -81,6 +84,7 @@ import com.aurora.carevision.feature.nurse.patient.registration.navigateToScanni
 import com.aurora.carevision.feature.nurse.patient.registration.patientRegistrationScreen
 import com.aurora.carevision.feature.nurse.patient.registration.search.PatientRegistrationViewModel
 
+
 @Composable
 fun CVNavHost(
     navController: NavHostController = rememberNavController(),
@@ -91,6 +95,7 @@ fun CVNavHost(
     val selfRegistrationViewModel: SelfRegistrationViewModel = hiltViewModel()
     val cameraRegistrationViewModel : CameraRegistrationViewModel = hiltViewModel()
     val patientRegistrationViewModel: PatientRegistrationViewModel = hiltViewModel()
+    val homeViewModel: HomeViewModel = hiltViewModel()
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
 
     var isModalVisible by remember { mutableStateOf(false) }
@@ -210,7 +215,10 @@ fun CVNavHost(
             )
 
             nurseHomeScreen(
-                navigateToNurseLogin = { navController.navigateToIntro() },
+                navigateToSpecificPatientStreamingScreen = { navController.navigateToNurseStreaming() },
+                navigateToSavedVideoScreen = { navController.navigateToNurseSavedVideo() },
+                onBackClick = { navController.popBackStack() },
+                viewModel = homeViewModel
             )
 
             nurseMypageScreen(
