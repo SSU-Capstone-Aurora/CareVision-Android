@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import com.aurora.carevision.feature.nurse.home.LiveStreamingScreen
 import com.aurora.carevision.feature.nurse.home.SavedVideoScreen
 import com.aurora.carevision.feature.nurse.home.home.HomeScreen
+import com.aurora.carevision.feature.nurse.home.home.HomeViewModel
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -25,24 +26,28 @@ fun NavController.navigateToNurseSavedVideo(navOptions: NavOptions? = null) = na
 fun NavGraphBuilder.nurseHomeScreen(
     navigateToSpecificPatientStreamingScreen: () -> Unit,
     navigateToSavedVideoScreen: () -> Unit,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    viewModel: HomeViewModel
 ) {
     composable<NurseHome> {
         HomeScreen(
-            navigateToSpecificPatientStreaming = navigateToSpecificPatientStreamingScreen
+            navigateToSpecificPatientStreaming = navigateToSpecificPatientStreamingScreen,
+            viewModel = viewModel
         )
     }
 
     composable<NurseStreaming> {
         LiveStreamingScreen(
             navigateToSavedVideoScreen = navigateToSavedVideoScreen,
-            onBackClick = onBackClick
+            onBackClick = onBackClick,
+            viewModel = viewModel
         )
     }
 
     composable<NurseSavedVideo> {
         SavedVideoScreen(
-            onBackClick = onBackClick
+            onBackClick = onBackClick,
+            viewModel = viewModel
         )
     }
 }

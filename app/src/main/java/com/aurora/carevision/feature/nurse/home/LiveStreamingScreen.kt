@@ -21,6 +21,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
 import com.aurora.carevision.R
 import com.aurora.carevision.app.ui.theme.CVTheme
@@ -29,20 +31,25 @@ import com.aurora.carevision.app.ui.theme.Gray700
 import com.aurora.carevision.core.component.AdminVideoListItem
 import com.aurora.carevision.core.component.TopAppBarLeft
 import com.aurora.carevision.domain.nurse.model.streaming.SavedVideo
+import com.aurora.carevision.feature.nurse.home.home.HomeViewModel
 
 @Composable
 fun LiveStreamingScreen(
     navigateToSavedVideoScreen: () -> Unit = {},
     onBackClick: () -> Unit = {},
+    viewModel: HomeViewModel = hiltViewModel()
 ) {
+
+    val state = viewModel.state.collectAsStateWithLifecycle().value
+
     Column(
         modifier =
-            Modifier
-                .fillMaxSize()
-                .background(Gray100),
+        Modifier
+            .fillMaxSize()
+            .background(Gray100),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        val roomBedInfo = "101호 1번 베드"
+        val roomBedInfo = "${state.clickedPatientInfo?.patientRoomNumber ?: ""}호 ${state.clickedPatientInfo?.bedNumber ?: ""}번 베드"
         val imageUrl = R.drawable.image_card_default.toString()
 
         val dummyList =
@@ -78,6 +85,7 @@ fun LiveStreamingScreen(
             )
         TopAppBarLeft(title = roomBedInfo, onClick = onBackClick)
 
+        // TODO : 영상 스트리밍 ui
         AsyncImage(
             model = imageUrl,
             contentDescription = "Live Video thumbnail",

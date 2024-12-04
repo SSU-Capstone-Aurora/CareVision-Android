@@ -11,22 +11,28 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.Gray100
 import com.aurora.carevision.core.component.TopAppBarLeft
 import com.aurora.carevision.core.component.VideoNavigationBar
+import com.aurora.carevision.feature.nurse.home.home.HomeViewModel
 
 @Composable
 fun SavedVideoScreen(
-    onBackClick: () -> Unit = {}
+    onBackClick: () -> Unit = {},
+    viewModel: HomeViewModel = hiltViewModel()
 ) {
+    val state = viewModel.state.collectAsStateWithLifecycle().value
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Gray100),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val roomBedInfo = "101호 1번 베드"
+        val roomBedInfo = "${state.clickedPatientInfo?.patientRoomNumber ?: ""}호 ${state.clickedPatientInfo?.bedNumber ?: ""}번 베드"
         val videoTime = "2024.07.05 10:08"
         TopAppBarLeft(title = roomBedInfo, onClick = onBackClick)
         Spacer(modifier = Modifier.height(24.dp))

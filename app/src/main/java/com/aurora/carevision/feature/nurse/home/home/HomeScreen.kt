@@ -93,7 +93,10 @@ fun HomeScreen(
         ) {
             items(state.patientStreamingList.size) {
                 VideoCardView(
-                    onClickCard = {navigateToSpecificPatientStreaming()},
+                    onClickCard = {
+                        navigateToSpecificPatientStreaming()
+                        viewModel.updateClickedPatientInfo(state.patientStreamingList[it])
+                                  },
                     patientName = state.patientStreamingList[it].patientName,
                     imageUrl = state.patientStreamingList[it].thumbnailImage,
                     inpatientWardNumber = state.patientStreamingList[it].inpatientWardNumber.toString(),

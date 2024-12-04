@@ -65,6 +65,7 @@ import com.aurora.carevision.feature.nurse.auth.signup.navigationToNurseSignupNa
 import com.aurora.carevision.feature.nurse.auth.signup.navigationToNurseSignupWaiting
 import com.aurora.carevision.feature.nurse.auth.signup.nurseSignUpScreen
 import com.aurora.carevision.feature.nurse.home.LiveStreamingScreen
+import com.aurora.carevision.feature.nurse.home.home.HomeViewModel
 import com.aurora.carevision.feature.nurse.home.navigation.NurseHome
 import com.aurora.carevision.feature.nurse.home.navigation.navigateToNurseHome
 import com.aurora.carevision.feature.nurse.home.navigation.navigateToNurseSavedVideo
@@ -94,6 +95,7 @@ fun CVNavHost(
     val nurseSignUpViewModel: NurseSignUpViewModel = hiltViewModel()
     val adminSignUpViewModel: AdminSignUpHospitalEntryViewModel = hiltViewModel()
     val cameraRegistrationViewModel : CameraRegistrationViewModel = hiltViewModel()
+    val homeViewModel: HomeViewModel = hiltViewModel()
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
 
     var isModalVisible by remember { mutableStateOf(false) }
@@ -215,7 +217,8 @@ fun CVNavHost(
             nurseHomeScreen(
                 navigateToSpecificPatientStreamingScreen = { navController.navigateToNurseStreaming() },
                 navigateToSavedVideoScreen = { navController.navigateToNurseSavedVideo() },
-                onBackClick = { navController.popBackStack() }
+                onBackClick = { navController.popBackStack() },
+                viewModel = homeViewModel
             )
 
             nurseMypageScreen(
