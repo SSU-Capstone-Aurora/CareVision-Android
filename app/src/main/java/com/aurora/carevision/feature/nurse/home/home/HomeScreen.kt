@@ -39,6 +39,7 @@ import kotlinx.coroutines.flow.collect
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
+    navigateToSpecificPatientStreaming: () -> Unit = {},
     hasAlarm: Boolean = false,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
@@ -63,7 +64,7 @@ fun HomeScreen(
     }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(Gray100)
             .padding(start = 12.dp, end = 12.dp, top = 24.dp, bottom = 12.dp),
@@ -71,7 +72,7 @@ fun HomeScreen(
     ) {
 
         Row(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .padding(start = 12.dp, end = 12.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -88,11 +89,11 @@ fun HomeScreen(
 
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
-            modifier = Modifier.fillMaxSize(),
+            modifier = modifier.fillMaxSize(),
         ) {
             items(state.patientStreamingList.size) {
                 VideoCardView(
-                    onClickCard = {},
+                    onClickCard = {navigateToSpecificPatientStreaming()},
                     patientName = state.patientStreamingList[it].patientName,
                     imageUrl = state.patientStreamingList[it].thumbnailImage,
                     inpatientWardNumber = state.patientStreamingList[it].inpatientWardNumber.toString(),
@@ -119,20 +120,20 @@ fun VideoCardView(
 ) {
     Card(
         onClick = onClickCard,
-        modifier = Modifier
+        modifier = modifier
             .clip(RoundedCornerShape(8.dp))
             .padding(12.dp)
     ) {
         
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .clip(RoundedCornerShape(8.dp))
                 .background(White)
         ) {
             AsyncImage(
                 model = imageUrl,
                 contentDescription = "Video Thumbnail",
-                modifier = Modifier
+                modifier = modifier
                     .height(84.dp)
                     .fillMaxWidth(),
                 contentScale = ContentScale.Crop,
@@ -145,7 +146,7 @@ fun VideoCardView(
 
 
             Row(
-                modifier = Modifier.padding(start = 12.dp, end = 12.dp, top = 12.dp, bottom = 4.dp),
+                modifier = modifier.padding(start = 12.dp, end = 12.dp, top = 12.dp, bottom = 4.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 if(hasAlarm) {

@@ -64,8 +64,11 @@ import com.aurora.carevision.feature.nurse.auth.signup.navigationToNurseSignupId
 import com.aurora.carevision.feature.nurse.auth.signup.navigationToNurseSignupName
 import com.aurora.carevision.feature.nurse.auth.signup.navigationToNurseSignupWaiting
 import com.aurora.carevision.feature.nurse.auth.signup.nurseSignUpScreen
+import com.aurora.carevision.feature.nurse.home.LiveStreamingScreen
 import com.aurora.carevision.feature.nurse.home.navigation.NurseHome
 import com.aurora.carevision.feature.nurse.home.navigation.navigateToNurseHome
+import com.aurora.carevision.feature.nurse.home.navigation.navigateToNurseSavedVideo
+import com.aurora.carevision.feature.nurse.home.navigation.navigateToNurseStreaming
 import com.aurora.carevision.feature.nurse.home.navigation.nurseHomeScreen
 import com.aurora.carevision.feature.nurse.mypage.NurseMypage
 import com.aurora.carevision.feature.nurse.mypage.nurseMypageScreen
@@ -210,7 +213,9 @@ fun CVNavHost(
             )
 
             nurseHomeScreen(
-                navigateToNurseLogin = { navController.navigateToIntro() },
+                navigateToSpecificPatientStreamingScreen = { navController.navigateToNurseStreaming() },
+                navigateToSavedVideoScreen = { navController.navigateToNurseSavedVideo() },
+                onBackClick = { navController.popBackStack() }
             )
 
             nurseMypageScreen(

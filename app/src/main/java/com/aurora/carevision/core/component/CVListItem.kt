@@ -455,7 +455,8 @@ fun AdminVideoListItem(
             .fillMaxWidth()
             .padding(12.dp)
             .clip(RoundedCornerShape(5.dp))
-            .background(White),
+            .background(White)
+            .clickable(onClick = onClick),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         AsyncImage(
@@ -499,7 +500,6 @@ fun AdminVideoListItem(
                 modifier = Modifier
                     .size(36.dp)
                     .padding(end = 12.dp)
-                    .clickable(onClick = onClick),
             )
         }
     }

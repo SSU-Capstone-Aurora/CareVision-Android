@@ -31,7 +31,10 @@ import com.aurora.carevision.core.component.TopAppBarLeft
 import com.aurora.carevision.domain.nurse.model.streaming.SavedVideo
 
 @Composable
-fun VideoDetailScreen() {
+fun LiveStreamingScreen(
+    navigateToSavedVideoScreen: () -> Unit = {},
+    onBackClick: () -> Unit = {},
+) {
     Column(
         modifier =
             Modifier
@@ -40,39 +43,40 @@ fun VideoDetailScreen() {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         val roomBedInfo = "101호 1번 베드"
-        val imageUrl = "https://www.example.com/image.jpg"
+        val imageUrl = R.drawable.image_card_default.toString()
+
         val dummyList =
             listOf(
                 SavedVideo(
                     videoId = 1,
-                    videoUrl = "",
-                    videoThumbnail = "",
+                    videoUrl = imageUrl,
+                    videoThumbnail = imageUrl,
                     videoPlayTime = "00:10",
                     videoDate = "2021.10.01",
                 ),
                 SavedVideo(
                     videoId = 2,
-                    videoUrl = "",
-                    videoThumbnail = "",
+                    videoUrl = imageUrl,
+                    videoThumbnail = imageUrl,
                     videoPlayTime = "00:10",
                     videoDate = "2021.10.01",
                 ),
                 SavedVideo(
                     videoId = 3,
-                    videoUrl = "",
-                    videoThumbnail = "",
+                    videoUrl = imageUrl,
+                    videoThumbnail = imageUrl,
                     videoPlayTime = "12:10",
                     videoDate = "2023.10.01",
                 ),
                 SavedVideo(
                     videoId = 4,
-                    videoUrl = "",
-                    videoThumbnail = "",
+                    videoUrl = imageUrl,
+                    videoThumbnail = imageUrl,
                     videoPlayTime = "00:10",
                     videoDate = "2021.10.01",
                 ),
             )
-        TopAppBarLeft(title = roomBedInfo)
+        TopAppBarLeft(title = roomBedInfo, onClick = onBackClick)
 
         AsyncImage(
             model = imageUrl,
@@ -107,7 +111,7 @@ fun VideoDetailScreen() {
                     imageUrl = savedVideo.videoThumbnail,
                     recordedDate = savedVideo.videoDate,
                     videoPlayTime = savedVideo.videoPlayTime,
-                    onClick = {}, // TODO
+                    onClick = {navigateToSavedVideoScreen()},
                 )
                 Spacer(modifier = Modifier.height(8.dp))
             }
@@ -117,8 +121,8 @@ fun VideoDetailScreen() {
 
 @Composable
 @Preview
-fun VideoDetailScreenPreview() {
+fun LiveStreamingScreenPreview() {
     CVTheme {
-        LiveVideoScreen()
+        LiveStreamingScreen()
     }
 }

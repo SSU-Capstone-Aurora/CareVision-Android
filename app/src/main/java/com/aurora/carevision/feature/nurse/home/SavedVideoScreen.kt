@@ -1,5 +1,6 @@
 package com.aurora.carevision.feature.nurse.home
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -16,7 +17,9 @@ import com.aurora.carevision.core.component.TopAppBarLeft
 import com.aurora.carevision.core.component.VideoNavigationBar
 
 @Composable
-fun LiveVideoScreen() {
+fun SavedVideoScreen(
+    onBackClick: () -> Unit = {}
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -25,7 +28,7 @@ fun LiveVideoScreen() {
     ) {
         val roomBedInfo = "101호 1번 베드"
         val videoTime = "2024.07.05 10:08"
-        TopAppBarLeft(title = roomBedInfo)
+        TopAppBarLeft(title = roomBedInfo, onClick = onBackClick)
         Spacer(modifier = Modifier.height(24.dp))
         VideoNavigationBar(videoSavedDateTime = videoTime)
         Spacer(modifier = Modifier.height(24.dp))
@@ -38,6 +41,6 @@ fun LiveVideoScreen() {
 @Preview
 fun LiveVideoScreenPreview() {
     CVTheme{
-        LiveVideoScreen()
+        SavedVideoScreen()
     }
 }
