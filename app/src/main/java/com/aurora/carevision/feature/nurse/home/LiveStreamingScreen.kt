@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -30,12 +29,8 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.media3.common.MediaItem
-import androidx.media3.common.PlaybackException
-import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
-import androidx.media3.exoplayer.DefaultRenderersFactory
 import androidx.media3.exoplayer.ExoPlayer
-import androidx.media3.exoplayer.offline.DownloadHelper.createMediaSource
 import androidx.media3.exoplayer.rtsp.RtspMediaSource
 import androidx.media3.exoplayer.source.MediaSource
 import androidx.media3.ui.PlayerView
@@ -59,6 +54,7 @@ fun LiveStreamingScreen(
 
     LaunchedEffect(key1 = Unit) {
         viewModel.getSpecifyPatientStreamingUri(state.clickedPatientInfo?.patientId ?: -1)
+        viewModel.getSavedVideos(state.clickedPatientInfo?.patientId ?: -1)
     }
 
     Column(
@@ -68,43 +64,11 @@ fun LiveStreamingScreen(
             .background(Gray100),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        val roomBedInfo = "${state.liveStreamingPatientInpatientWardNumber}동 ${state.liveStreamingPatientRoomNumber}호 ${state.liveStreamingPatientBedNumber}번 베드"
-        val imageUrl = R.drawable.image_card_default.toString()
+        val roomBedInfo =
+            "${state.liveStreamingPatientInpatientWardNumber}동 ${state.liveStreamingPatientRoomNumber}호 ${state.liveStreamingPatientBedNumber}번 베드"
 
-        val dummyList =
-            listOf(
-                SavedVideo(
-                    videoId = 1,
-                    videoUrl = imageUrl,
-                    videoThumbnail = imageUrl,
-                    videoPlayTime = "00:10",
-                    videoDate = "2021.10.01",
-                ),
-                SavedVideo(
-                    videoId = 2,
-                    videoUrl = imageUrl,
-                    videoThumbnail = imageUrl,
-                    videoPlayTime = "00:10",
-                    videoDate = "2021.10.01",
-                ),
-                SavedVideo(
-                    videoId = 3,
-                    videoUrl = imageUrl,
-                    videoThumbnail = imageUrl,
-                    videoPlayTime = "12:10",
-                    videoDate = "2023.10.01",
-                ),
-                SavedVideo(
-                    videoId = 4,
-                    videoUrl = imageUrl,
-                    videoThumbnail = imageUrl,
-                    videoPlayTime = "00:10",
-                    videoDate = "2021.10.01",
-                ),
-            )
         TopAppBarLeft(title = roomBedInfo, onClick = onBackClick)
 
-        Log.d("LiveStreamingScreen", "state.clickedPatientInfo?.liveStreamingUrl: ${state.liveStreamingRtspUrl}")
         LiveStreamingViewScreen(
             rtspUri = state.liveStreamingRtspUrl,
             modifier =
@@ -128,12 +92,12 @@ fun LiveStreamingScreen(
         LazyColumn(
             modifier = Modifier.padding(start = 24.dp, end = 24.dp),
         ) {
-            items(dummyList) { savedVideo ->
+            items(state.savedVideoList) { savedVideo ->
                 AdminVideoListItem(
-                    imageUrl = savedVideo.videoThumbnail,
+                    imageUrl = savedVideo.thumbnail,
                     recordedDate = savedVideo.videoDate,
-                    videoPlayTime = savedVideo.videoPlayTime,
-                    onClick = {navigateToSavedVideoScreen()},
+                    videoPlayTime = savedVideo.videoLength,
+                    onClick = { navigateToSavedVideoScreen() },
                 )
                 Spacer(modifier = Modifier.height(8.dp))
             }
@@ -189,8 +153,6 @@ fun LiveStreamingViewScreen(
         }
     )
 }
-
-
 
 
 @Composable

@@ -17,4 +17,7 @@ class DefaultPatientStreamingRepository @Inject constructor(
     override suspend fun getSpecifyPatientStreamingUri(patientId: Int): StreamingSpecifyPatientInfo {
         return patientStreamingDataSource.getSpecifyPatientStreamingUri(patientId).result.toDomainModel()
     }
+
+    override suspend fun getSavedVideos(patientId: Int) =
+        patientStreamingDataSource.getSavedVideos(patientId).result.toDomainModel()
 }

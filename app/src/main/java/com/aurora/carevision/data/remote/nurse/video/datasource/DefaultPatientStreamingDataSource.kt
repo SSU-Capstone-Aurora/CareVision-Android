@@ -16,4 +16,7 @@ class DefaultPatientStreamingDataSource @Inject constructor(
     override suspend fun getSpecifyPatientStreamingUri(patientId: Int): BaseResponse<SpecifyLiveStreamingResponse> {
         return patientStreamingService.getSpecifyPatientStreamingUri(patientId)
     }
+
+    override suspend fun getSavedVideos(patientId: Int) =
+        patientStreamingService.getSavedVideos(patientId)
 }

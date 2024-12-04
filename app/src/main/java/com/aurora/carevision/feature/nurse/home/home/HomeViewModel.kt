@@ -60,4 +60,18 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun getSavedVideos(patientId: Int){
+        viewModelScope.launch {
+            runCatching {
+                patientStreamingRepository.getSavedVideos(patientId)
+            }.onSuccess {
+                _state.value = state.value.copy(savedVideoList = it)
+                _sideEffect.value = HomeSideEffect.GetSavedVideosSuccess
+                Log.d("HomeViewModel", "getSavedVideos: ${it}")
+            }.onFailure {
+                _sideEffect.value = HomeSideEffect.GetSavedVideosFailure
+                Log.d("HomeViewModel", "getSavedVideos: ${it}")
+            }
+        }
+    }
 }
