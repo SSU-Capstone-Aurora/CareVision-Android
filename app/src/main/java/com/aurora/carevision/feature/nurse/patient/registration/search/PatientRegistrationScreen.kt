@@ -1,5 +1,6 @@
 package com.aurora.carevision.feature.nurse.patient.registration.search
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -17,6 +18,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.Gray100
 import com.aurora.carevision.app.ui.theme.Gray700
@@ -41,57 +45,16 @@ import com.aurora.carevision.domain.nurse.model.Patient
 fun PatientRegistrationScreen(
     onClickNavigateToSelfRegistration: () -> Unit = {},
     onClickNavigateToRegistrationDone: () -> Unit = {},
-    onClickNavigateToBack: () -> Unit = {}
+    onClickNavigateToBack: () -> Unit = {},
+    viewModel: PatientRegistrationViewModel = hiltViewModel(),
 ) {
     var selectedPatientId by remember { mutableStateOf<Int?>(null) }
+    val state = viewModel.state.collectAsState().value
 
-    val dummyList = listOf(
-        Patient(
-            patientId = 1,
-            patientName = "오로라",
-            patientCode = "07-FJw144",
-            patientRoom = 4,
-            registrationDate = "2021.10.01",
-            inpatientWardNumber = 4,
-            bedNumber = 4,
-        ),
-        Patient(
-            patientId = 2,
-            patientName = "오로라",
-            patientCode = "07-FJw144",
-            patientRoom = 4,
-            registrationDate = "2021.10.01",
-            inpatientWardNumber = 4,
-            bedNumber = 4,
-        ),
-        Patient(
-            patientId = 3,
-            patientName = "오로라",
-            patientCode = "07-FJw144",
-            patientRoom = 4,
-            registrationDate = "2021.10.01",
-            inpatientWardNumber = 4,
-            bedNumber = 4,
-        ),
-        Patient(
-            patientId = 4,
-            patientName = "오로라",
-            patientCode = "07-FJw144",
-            patientRoom = 4,
-            registrationDate = "2021.10.01",
-            inpatientWardNumber = 4,
-            bedNumber = 4,
-        ),
-        Patient(
-            patientId = 5,
-            patientName = "오로라",
-            patientCode = "07-FJw144",
-            patientRoom = 4,
-            registrationDate = "2021.10.01",
-            inpatientWardNumber = 4,
-            bedNumber = 4,
-        ),
-    )
+    LaunchedEffect(key1 = Unit) {
+        viewModel.getPatientList()
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -127,40 +90,42 @@ fun PatientRegistrationScreen(
             }
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
-        var text by remember { mutableStateOf("") } // TODO Move To viewModel
+        //Spacer(modifier = Modifier.height(16.dp))
+        //var text by remember { mutableStateOf("") } // TODO Move To viewModel
 
-        CVHeadIconSearchBar(
-            value = text,
-            onValueChange = { newValue -> text = newValue },
-            placeholder = "환자 이름으로 검색"
-        )
+        //CVHeadIconSearchBar(
+        //    value = text,
+        //    onValueChange = { newValue -> text = newValue },
+        //    placeholder = "환자 이름으로 검색"
+        //)
 
         LazyColumn(
-            modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp)
+            modifier = Modifier
+                .padding(horizontal = 24.dp, vertical = 16.dp)
+                .weight(1f)
         ) {
-            items(dummyList) { patient ->
+            items(state.patientList) { patient ->
                 AdminPatientListItem(
                     patientId = patient.patientCode,
                     patientName = patient.patientName,
-                    patientInfo = patient.patientRoom.toString(),
+                    patientInfo = "${patient.inpatientWardNumber}동 ${patient.patientRoom}호 ${patient.bedNumber}번 침대",
                     isSelected = selectedPatientId == patient.patientId,
                     onClick = {
                         selectedPatientId =
                             if (selectedPatientId == patient.patientId) null else patient.patientId
+                        viewModel.updateSelectedPatient(patient)
+                        Log.d("PatientRegistrationScreen", "selectedPatientId: ${state.selectedPatient?.patientId}")
                     }
                 )
                 Spacer(modifier = Modifier.height(8.dp))
             }
-
-            item {
-                CVLongButton(
-                    text = "다음",
-                    onClick = { onClickNavigateToRegistrationDone() },
-                    enabled = selectedPatientId != null
-                )
-            }
         }
+        CVLongButton(
+            text = "다음",
+            onClick = { onClickNavigateToRegistrationDone() },
+            enabled = selectedPatientId != null,
+            modifier = Modifier.padding(bottom = 15.dp)
+        )
     }
 }
 

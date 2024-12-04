@@ -58,19 +58,19 @@ fun AdminPatientListItem(
             modifier = modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(8.dp))
-                .padding(vertical = 12.dp, horizontal = 12.dp)
                 .background(White)
+                .border(if(isSelected)1.dp else 0.dp, if(isSelected)Primary500 else Color.Transparent, RoundedCornerShape(5.dp))
+                .padding(vertical = 16.dp, horizontal = 12.dp)
                 .clickable {
                     onClick()
-                }
-                .border(if(isSelected)1.dp else 0.dp, if(isSelected)Primary500 else Color.Transparent, RoundedCornerShape(5.dp)),
+                },
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .background(White)
-                    .padding(vertical = 12.dp, horizontal = 16.dp),
+                    .background(White),
+                    //.padding(vertical = 12.dp, horizontal = 16.dp),
                 verticalArrangement = Arrangement.Center
             ) {
                 // 환자 이름

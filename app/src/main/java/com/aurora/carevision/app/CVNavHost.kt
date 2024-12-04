@@ -82,6 +82,8 @@ import com.aurora.carevision.feature.nurse.patient.registration.navigateToPatien
 import com.aurora.carevision.feature.nurse.patient.registration.navigateToPatientRegistrationDone
 import com.aurora.carevision.feature.nurse.patient.registration.navigateToScanningBarcode
 import com.aurora.carevision.feature.nurse.patient.registration.patientRegistrationScreen
+import com.aurora.carevision.feature.nurse.patient.registration.search.PatientRegistrationViewModel
+
 
 @Composable
 fun CVNavHost(
@@ -90,7 +92,9 @@ fun CVNavHost(
 ) {
     val nurseSignUpViewModel: NurseSignUpViewModel = hiltViewModel()
     val adminSignUpViewModel: AdminSignUpHospitalEntryViewModel = hiltViewModel()
+    val selfRegistrationViewModel: SelfRegistrationViewModel = hiltViewModel()
     val cameraRegistrationViewModel : CameraRegistrationViewModel = hiltViewModel()
+    val patientRegistrationViewModel: PatientRegistrationViewModel = hiltViewModel()
     val homeViewModel: HomeViewModel = hiltViewModel()
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
 
@@ -226,7 +230,8 @@ fun CVNavHost(
             )
 
             patientRegistrationScreen(
-                viewModel = SelfRegistrationViewModel(),
+                selfRegistrationViewModel = selfRegistrationViewModel,
+                registrationViewModel = patientRegistrationViewModel,
                 navigateToPatientRegistrationDone = { navController.navigateToPatientRegistrationDone() },
                 navigateToPatientInfo = { navController.navigateToPatientInfo() },
                 navigateToPatientRegistration = { navController.navigateToPatientInfo() },

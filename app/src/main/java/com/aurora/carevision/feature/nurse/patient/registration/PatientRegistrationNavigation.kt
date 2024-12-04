@@ -13,6 +13,7 @@ import com.aurora.carevision.feature.nurse.patient.registration.barcode.screen.E
 import com.aurora.carevision.feature.nurse.patient.registration.barcode.screen.ScanningBarcodeScreen
 import com.aurora.carevision.feature.nurse.patient.registration.search.PatientRegistrationDone
 import com.aurora.carevision.feature.nurse.patient.registration.search.PatientRegistrationScreen
+import com.aurora.carevision.feature.nurse.patient.registration.search.PatientRegistrationViewModel
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -61,7 +62,8 @@ fun NavController.navigateToScanningBarcode(navOptions: NavOptions? = null) =
 
 
 fun NavGraphBuilder.patientRegistrationScreen(
-    viewModel: SelfRegistrationViewModel,
+    selfRegistrationViewModel: SelfRegistrationViewModel,
+    registrationViewModel: PatientRegistrationViewModel,
     navigateToPatientRegistration: () -> Unit, // 환자 등록 화면으로 넘어가기
     navigateToPatientRegistrationDone: () -> Unit, // 확인 화면으로 넘어가기
     navigateToPatientInfo: () -> Unit, // 완료 후 환자 정보 화면으로 넘어가기
@@ -82,7 +84,8 @@ fun NavGraphBuilder.patientRegistrationScreen(
             },
             onClickNavigateToBack = {
                 onClickBack()
-            }
+            },
+            viewModel = registrationViewModel
         )
     }
 
@@ -93,7 +96,8 @@ fun NavGraphBuilder.patientRegistrationScreen(
             },
             onClickBack = {
                 onClickBack()
-            }
+            },
+            viewModel = registrationViewModel
         )
     }
 
@@ -101,7 +105,7 @@ fun NavGraphBuilder.patientRegistrationScreen(
     composable<ScanningBarcode.ScanningBarcodeRoute.EnterPatientNumber> {
         val args = it.toRoute<ScanningBarcode.ScanningBarcodeRoute.EnterPatientNumber>()
         EnterPatientNumberScreen(
-            viewModel = viewModel,
+            viewModel = selfRegistrationViewModel,
             navigateToCheckPatientInfo = {
                 navigateToCheckPatientName()
             },
@@ -122,7 +126,8 @@ fun NavGraphBuilder.patientRegistrationScreen(
             },
             onClickBack = {
                 onClickBack()
-            }
+            },
+            viewModel = selfRegistrationViewModel
         )
     }
 
@@ -134,6 +139,7 @@ fun NavGraphBuilder.patientRegistrationScreen(
             onClickNavigateToBack = {
                 onClickBack()
             },
+            viewModel = selfRegistrationViewModel
         )
     }
 
@@ -145,12 +151,13 @@ fun NavGraphBuilder.patientRegistrationScreen(
             onClickBack = {
                 onClickBack()
             },
+            viewModel = selfRegistrationViewModel
         )
     }
 
     composable<ScanningBarcode> {
         ScanningBarcodeScreen(
-            viewModel = viewModel,
+            viewModel = selfRegistrationViewModel,
             navigateToEnterPatientNumber = { scannedBarcodeNumber ->
                 navController.navigateToEnterPatientNumber(scannedBarcodeNumber)
             }

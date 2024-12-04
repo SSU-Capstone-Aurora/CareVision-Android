@@ -1,0 +1,30 @@
+package com.aurora.carevision.data.remote.nurse.registration.service
+
+import com.aurora.carevision.core.network.response.BaseResponse
+import com.aurora.carevision.data.remote.nurse.registration.model.request.GetPatientNameRequest
+import com.aurora.carevision.data.remote.nurse.registration.model.request.PostAlreadyPatientRequest
+import com.aurora.carevision.data.remote.nurse.registration.model.request.PostNewPatientRequest
+import com.aurora.carevision.data.remote.nurse.registration.model.response.GetPatientNameResponse
+import com.aurora.carevision.data.remote.nurse.registration.model.response.UnlinkedCameraListResponse
+import com.aurora.carevision.data.remote.nurse.registration.model.response.UnlinkedPatientsListResponse
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.PATCH
+import retrofit2.http.POST
+
+interface NursePatientRegistrationService {
+    @POST("api/patients/name")
+    suspend fun getRegistrationPatientName(@Body getPatientNameRequest: GetPatientNameRequest): BaseResponse<GetPatientNameResponse>
+
+    @GET("api/cameras/unlinked")
+    suspend fun getUnlinkedCameras(): BaseResponse<UnlinkedCameraListResponse>
+
+    @GET("api/patients/unlinked")
+    suspend fun getUnlinkedPatients(): BaseResponse<UnlinkedPatientsListResponse>
+
+    @POST("api/patients")
+    suspend fun postNewPatient(@Body postNewPatientRequest: PostNewPatientRequest): BaseResponse<Unit>
+
+    @PATCH("api/patients")
+    suspend fun patchAlreadyPatient(@Body postAlreadyPatientRequest: PostAlreadyPatientRequest): BaseResponse<Unit>
+}

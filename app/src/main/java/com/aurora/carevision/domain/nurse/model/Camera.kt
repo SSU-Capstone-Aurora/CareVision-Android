@@ -1,7 +1,8 @@
 package com.aurora.carevision.domain.nurse.model
 
 data class Camera(
-    val cameraId: Int,
-    val cameraNum: String,
-    val bedInfo: String,
+    val cameraCode: String,
+    val inpatientWardNumber: Int,
+    val patientRoomNumber: Int,
+    val bedNumber: Int,
 )

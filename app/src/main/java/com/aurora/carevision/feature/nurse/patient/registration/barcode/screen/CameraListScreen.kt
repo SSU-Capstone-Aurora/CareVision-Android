@@ -11,6 +11,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -18,6 +20,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.Gray100
 import com.aurora.carevision.app.ui.theme.Gray500
@@ -26,38 +29,28 @@ import com.aurora.carevision.core.component.AdminCameraListItem
 import com.aurora.carevision.core.component.CVLongButton
 import com.aurora.carevision.core.component.TopAppBarLeft
 import com.aurora.carevision.domain.nurse.model.Camera
+import com.aurora.carevision.feature.nurse.patient.registration.barcode.SelfRegistrationViewModel
 
 @Composable
 fun CameraListScreen(
     onClickCheckFinishInfo: () -> Unit = {},
-    onClickNavigateToBack: () -> Unit = {}
+    onClickNavigateToBack: () -> Unit = {},
+    viewModel: SelfRegistrationViewModel = hiltViewModel()
 ) {
-    var selectedCameraId by remember { mutableStateOf<Int?>(null) }
+    var selectedCameraId by remember { mutableStateOf<String?>(null) }
 
-    val dummyList = listOf(
-        Camera(
-            cameraId = 1,
-            cameraNum = "07-FJw144",
-            bedInfo = "2동 101호 4번 베드",
-        ),
-        Camera(
-            cameraId = 2,
-            cameraNum = "07-FJw144",
-            bedInfo = "2동 101호 4번 베드",
-        ),
-        Camera(
-            cameraId = 3,
-            cameraNum = "07-FJw144",
-            bedInfo = "2동 101호 4번 베드",
-        ),
-    )
+    val state = viewModel.state.collectAsState().value
+
+    LaunchedEffect(key1 = Unit) {
+        viewModel.getUnlinkedCameras()
+    }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Gray100)
     ) {
-        TopAppBarLeft("환자 등록", onClick = onClickNavigateToBack)
+        TopAppBarLeft("카메라 연결", onClick = onClickNavigateToBack)
 
         Column(
             modifier = Modifier
@@ -65,7 +58,7 @@ fun CameraListScreen(
                 .padding(top = 26.dp, start = 24.dp, end = 24.dp)
         ) {
             Text(
-                text = "연결할 환자를 선택해주세요",
+                text = "연결할 카메라를 선택해주세요",
                 color = Gray700,
                 style = CVTheme.typography.headingSecondary,
                 modifier = Modifier
@@ -85,14 +78,20 @@ fun CameraListScreen(
                 .padding(horizontal = 24.dp, vertical = 16.dp)
                 .weight(2f)
         ) {
-            items(dummyList) { camera ->
+            items(state.cameraList) { camera ->
                 AdminCameraListItem(
-                    cameraInfo = camera.bedInfo,
-                    cameraId = camera.cameraNum,
-                    isSelected = selectedCameraId == camera.cameraId,
+                    cameraInfo = "${camera.inpatientWardNumber} 병동 ${camera.patientRoomNumber}호실 ${camera.bedNumber}번 침대",
+                    cameraId = camera.cameraCode,
+                    isSelected = selectedCameraId == camera.cameraCode,
                     onClick = {
                         selectedCameraId =
-                            if (selectedCameraId == camera.cameraId) null else camera.cameraId
+                            if (selectedCameraId == camera.cameraCode) null else camera.cameraCode
+                        viewModel.selectedCameraInfo(
+                            cameraCode = camera.cameraCode,
+                            inpatientWardNumber = camera.inpatientWardNumber,
+                            patientRoomNumber = camera.patientRoomNumber,
+                            bedNumber = camera.bedNumber
+                        )
                     }
                 )
                 Spacer(modifier = Modifier.height(8.dp))

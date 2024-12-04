@@ -33,26 +33,16 @@ fun AdminCameraListScreen(
     onClickCheckFinishInfo: () -> Unit = {},
     onClickNavigateToBack: () -> Unit = {}
 ) {
-    var selectedCameraId by remember { mutableStateOf<Int?>(null) }
+    var selectedCameraId by remember { mutableStateOf<String?>(null) }
 
     val dummyList = listOf(
         Camera(
-            cameraId = 1,
-            cameraNum = "07-FJw144",
-            bedInfo = "2동 101호 4번 베드",
-        ),
-        Camera(
-            cameraId = 2,
-            cameraNum = "07-FJw144",
-            bedInfo = "2동 101호 4번 베드",
-        ),
-        Camera(
-            cameraId = 3,
-            cameraNum = "07-FJw144",
-            bedInfo = "2동 101호 4번 베드",
+          cameraCode = "07-FJw144",
+            inpatientWardNumber = 2,
+            patientRoomNumber = 101,
+            bedNumber = 4,
         ),
     )
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -88,12 +78,12 @@ fun AdminCameraListScreen(
         ) {
             items(dummyList) { camera ->
                 AdminCameraListItem(
-                    cameraInfo = camera.bedInfo,
-                    cameraId = camera.cameraNum,
-                    isSelected = selectedCameraId == camera.cameraId,
+                    cameraInfo = "${camera.patientRoomNumber}호",
+                    cameraId = camera.cameraCode,
+                    isSelected = selectedCameraId == camera.cameraCode,
                     onClick = {
                         selectedCameraId =
-                            if (selectedCameraId == camera.cameraId) null else camera.cameraId
+                            if (selectedCameraId == camera.cameraCode) null else camera.cameraCode
                     }
                 )
                 Spacer(modifier = Modifier.height(8.dp))

@@ -72,24 +72,13 @@ fun EnterPatientNumberScreen(
                 .fillMaxWidth()
                 .padding(start = 24.dp, end = 24.dp),
         )
-        Log.d("EnterPatientNumberScreen", "Patient Number : ${state.patientBarcodeNumber}")
-
-
-        val isLoginError = true // TODO Move To viewModel
-        if (isLoginError) {
-            Text(
-                text = "*아직 등록되지 않은 환자입니다",
-                color = Red600,
-                style = CVTheme.typography.captionRegular,
-                modifier = Modifier
-                    .padding(horizontal = 24.dp, vertical = 8.dp)
-                    .fillMaxWidth()
-            )
-        }
 
         CVLongButton(
             text = "다음",
-            onClick = navigateToCheckPatientInfo,
+            onClick = {
+                navigateToCheckPatientInfo()
+                viewModel.getCheckPatientName()
+                      },
             enabled = true,
             modifier = Modifier
                 .padding(top = 24.dp)
