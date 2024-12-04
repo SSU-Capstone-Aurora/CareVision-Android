@@ -35,7 +35,6 @@ import com.aurora.carevision.feature.admin.auth.signup.AdminSignUpHospitalEntryV
 import com.aurora.carevision.feature.admin.auth.signup.navigateToAdminSignUp
 import com.aurora.carevision.feature.admin.auth.signup.navigationToAdminSignUpIdPw
 import com.aurora.carevision.feature.admin.auth.signup.navigationToAdminSignUpName
-import com.aurora.carevision.feature.admin.auth.signup.navigationToAdminSignupWaiting
 import com.aurora.carevision.feature.admin.auth.signup.adminSignUpHospitalScreen
 import com.aurora.carevision.feature.admin.home.navigation.AdminHome
 import com.aurora.carevision.feature.admin.home.navigation.adminHomeScreen
@@ -64,8 +63,11 @@ import com.aurora.carevision.feature.nurse.auth.signup.navigationToNurseSignupId
 import com.aurora.carevision.feature.nurse.auth.signup.navigationToNurseSignupName
 import com.aurora.carevision.feature.nurse.auth.signup.navigationToNurseSignupWaiting
 import com.aurora.carevision.feature.nurse.auth.signup.nurseSignUpScreen
+import com.aurora.carevision.feature.nurse.home.home.HomeViewModel
 import com.aurora.carevision.feature.nurse.home.navigation.NurseHome
 import com.aurora.carevision.feature.nurse.home.navigation.navigateToNurseHome
+import com.aurora.carevision.feature.nurse.home.navigation.navigateToNurseSavedVideo
+import com.aurora.carevision.feature.nurse.home.navigation.navigateToNurseStreaming
 import com.aurora.carevision.feature.nurse.home.navigation.nurseHomeScreen
 import com.aurora.carevision.feature.nurse.mypage.NurseMypage
 import com.aurora.carevision.feature.nurse.mypage.nurseMypageScreen
@@ -76,12 +78,10 @@ import com.aurora.carevision.feature.nurse.patient.registration.barcode.SelfRegi
 import com.aurora.carevision.feature.nurse.patient.registration.navigateToCameraListInfo
 import com.aurora.carevision.feature.nurse.patient.registration.navigateToCheckTotalInfo
 import com.aurora.carevision.feature.nurse.patient.registration.navigateToCheckPatientName
-import com.aurora.carevision.feature.nurse.patient.registration.navigateToEnterPatientNumber
 import com.aurora.carevision.feature.nurse.patient.registration.navigateToPatientRegistration
 import com.aurora.carevision.feature.nurse.patient.registration.navigateToPatientRegistrationDone
 import com.aurora.carevision.feature.nurse.patient.registration.navigateToScanningBarcode
 import com.aurora.carevision.feature.nurse.patient.registration.patientRegistrationScreen
-import dagger.hilt.android.lifecycle.HiltViewModel
 
 @Composable
 fun CVNavHost(
@@ -91,6 +91,7 @@ fun CVNavHost(
     val nurseSignUpViewModel: NurseSignUpViewModel = hiltViewModel()
     val adminSignUpViewModel: AdminSignUpHospitalEntryViewModel = hiltViewModel()
     val cameraRegistrationViewModel : CameraRegistrationViewModel = hiltViewModel()
+    val homeViewModel: HomeViewModel = hiltViewModel()
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
 
     var isModalVisible by remember { mutableStateOf(false) }
@@ -210,7 +211,10 @@ fun CVNavHost(
             )
 
             nurseHomeScreen(
-                navigateToNurseLogin = { navController.navigateToIntro() },
+                navigateToSpecificPatientStreamingScreen = { navController.navigateToNurseStreaming() },
+                navigateToSavedVideoScreen = { navController.navigateToNurseSavedVideo() },
+                onBackClick = { navController.popBackStack() },
+                viewModel = homeViewModel
             )
 
             nurseMypageScreen(

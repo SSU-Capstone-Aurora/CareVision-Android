@@ -1,6 +1,7 @@
 [versions]
 accompanistPermissions = "0.36.0"
 agp = "8.5.0"
+coilNetworkOkhttp = "3.0.4"
 kotlin = "1.9.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
@@ -9,7 +10,7 @@ espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.4"
 activityCompose = "1.9.1"
 composeBom = "2024.04.01"
-coil-compose = "3.0.0-rc01"
+coil-compose = "3.0.4"
 hilt-android = "2.51.1"
 hilt-navigation-compose = "1.2.0"
 kotlin-parcelize = "1.8.20"
@@ -21,10 +22,14 @@ retrofit = "2.11.0"
 okhttp = "4.12.0"
 timber = "5.0.1"
 playServicesMlkitBarcodeScanning = "18.3.1"
+media3Exoplayer = "1.4.1"
+media3Ui = "1.4.1"
+rstp = "1.4.1"
 
 [libraries]
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coilNetworkOkhttp" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -60,6 +65,10 @@ okhttp3-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-
 
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 play-services-mlkit-barcode-scanning = { group = "com.google.android.gms", name = "play-services-mlkit-barcode-scanning", version.ref = "playServicesMlkitBarcodeScanning" }
+
+rstp = { group = "androidx.media3", name = "media3-exoplayer-rtsp", version.ref = "rstp" }
+androidx-media3-exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "media3Exoplayer" }
+androidx-media3-ui = { group = "androidx.media3", name = "media3-ui", version.ref = "media3Ui" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
