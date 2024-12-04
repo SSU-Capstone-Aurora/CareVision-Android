@@ -42,7 +42,8 @@ fun StreamingResponse.toDomainModel(): List<PatientStreamingInfo> {
             thumbnailImage = it.thumbnail,
             bedNumber = it.bedInfo.bedNumber,
             inpatientWardNumber = it.bedInfo.inpatientWardNumber,
-            patientRoomNumber = it.bedInfo.patientRoomNumber
+            patientRoomNumber = it.bedInfo.patientRoomNumber,
+            liveStreamingUrl = ""
         )
     }
 }

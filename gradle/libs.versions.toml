@@ -22,6 +22,9 @@ retrofit = "2.11.0"
 okhttp = "4.12.0"
 timber = "5.0.1"
 playServicesMlkitBarcodeScanning = "18.3.1"
+media3Exoplayer = "1.4.1"
+media3Ui = "1.4.1"
+rstp = "1.4.1"
 
 [libraries]
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
@@ -62,6 +65,10 @@ okhttp3-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-
 
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 play-services-mlkit-barcode-scanning = { group = "com.google.android.gms", name = "play-services-mlkit-barcode-scanning", version.ref = "playServicesMlkitBarcodeScanning" }
+
+rstp = { group = "androidx.media3", name = "media3-exoplayer-rtsp", version.ref = "rstp" }
+androidx-media3-exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "media3Exoplayer" }
+androidx-media3-ui = { group = "androidx.media3", name = "media3-ui", version.ref = "media3Ui" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

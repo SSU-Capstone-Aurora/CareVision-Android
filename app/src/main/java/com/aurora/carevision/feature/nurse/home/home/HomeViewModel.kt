@@ -39,4 +39,25 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun getSpecifyPatientStreamingUri(patientId: Int){
+        viewModelScope.launch {
+            runCatching {
+                patientStreamingRepository.getSpecifyPatientStreamingUri(patientId)
+            }.onSuccess {
+                _state.value = state.value.copy(
+                    liveStreamingPatientName = it.patientName,
+                    liveStreamingRtspUrl = it.liveStreamingUrl,
+                    liveStreamingPatientInpatientWardNumber = it.inpatientWardNumber,
+                    liveStreamingPatientRoomNumber = it.patientRoomNumber,
+                    liveStreamingPatientBedNumber = it.bedNumber
+                )
+                _sideEffect.value = HomeSideEffect.GetSpecifyPatientStreamingUriSuccess
+                Log.d("HomeViewModel", "getSpecifyPatientStreamingUri: ${it}")
+            }.onFailure {
+                _sideEffect.value = HomeSideEffect.GetSpecifyPatientStreamingUriFailure
+                Log.d("HomeViewModel", "getSpecifyPatientStreamingUri: ${it}")
+            }
+        }
+    }
+
 }

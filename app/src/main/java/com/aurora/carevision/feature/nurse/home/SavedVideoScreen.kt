@@ -32,7 +32,7 @@ fun SavedVideoScreen(
             .background(Gray100),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val roomBedInfo = "${state.clickedPatientInfo?.patientRoomNumber ?: ""}호 ${state.clickedPatientInfo?.bedNumber ?: ""}번 베드"
+        val roomBedInfo = "${state.clickedPatientInfo?.inpatientWardNumber ?: ""}동 ${state.clickedPatientInfo?.patientRoomNumber ?: ""}호 ${state.clickedPatientInfo?.bedNumber ?: ""}번 베드"
         val videoTime = "2024.07.05 10:08"
         TopAppBarLeft(title = roomBedInfo, onClick = onBackClick)
         Spacer(modifier = Modifier.height(24.dp))
