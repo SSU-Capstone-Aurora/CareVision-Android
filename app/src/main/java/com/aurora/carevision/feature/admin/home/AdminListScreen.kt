@@ -21,6 +21,7 @@ import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.AdminHospitalListItem
 import com.aurora.carevision.core.component.CVTabs
 import com.aurora.carevision.feature.admin.home.cameralist.CameraListScreen
+import com.aurora.carevision.feature.admin.home.nurselist.NurseListScreen
 import com.aurora.carevision.feature.admin.home.patientlist.PatientListScreen
 
 
@@ -36,7 +37,7 @@ fun AdminListScreen() {
             modifier = Modifier
                 .background(White)
         ) {
-            AdminHospitalListItem(hospitalDepartment = "정형외과", hospitalName = "서울대병원")
+            AdminHospitalListItem(hospitalDepartment = "정형외과", hospitalName = "서울대병원") //TODO 관리자 정보 입력해야함
             CVTabs(
                 tabItemTitle = listOf("간호사", "환자", "카메라"),
                 onClickTabItem = { tabIndex ->

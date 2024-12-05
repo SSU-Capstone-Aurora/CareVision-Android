@@ -1,7 +1,6 @@
 package com.aurora.carevision.feature.admin.home.cameralist
 
 import android.util.Log
-import android.widget.MultiAutoCompleteTextView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aurora.carevision.domain.admin.repository.AdminCameraListRepository

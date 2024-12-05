@@ -6,6 +6,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -13,19 +17,30 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.aurora.carevision.R
 import com.aurora.carevision.app.ui.theme.Black
 import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.Gray100
 import com.aurora.carevision.app.ui.theme.Gray700
+import com.aurora.carevision.app.ui.theme.Primary400
+import com.aurora.carevision.app.ui.theme.Primary600
 import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.AdminRequestItem
 import com.aurora.carevision.core.component.CVTopAppBar
+import com.aurora.carevision.core.component.CVTwoButtonDialog
+import com.aurora.carevision.domain.admin.model.nurserequest.NurseRequestList
 
 @Composable
-fun AdminRequestAcceptanceScreen() {
-    val requests = remember { listOf("안셰프" to "5분 전") }
-    //val requests = remember {listOf("")}
+fun AdminRequestAcceptanceScreen(
+    viewModel: AdminRequestAcceptanceViewModel = hiltViewModel()
+) {
+    val state by viewModel.state.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.loadNurseRequests()
+    }
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
@@ -34,17 +49,53 @@ fun AdminRequestAcceptanceScreen() {
         ) {
             CVTopAppBar(title = "간호사 요청")
 
-            if (requests.isEmpty()) {
+            if (state.requests.isEmpty()) {
                 AdminRequestNullContent()
             } else {
-                AdminRequestContent(requests.size, requests)
+                AdminRequestContent(
+                    requestCount = state.requestCount,
+                    requests = state.requests,
+//                    onAcceptClick = {nurseId ->
+//                        viewModel.acceptNurseRequest(nurseId)
+//                    },
+                    onAcceptClick = {nurseId, nurseName ->
+                        if (nurseName != null) {
+                            viewModel.showDialog(nurseId, nurseName)
+                        }
+                    },
+                    onRejectClick = {nurseId ->
+                        viewModel.acceptNurseRequest() //TODO reject 구현 필요
+                    }
+                )
             }
+        }
+
+        if (state.isDialogVisible) {
+            CVTwoButtonDialog(
+                negativeButtonText = "취소",
+                positiveButtonText = "확인",
+                onNegativeButtonClicked = {
+                    viewModel.dismissDialog()
+                },
+                onPositiveButtonClicked = {
+                    viewModel.acceptNurseRequest()
+                    viewModel.dismissDialog()
+                },
+                title = "${state.selectedNurseName} 간호사의 가입 요청을\n수락하시겠습니까?",
+                iconColor = Primary400,
+                positiveButtonColor = Primary600
+            )
         }
     }
 }
 
 @Composable
-fun AdminRequestContent(requestCount: Int, requests: List<Pair<String, String>>) {
+fun AdminRequestContent(
+    requestCount: Int,
+    requests:  List<NurseRequestList.NurseRequest>,
+    onAcceptClick:(Int, String?)-> Unit,
+    onRejectClick:(Int)-> Unit,
+) {
     Column(
         modifier = Modifier
             .background(Gray100)
@@ -61,11 +112,13 @@ fun AdminRequestContent(requestCount: Int, requests: List<Pair<String, String>>)
             modifier = Modifier.padding(horizontal = 12.dp, vertical = 16.dp)
         ) {
             items(requests.size) { index ->
-                val (nurseName, requestTime) = requests[index]
+                val (nurseId, nurseName, userName, requestTime) = requests[index]
                 AdminRequestItem(
                     nurseRequestName = nurseName,
-                    nurseId = "$index",
-                    requestTime = requestTime
+                    nurseId = userName,
+                    requestTime = requestTime,
+                    onAcceptClick = {onAcceptClick(nurseId, nurseName) },
+                    onRejectClick = {onRejectClick(nurseId)},
                 )
                 Spacer(modifier = Modifier.height(8.dp))
             }
