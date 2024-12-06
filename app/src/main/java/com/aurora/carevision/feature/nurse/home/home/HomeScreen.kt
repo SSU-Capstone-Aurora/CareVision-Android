@@ -173,7 +173,7 @@ fun VideoCardView(
 
 @Composable
 @Preview
-fun HomeScreenPreview() {
+private fun HomeScreenPreview() {
     CVTheme {
         HomeScreen()
     }
@@ -181,7 +181,7 @@ fun HomeScreenPreview() {
 
 @Composable
 @Preview
-fun VideoCardViewPreview() {
+private fun VideoCardViewPreview() {
     CVTheme {
         VideoCardView(onClickCard = {})
     }
