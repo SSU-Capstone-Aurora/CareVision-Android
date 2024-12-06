@@ -51,8 +51,8 @@ fun LiveStreamingScreen(
     val state = viewModel.state.collectAsStateWithLifecycle().value
 
     LaunchedEffect(key1 = Unit) {
-        viewModel.getSpecifyPatientStreamingUri(state.clickedPatientInfo?.patientId ?: -1)
-        viewModel.getSavedVideos(state.clickedPatientInfo?.patientId ?: -1)
+        viewModel.getSpecifyPatientStreamingUri(state.clickedPatientId)
+        viewModel.getSavedVideos(state.clickedPatientId)
     }
 
     Column(

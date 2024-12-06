@@ -21,7 +21,10 @@ class HomeViewModel @Inject constructor(
     val sideEffect: MutableStateFlow<HomeSideEffect?> = _sideEffect
 
     fun updateClickedPatientInfo(patientInfo: PatientStreamingInfo){
-        _state.value = state.value.copy(clickedPatientInfo = patientInfo)
+        _state.value = state.value.copy(
+            clickedPatientInfo = patientInfo,
+            clickedPatientId = patientInfo.patientId
+        )
     }
 
     fun updateClickedSavedVideoInfo(videoId: Int, clickedSavedVideoDate: String){
@@ -29,6 +32,10 @@ class HomeViewModel @Inject constructor(
             clickedSavedVideoId = videoId,
             clickedSavedVideoDate = clickedSavedVideoDate
         )
+    }
+
+    fun updateClickedPatientId(patientId: Int){
+        _state.value = state.value.copy(clickedPatientId = patientId)
     }
 
     fun getPatientStreamingList(){
@@ -93,6 +100,23 @@ class HomeViewModel @Inject constructor(
             }.onFailure {
                 _sideEffect.value = HomeSideEffect.GetSpecifyPatientSavedVideoUriFailure
                 Log.d("HomeViewModel", "getSpecifyPatientSavedVideoUri: ${it}")
+            }
+        }
+    }
+
+    fun getNotificationList(){
+        viewModelScope.launch {
+            runCatching {
+                patientStreamingRepository.getNotificationList()
+            }.onSuccess {
+                _state.value = state.value.copy(
+                    notificationList = it,
+                )
+                _sideEffect.value = HomeSideEffect.GetNotificationListSuccess
+                Log.d("HomeViewModel", "getNotificationList: ${it}")
+            }.onFailure {
+                _sideEffect.value = HomeSideEffect.GetNotificationListFailure
+                Log.d("HomeViewModel", "getNotificationList: ${it}")
             }
         }
     }

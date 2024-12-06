@@ -1,8 +1,12 @@
 package com.aurora.carevision.domain.nurse.model.notification
 
 data class Notification(
-    val roomBedInfo: String,
+    val documentId: String,
+    val patientId: Int,
+    val patientName: String,
+    val inpatientWardNumber: Int,
+    val patientRoomNumber: Int,
+    val bedNumber: Int,
     val notificationTime: String,
-    val notificationContent: String,
-    val isChecked: Boolean
+    val isChecked: Boolean = false
 )

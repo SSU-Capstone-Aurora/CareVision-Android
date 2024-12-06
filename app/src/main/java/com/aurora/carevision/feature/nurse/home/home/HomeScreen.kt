@@ -42,13 +42,13 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     navigateToSpecificPatientStreaming: () -> Unit = {},
     navigateToNotificationList: () -> Unit = {},
-    hasAlarm: Boolean = false,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.collectAsState().value
 
     LaunchedEffect(key1 = Unit) {
         viewModel.getPatientStreamingList()
+        viewModel.getNotificationList()
     }
 
     LaunchedEffect(Unit) {
@@ -82,7 +82,7 @@ fun HomeScreen(
         ) {
             Text(text = "환자 영상", style = CVTheme.typography.headingDisplay, color = Black)
             Image(
-                painter = painterResource(id = if (hasAlarm) R.drawable.ic_alarm_active else R.drawable.ic_alarm),
+                painter = painterResource(id = if (state.notificationList.isNotEmpty()) R.drawable.ic_alarm_active else R.drawable.ic_alarm),
                 contentDescription = "Alarm",
                 modifier = modifier.clickable {
                     navigateToNotificationList()

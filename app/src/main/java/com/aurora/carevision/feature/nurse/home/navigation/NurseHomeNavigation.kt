@@ -62,7 +62,8 @@ fun NavGraphBuilder.nurseHomeScreen(
     composable<NurseNotificationList> {
         NotificationScreen(
             onBackClick = onBackClick,
-            navigateToSpecificPatientStreaming = navigateToSpecificPatientStreamingScreen
+            navigateToSpecificPatientStreaming = navigateToSpecificPatientStreamingScreen,
+            viewModel = viewModel
         )
     }
 }
