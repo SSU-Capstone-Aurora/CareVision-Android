@@ -152,16 +152,16 @@ class HomeViewModel @Inject constructor(
     fun fetchFCMToken() {
         FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
             if (!task.isSuccessful) {
-                Log.w("FCM", "Fetching FCM registration token failed", task.exception)
+                Log.w("FCM token failed", "Fetching FCM registration token failed", task.exception)
                 return@addOnCompleteListener
             }
 
             // Get new FCM registration token
             val token = task.result
-            Log.d("FCM", "FCM registration token: $token")
+            Log.d("FCM new Token", "FCM registration token: $token")
 
             tokenProvider.saveFCMToken(token)
-            Log.d("FCM", "${tokenProvider.getFCMToken()}")
+            Log.d("FCM in tokenProvider", "${tokenProvider.getFCMToken()}")
 
             sendFCMTokenToServer()
         }
@@ -179,11 +179,11 @@ class HomeViewModel @Inject constructor(
                         clientToken = token
                     )
                 )
-                Log.d("FCM", "$username, $token")
+                Log.d("FCM Token Provider", "$username, $token")
             }.onSuccess {
-                Log.d("FCM", "FCM Token successfully sent to server.")
+                Log.d("FCM to Server Success", "FCM Token successfully sent to server.")
             }.onFailure {
-                Log.e("FCM", "Failed to send FCM Token to server: ${it.message}")
+                Log.e("FCM to Server Failed", "Failed to send FCM Token to server: ${it.message}")
             }
         }
     }

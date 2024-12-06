@@ -25,14 +25,6 @@ class AppFirebaseMessagingService : FirebaseMessagingService() {
     @Inject
     lateinit var firebaseTokenService: FirebaseTokenService
 
-    // 토큰이 갱신될 때 호출
-    override fun onNewToken(token: String) {
-        super.onNewToken(token)
-        Log.d("FCM", "Refreshed token: $token")
-        // 토큰 저장 및 서버로 전송
-        handleTokenUpdate(token)
-    }
-
     // 메시지 수신 시 호출
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
@@ -49,25 +41,6 @@ class AppFirebaseMessagingService : FirebaseMessagingService() {
 
         // 알림 생성
         showNotification(remoteMessage.notification?.title, remoteMessage.notification?.body)
-    }
-
-    private fun handleTokenUpdate(token: String) {
-        // 1. 토큰을 SharedPreferences에 저장
-        tokenProvider.saveFCMToken(token)
-
-        // 2. 서버에 전송
-        val username = tokenProvider.getAccessToken() ?: return
-        val requestBody = FCMRequestBody(username = username, clientToken = token)
-
-        CoroutineScope(Dispatchers.IO).launch {
-            kotlin.runCatching {
-                firebaseTokenService.sendRegistrationToken(requestBody)
-            }.onSuccess {
-                Log.d("FCM", "FCM Token successfully sent to server.")
-            }.onFailure {
-                Log.e("FCM", "Failed to send FCM Token to server: ${it.message}")
-            }
-        }
     }
 
     private fun showNotification(title: String?, body: String?) {
