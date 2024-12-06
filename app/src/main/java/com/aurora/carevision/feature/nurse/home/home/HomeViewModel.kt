@@ -1,10 +1,17 @@
 package com.aurora.carevision.feature.nurse.home.home
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.aurora.carevision.data.local.auth.TokenProvider
+import com.aurora.carevision.data.remote.nurse.fcm.model.FCMRequestBody
+import com.aurora.carevision.data.remote.nurse.fcm.service.FirebaseTokenService
 import com.aurora.carevision.domain.nurse.model.streaming.PatientStreamingInfo
+import com.aurora.carevision.domain.nurse.repository.NurseMypageRepository
 import com.aurora.carevision.domain.nurse.repository.PatientStreamingRepository
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -12,33 +19,53 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val patientStreamingRepository: PatientStreamingRepository
-): ViewModel(){
+    private val patientStreamingRepository: PatientStreamingRepository,
+    private val mypageRepository: NurseMypageRepository,
+    private val tokenProvider: TokenProvider,
+    private val firebaseTokenService: FirebaseTokenService,
+) : ViewModel() {
     private val _state: MutableStateFlow<HomeState> = MutableStateFlow(HomeState())
-    val state : MutableStateFlow<HomeState> = _state
+    val state: MutableStateFlow<HomeState> = _state
 
     private val _sideEffect: MutableStateFlow<HomeSideEffect?> = MutableStateFlow(null)
     val sideEffect: MutableStateFlow<HomeSideEffect?> = _sideEffect
 
-    fun updateClickedPatientInfo(patientInfo: PatientStreamingInfo){
+    fun updateClickedPatientInfo(patientInfo: PatientStreamingInfo) {
         _state.value = state.value.copy(
             clickedPatientInfo = patientInfo,
             clickedPatientId = patientInfo.patientId
         )
     }
 
-    fun updateClickedSavedVideoInfo(videoId: Int, clickedSavedVideoDate: String){
+    fun updateClickedSavedVideoInfo(videoId: Int, clickedSavedVideoDate: String) {
         _state.value = state.value.copy(
             clickedSavedVideoId = videoId,
             clickedSavedVideoDate = clickedSavedVideoDate
         )
     }
 
-    fun updateClickedPatientId(patientId: Int){
+    fun updateClickedPatientId(patientId: Int) {
         _state.value = state.value.copy(clickedPatientId = patientId)
     }
 
-    fun getPatientStreamingList(){
+    fun getNurseMypageInfo() {
+        viewModelScope.launch {
+            runCatching {
+                mypageRepository.getNurseMypage()
+            }.onSuccess {
+                _state.value = _state.value.copy(
+                    nurseName = it.name,
+                )
+                tokenProvider.saveUserName(it.name)
+                _sideEffect.value = HomeSideEffect.GetNurseMypageSuccess
+                Log.d("NurseMypage", "${state.value.nurseName}")
+            }.onFailure {
+                _sideEffect.value = HomeSideEffect.GetNurseMypageFailure
+            }
+        }
+    }
+
+    fun getPatientStreamingList() {
         viewModelScope.launch {
             runCatching {
                 patientStreamingRepository.getPatientVideoList()
@@ -53,7 +80,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getSpecifyPatientStreamingUri(patientId: Int){
+    fun getSpecifyPatientStreamingUri(patientId: Int) {
         viewModelScope.launch {
             runCatching {
                 patientStreamingRepository.getSpecifyPatientStreamingUri(patientId)
@@ -74,7 +101,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getSavedVideos(patientId: Int){
+    fun getSavedVideos(patientId: Int) {
         viewModelScope.launch {
             runCatching {
                 patientStreamingRepository.getSavedVideos(patientId)
@@ -89,7 +116,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getSpecifyPatientSavedVideoUri(videoId: Int){
+    fun getSpecifyPatientSavedVideoUri(videoId: Int) {
         viewModelScope.launch {
             runCatching {
                 patientStreamingRepository.getVideoUri(videoId)
@@ -104,7 +131,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getNotificationList(){
+    fun getNotificationList() {
         viewModelScope.launch {
             runCatching {
                 patientStreamingRepository.getNotificationList()
@@ -117,6 +144,46 @@ class HomeViewModel @Inject constructor(
             }.onFailure {
                 _sideEffect.value = HomeSideEffect.GetNotificationListFailure
                 Log.d("HomeViewModel", "getNotificationList: ${it}")
+            }
+        }
+    }
+
+    // 알림 관련 FCM
+    fun fetchFCMToken() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w("FCM", "Fetching FCM registration token failed", task.exception)
+                return@addOnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+            Log.d("FCM", "FCM registration token: $token")
+
+            tokenProvider.saveFCMToken(token)
+            Log.d("FCM", "${tokenProvider.getFCMToken()}")
+
+            sendFCMTokenToServer()
+        }
+    }
+
+    private fun sendFCMTokenToServer() {
+        val token = tokenProvider.getFCMToken() ?: return
+        val username = tokenProvider.getAccessToken() ?: return
+
+        viewModelScope.launch {
+            runCatching {
+                firebaseTokenService.sendRegistrationToken(
+                    FCMRequestBody(
+                        username = username,
+                        clientToken = token
+                    )
+                )
+                Log.d("FCM", "$username, $token")
+            }.onSuccess {
+                Log.d("FCM", "FCM Token successfully sent to server.")
+            }.onFailure {
+                Log.e("FCM", "Failed to send FCM Token to server: ${it.message}")
             }
         }
     }

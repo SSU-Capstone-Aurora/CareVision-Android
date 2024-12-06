@@ -19,9 +19,12 @@ import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
+import com.aurora.carevision.R
 import com.aurora.carevision.app.ui.theme.CVTheme
+import com.aurora.carevision.data.local.auth.TokenProvider
 import com.aurora.carevision.feature.intro.Intro
 import com.aurora.carevision.navigation.CVNavHost
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

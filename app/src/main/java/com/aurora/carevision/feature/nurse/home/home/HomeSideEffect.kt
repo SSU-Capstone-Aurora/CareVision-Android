@@ -11,4 +11,6 @@ sealed class HomeSideEffect {
     object GetSpecifyPatientSavedVideoUriFailure : HomeSideEffect()
     object GetNotificationListSuccess : HomeSideEffect()
     object GetNotificationListFailure : HomeSideEffect()
+    object GetNurseMypageSuccess : HomeSideEffect()
+    object GetNurseMypageFailure : HomeSideEffect()
 }

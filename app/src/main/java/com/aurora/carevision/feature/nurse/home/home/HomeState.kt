@@ -5,6 +5,12 @@ import com.aurora.carevision.domain.nurse.model.streaming.PatientStreamingInfo
 import com.aurora.carevision.domain.nurse.model.streaming.SavedVideoInfo
 
 data class HomeState(
+    // 로그인한 간호사 정보
+    val nurseName: String = "",
+    val registeredAt: String? = "",
+    val hospitalName: String = "",
+    val department: String = "",
+
     val patientStreamingList: List<PatientStreamingInfo> = emptyList(),
 
     val clickedPatientInfo: PatientStreamingInfo? = null,
