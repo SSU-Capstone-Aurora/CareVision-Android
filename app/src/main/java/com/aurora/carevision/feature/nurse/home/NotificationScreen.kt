@@ -2,6 +2,7 @@ package com.aurora.carevision.feature.nurse.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -31,14 +32,17 @@ import com.aurora.carevision.core.component.TopAppBarLeft
 import com.aurora.carevision.domain.nurse.model.notification.Notification
 
 @Composable
-fun NotificationScreen() {
+fun NotificationScreen(
+    onBackClick: () -> Unit = {},
+    navigateToSpecificPatientStreaming: () -> Unit = {},
+) {
 
     Column(
         modifier = Modifier
             .background(White)
             .fillMaxSize()
     ) {
-        TopAppBarLeft(title = stringResource(R.string.tv_notification))
+        TopAppBarLeft(title = stringResource(R.string.tv_notification), onClick = onBackClick)
 
         val hasAlarm = true
         val notifications = listOf(
@@ -57,7 +61,8 @@ fun NotificationScreen() {
                         roomBedInfo = notification.roomBedInfo,
                         notificationTime = notification.notificationTime,
                         notificationContent = notification.notificationContent,
-                        isChecked = notification.isChecked
+                        isChecked = notification.isChecked,
+                        navigateToSpecificPatientStreaming = navigateToSpecificPatientStreaming
                     )
                 }
             }
@@ -89,12 +94,14 @@ fun NotificationList(
     roomBedInfo: String = "",
     notificationTime: String = "",
     notificationContent: String = "",
-    isChecked: Boolean = false
+    isChecked: Boolean = false,
+    navigateToSpecificPatientStreaming: () -> Unit = {}
 ) {
     Row(
         modifier = Modifier
             .background(if (isChecked) White else Primary100)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .clickable { navigateToSpecificPatientStreaming() },
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         Column(

@@ -3,6 +3,7 @@ package com.aurora.carevision.feature.nurse.home.home
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -40,6 +41,7 @@ import kotlinx.coroutines.flow.collect
 fun HomeScreen(
     modifier: Modifier = Modifier,
     navigateToSpecificPatientStreaming: () -> Unit = {},
+    navigateToNotificationList: () -> Unit = {},
     hasAlarm: Boolean = false,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
@@ -81,7 +83,10 @@ fun HomeScreen(
             Text(text = "환자 영상", style = CVTheme.typography.headingDisplay, color = Black)
             Image(
                 painter = painterResource(id = if (hasAlarm) R.drawable.ic_alarm_active else R.drawable.ic_alarm),
-                contentDescription = "Alarm"
+                contentDescription = "Alarm",
+                modifier = modifier.clickable {
+                    navigateToNotificationList()
+                }
             )
         }
 
