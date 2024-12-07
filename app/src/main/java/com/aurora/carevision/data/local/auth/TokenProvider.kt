@@ -57,4 +57,12 @@ class TokenProvider @Inject constructor(
     fun getUserName(): String? {
         return sharedPreferences.getString("user_name", null)
     }
+
+    fun saveUserId(userId: String): Boolean {
+        return sharedPreferences.edit().putString("user_id", userId).commit()
+    }
+
+    fun getUserId(): String? {
+        return sharedPreferences.getString("user_id", null)
+    }
 }

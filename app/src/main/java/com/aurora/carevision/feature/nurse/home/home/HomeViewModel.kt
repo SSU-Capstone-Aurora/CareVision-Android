@@ -22,7 +22,6 @@ class HomeViewModel @Inject constructor(
     private val patientStreamingRepository: PatientStreamingRepository,
     private val mypageRepository: NurseMypageRepository,
     private val tokenProvider: TokenProvider,
-    private val firebaseTokenService: FirebaseTokenService,
 ) : ViewModel() {
     private val _state: MutableStateFlow<HomeState> = MutableStateFlow(HomeState())
     val state: MutableStateFlow<HomeState> = _state

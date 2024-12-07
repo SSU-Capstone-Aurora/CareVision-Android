@@ -113,7 +113,6 @@ fun NurseLoginScreen(
             text = "로그인",
             onClick = {
                 viewModel.nurseLogin(state.userId, state.password)
-                viewModel.fetchFCMToken()
                       },
             enabled = state.userId.isNotBlank() && state.password.isNotBlank(),
             modifier = Modifier

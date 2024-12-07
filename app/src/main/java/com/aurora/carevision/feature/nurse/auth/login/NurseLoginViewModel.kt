@@ -45,6 +45,7 @@ class NurseLoginViewModel @Inject constructor(
                 _sideEffect.value = NurseLoginSideEffect.LoginSuccess
                 tokenProvider.saveAccessToken(it.accessToken)
                 tokenProvider.saveRefreshToken(it.refreshToken)
+                fetchFCMToken()
                 Log.d("NurseLoginViewModel", "nurseLogin: ${_state.value.userId} ${_state.value.password}")
                 Log.d("NurseLoginViewModel", "Token: ${it.accessToken} ${it.refreshToken}")
             }.onFailure {
@@ -56,7 +57,7 @@ class NurseLoginViewModel @Inject constructor(
 
 
     // 알림 관련 FCM
-    fun fetchFCMToken() {
+    private fun fetchFCMToken() {
         FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
             if (!task.isSuccessful) {
                 Log.w("FCM token failed", "Fetching FCM registration token failed", task.exception)
@@ -76,7 +77,7 @@ class NurseLoginViewModel @Inject constructor(
 
     private fun sendFCMTokenToServer() {
         val token = tokenProvider.getFCMToken() ?: return
-        val username = tokenProvider.getAccessToken() ?: return
+        val username = _state.value.userId
 
         viewModelScope.launch {
             runCatching {

@@ -1,6 +1,8 @@
 package com.aurora.carevision.app
 
 import android.Manifest
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
@@ -24,6 +26,7 @@ import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.data.local.auth.TokenProvider
 import com.aurora.carevision.feature.intro.Intro
 import com.aurora.carevision.navigation.CVNavHost
+import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -39,6 +42,8 @@ class MainActivity : ComponentActivity() {
                 // navController를 생성하고, 이를 NavHost에 전달
                 val navController = rememberNavController()
                 val context = LocalContext.current
+                FirebaseApp.initializeApp(context)
+                createNotificationChannel()
 
                 // 권한 요청 런처
                 val requestPermissionLauncher = rememberLauncherForActivityResult(
@@ -91,6 +96,20 @@ class MainActivity : ComponentActivity() {
                     requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                 }
             }
+        }
+    }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                "이상행동감지알림채널ID",
+                "이상행동감지알림채널",
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
+            val manager = getSystemService(NotificationManager::class.java)
+            manager.createNotificationChannel(channel)
+
+            Log.d("Notification", "Notification channel created")
         }
     }
 }
