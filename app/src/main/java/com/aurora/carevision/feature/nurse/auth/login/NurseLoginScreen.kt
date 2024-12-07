@@ -111,7 +111,10 @@ fun NurseLoginScreen(
 
         CVLongButton(
             text = "로그인",
-            onClick = { viewModel.nurseLogin(state.userId, state.password) },
+            onClick = {
+                viewModel.nurseLogin(state.userId, state.password)
+                viewModel.fetchFCMToken()
+                      },
             enabled = state.userId.isNotBlank() && state.password.isNotBlank(),
             modifier = Modifier
                 .padding(top = 24.dp)

@@ -66,7 +66,6 @@ fun HomeScreen(
         viewModel.getPatientStreamingList()
         viewModel.getNotificationList()
         viewModel.getNurseMypageInfo()
-        viewModel.fetchFCMToken()
     }
 
     LaunchedEffect(Unit) {

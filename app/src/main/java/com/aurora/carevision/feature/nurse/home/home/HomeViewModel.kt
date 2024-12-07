@@ -147,44 +147,4 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
-
-    // 알림 관련 FCM
-    fun fetchFCMToken() {
-        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.w("FCM token failed", "Fetching FCM registration token failed", task.exception)
-                return@addOnCompleteListener
-            }
-
-            // Get new FCM registration token
-            val token = task.result
-            Log.d("FCM new Token", "FCM registration token: $token")
-
-            tokenProvider.saveFCMToken(token)
-            Log.d("FCM in tokenProvider", "${tokenProvider.getFCMToken()}")
-
-            sendFCMTokenToServer()
-        }
-    }
-
-    private fun sendFCMTokenToServer() {
-        val token = tokenProvider.getFCMToken() ?: return
-        val username = tokenProvider.getAccessToken() ?: return
-
-        viewModelScope.launch {
-            runCatching {
-                firebaseTokenService.sendRegistrationToken(
-                    FCMRequestBody(
-                        username = username,
-                        clientToken = token
-                    )
-                )
-                Log.d("FCM Token Provider", "$username, $token")
-            }.onSuccess {
-                Log.d("FCM to Server Success", "FCM Token successfully sent to server.")
-            }.onFailure {
-                Log.e("FCM to Server Failed", "Failed to send FCM Token to server: ${it.message}")
-            }
-        }
-    }
 }
