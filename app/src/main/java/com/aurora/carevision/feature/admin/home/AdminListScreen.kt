@@ -37,7 +37,7 @@ fun AdminListScreen() {
             modifier = Modifier
                 .background(White)
         ) {
-            AdminHospitalListItem(hospitalDepartment = "정형외과", hospitalName = "서울대병원") //TODO 관리자 정보 입력해야함
+            AdminHospitalListItem(hospitalDepartment = "국제성모병원", hospitalName = "정신건강의학과") //TODO 관리자 정보 입력해야함
             CVTabs(
                 tabItemTitle = listOf("간호사", "환자", "카메라"),
                 onClickTabItem = { tabIndex ->
