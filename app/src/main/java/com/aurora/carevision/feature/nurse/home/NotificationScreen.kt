@@ -2,6 +2,7 @@ package com.aurora.carevision.feature.nurse.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,6 +22,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.aurora.carevision.R
 import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.Gray500
@@ -29,35 +32,40 @@ import com.aurora.carevision.app.ui.theme.Primary100
 import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.TopAppBarLeft
 import com.aurora.carevision.domain.nurse.model.notification.Notification
+import com.aurora.carevision.feature.nurse.home.home.HomeViewModel
 
 @Composable
-fun NotificationScreen() {
+fun NotificationScreen(
+    onBackClick: () -> Unit = {},
+    navigateToSpecificPatientStreaming: () -> Unit = {},
+    viewModel: HomeViewModel = hiltViewModel()
+) {
+
+    val state = viewModel.state.collectAsStateWithLifecycle().value
 
     Column(
         modifier = Modifier
             .background(White)
             .fillMaxSize()
     ) {
-        TopAppBarLeft(title = stringResource(R.string.tv_notification))
+        TopAppBarLeft(title = stringResource(R.string.tv_notification), onClick = onBackClick)
 
-        val hasAlarm = true
-        val notifications = listOf(
-            Notification("101호 1번 침대", "3분전", "환자가 침대에서 일어났습니다.", true),
-            Notification("102호 2번 침대", "5분전", "환자가 도움을 요청했습니다.", false),
-            Notification("101호 1번 침대", "3분전", "환자가 침대에서 일어났습니다.", true),
-            Notification("102호 2번 침대", "5분전", "환자가 도움을 요청했습니다.", false),
-        )
-
-        if(hasAlarm) {
+        if(state.notificationList.isNotEmpty()) {
             LazyColumn(
                 modifier = Modifier.fillMaxSize()
             ) {
-                items(notifications) { notification ->
+                items(state.notificationList) { notification ->
                     NotificationList(
-                        roomBedInfo = notification.roomBedInfo,
+                        patientName = notification.patientName,
                         notificationTime = notification.notificationTime,
-                        notificationContent = notification.notificationContent,
-                        isChecked = notification.isChecked
+                        inPatientWardNumber = notification.inpatientWardNumber,
+                        patientRoomNumber = notification.patientRoomNumber,
+                        bedNumber = notification.bedNumber,
+                        isChecked = notification.isChecked,
+                        navigateToSpecificPatientStreaming = navigateToSpecificPatientStreaming,
+                        onClickItem = {
+                            viewModel.updateClickedPatientId(notification.patientId)
+                        }
                     )
                 }
             }
@@ -85,26 +93,34 @@ fun NotificationScreen() {
 
 @Composable
 fun NotificationList(
+    onClickItem: () -> Unit,
     modifier : Modifier = Modifier,
-    roomBedInfo: String = "",
+    patientName: String = "",
+    inPatientWardNumber: Int = 0,
+    patientRoomNumber: Int = 0,
+    bedNumber: Int = 0,
     notificationTime: String = "",
-    notificationContent: String = "",
-    isChecked: Boolean = false
+    isChecked: Boolean = false,
+    navigateToSpecificPatientStreaming: () -> Unit = {}
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .background(if (isChecked) White else Primary100)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .clickable {
+                navigateToSpecificPatientStreaming()
+                onClickItem()
+                       },
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         Column(
-            modifier = Modifier.padding(vertical = 20.dp, horizontal = 24.dp)
+            modifier = modifier.padding(vertical = 20.dp, horizontal = 24.dp)
         ) {
-            Text(text = roomBedInfo, style = CVTheme.typography.captionRegular, color = Gray500)
-            Text(text = notificationContent, style = CVTheme.typography.textBody2Importance, color = Gray600)
+            Text(text = "${inPatientWardNumber}동 ${patientRoomNumber}호 ${bedNumber}베드", style = CVTheme.typography.captionRegular, color = Gray500)
+            Text(text = "$patientName 님의 이상행동이 감지되었습니다.", style = CVTheme.typography.textBody2Importance, color = Gray600)
         }
 
-        Text(text = notificationTime, style = CVTheme.typography.captionImportance, color = Gray500, modifier = Modifier.padding(end = 24.dp, top = 20.dp))
+        Text(text = notificationTime, style = CVTheme.typography.captionImportance, color = Gray500, modifier = modifier.padding(end = 24.dp, top = 20.dp))
     }
 }
 

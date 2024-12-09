@@ -1,8 +1,12 @@
 package com.aurora.carevision.feature.nurse.home.home
 
 import android.util.Log
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -40,13 +45,27 @@ import kotlinx.coroutines.flow.collect
 fun HomeScreen(
     modifier: Modifier = Modifier,
     navigateToSpecificPatientStreaming: () -> Unit = {},
-    hasAlarm: Boolean = false,
+    navigateToNotificationList: () -> Unit = {},
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.collectAsState().value
+    val context = LocalContext.current
+
+    // 알림 권한 요청
+    val requestPermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            Toast.makeText(context, "알림 권한이 허용되었습니다.", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(context, "알림 권한이 거부되었습니다.", Toast.LENGTH_SHORT).show()
+        }
+    }
 
     LaunchedEffect(key1 = Unit) {
         viewModel.getPatientStreamingList()
+        viewModel.getNotificationList()
+        viewModel.getNurseMypageInfo()
     }
 
     LaunchedEffect(Unit) {
@@ -80,8 +99,11 @@ fun HomeScreen(
         ) {
             Text(text = "환자 영상", style = CVTheme.typography.headingDisplay, color = Black)
             Image(
-                painter = painterResource(id = if (hasAlarm) R.drawable.ic_alarm_active else R.drawable.ic_alarm),
-                contentDescription = "Alarm"
+                painter = painterResource(id = if (state.notificationList.isNotEmpty()) R.drawable.ic_alarm_active else R.drawable.ic_alarm),
+                contentDescription = "Alarm",
+                modifier = modifier.clickable {
+                    navigateToNotificationList()
+                }
             )
         }
 
@@ -168,7 +190,7 @@ fun VideoCardView(
 
 @Composable
 @Preview
-fun HomeScreenPreview() {
+private fun HomeScreenPreview() {
     CVTheme {
         HomeScreen()
     }
@@ -176,7 +198,7 @@ fun HomeScreenPreview() {
 
 @Composable
 @Preview
-fun VideoCardViewPreview() {
+private fun VideoCardViewPreview() {
     CVTheme {
         VideoCardView(onClickCard = {})
     }

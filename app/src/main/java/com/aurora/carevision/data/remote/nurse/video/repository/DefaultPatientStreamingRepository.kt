@@ -2,6 +2,7 @@ package com.aurora.carevision.data.remote.nurse.video.repository
 
 import com.aurora.carevision.data.remote.nurse.video.datasource.PatientStreamingDataSource
 import com.aurora.carevision.data.remote.nurse.video.model.response.toDomainModel
+import com.aurora.carevision.domain.nurse.model.notification.Notification
 import com.aurora.carevision.domain.nurse.model.streaming.PatientStreamingInfo
 import com.aurora.carevision.domain.nurse.model.streaming.StreamingSpecifyPatientInfo
 import com.aurora.carevision.domain.nurse.repository.PatientStreamingRepository
@@ -22,4 +23,8 @@ class DefaultPatientStreamingRepository @Inject constructor(
         patientStreamingDataSource.getSavedVideos(patientId).result.toDomainModel()
 
     override suspend fun getVideoUri(videoId: Int) = patientStreamingDataSource.getVideoUri(videoId).result.link
+
+    override suspend fun getNotificationList(): List<Notification> {
+        return patientStreamingDataSource.getNotificationList().result.toDomainModel()
+    }
 }

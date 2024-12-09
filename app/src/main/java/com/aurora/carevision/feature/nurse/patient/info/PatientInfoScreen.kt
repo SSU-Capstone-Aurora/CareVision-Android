@@ -47,7 +47,6 @@ fun PatientInfoScreen(
     viewModel: PatientInfoViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.collectAsState().value
-    val username = "김나나"
 
     LaunchedEffect(key1 = Unit) {
         viewModel.getPatientList()
@@ -59,14 +58,14 @@ fun PatientInfoScreen(
             .background(Gray100),
     ) {
         Spacer(modifier = Modifier.height(20.dp))
-        Text(
-            text = username,
-            color = Gray500,
-            style = CVTheme.typography.textBody2Importance,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 24.dp, vertical = 4.dp)
-        )
+//        Text(
+//            text = username,
+//            color = Gray500,
+//            style = CVTheme.typography.textBody2Importance,
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(horizontal = 24.dp, vertical = 4.dp)
+//        )
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
@@ -108,7 +107,7 @@ fun PatientInfoScreen(
                 MyPatientListItem(
                     patientName = patient.patientName,
                     patientNum = patient.patientCode,
-                    patientRoom = patient.patientRoom.toString(),
+                    patientRoom = "${patient.patientRoom}동 ${patient.inpatientWardNumber}호 ${patient.bedNumber}번 베드",
                     registrationDate = patient.registrationDate,
                     onClick = {},
                 )
@@ -128,13 +127,13 @@ fun MyPatientListItem(
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .background(White)
             .clip(RoundedCornerShape(12.dp))
             .clickable { onClick() }
     ) {
         Row(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .padding(end = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
@@ -145,10 +144,10 @@ fun MyPatientListItem(
                 modifier = Modifier.padding(16.dp)
             )
             Column(
-                modifier = Modifier.weight(2f)
+                modifier = modifier.weight(2f)
             ) {
                 Row(
-                    modifier = Modifier.padding(top = 12.dp, bottom = 4.dp),
+                    modifier = modifier.padding(top = 12.dp, bottom = 4.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Start
                 ) {
@@ -156,13 +155,13 @@ fun MyPatientListItem(
                         text = patientName,
                         color = Gray600,
                         style = CVTheme.typography.textBody1Importance,
-                        modifier = Modifier.padding(end = 8.dp)
+                        modifier = modifier.padding(end = 8.dp)
                     )
                     Text(
                         text = patientNum,
                         color = Primary700,
                         style = CVTheme.typography.captionImportance,
-                        modifier = Modifier.padding(vertical = 4.dp)
+                        modifier = modifier.padding(vertical = 4.dp)
                     )
                 }
                 Text(
@@ -172,7 +171,7 @@ fun MyPatientListItem(
                 )
 
                 Box(
-                    modifier = Modifier
+                    modifier = modifier
                         .height(2.dp)
                         .padding(horizontal = 16.dp, vertical = 8.dp)
                         .background(Gray100)
@@ -186,14 +185,14 @@ fun MyPatientListItem(
             )
         }
         Spacer(
-            modifier = Modifier
+            modifier = modifier
                 .height(1.dp)
                 .fillMaxWidth()
                 .background(Gray100)
         )
 
         Row(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .padding(start = 16.dp, end = 16.dp, bottom = 12.dp),
             horizontalArrangement = Arrangement.SpaceBetween,

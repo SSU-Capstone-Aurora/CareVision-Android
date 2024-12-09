@@ -7,6 +7,9 @@ plugins {
     alias(libs.plugins.kotlinx.serialization)
     id("org.jetbrains.kotlin.kapt")
     id("kotlin-kapt")
+
+    // google-services plugin 추가
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -118,4 +121,14 @@ dependencies {
     implementation(libs.androidx.media3.ui)
     implementation(libs.rstp)
     implementation(libs.accompanist.permissions)
+
+    // firebase
+    // Import the Firebase BoM
+    implementation(libs.firebase.bom)
+
+
+    // TODO: Add the dependencies for Firebase products you want to use
+    // When using the BoM, don't specify versions in Firebase dependencies
+    implementation(libs.firebase.messaging)
+
 }

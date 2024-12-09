@@ -1,6 +1,5 @@
 package com.aurora.carevision.feature.intro
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -50,7 +49,7 @@ fun InitialLoginScreen(
         ) {
             Spacer(modifier = Modifier.height(65.dp))
 
-            Icon(painter = painterResource(id = R.drawable.ic_logo), contentDescription = "logo", tint = Primary600, modifier = Modifier.weight(1f))
+            Icon(painter = painterResource(id = R.drawable.ic_logo_small), contentDescription = "logo", tint = Primary600, modifier = Modifier.weight(1f))
 
             Spacer(modifier = Modifier.height(65.dp))
             Text(
