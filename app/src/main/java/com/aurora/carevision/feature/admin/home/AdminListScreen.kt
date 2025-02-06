@@ -21,7 +21,7 @@ import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.AdminHospitalListItem
 import com.aurora.carevision.core.component.CVTabs
 import com.aurora.carevision.feature.admin.home.cameralist.CameraListRoute
-import com.aurora.carevision.feature.admin.home.nurselist.NurseListScreen
+import com.aurora.carevision.feature.admin.home.nurselist.NurseListRoute
 import com.aurora.carevision.feature.admin.home.patientlist.PatientListScreen
 
 
@@ -56,7 +56,7 @@ fun AdminListScreen() {
                 .padding(top = 168.dp, start = 24.dp, end = 24.dp)
         ) {
             when (selectedTab) {
-                "Nurse" -> NurseListScreen()
+                "Nurse" -> NurseListRoute()
                 "Patient" -> PatientListScreen()
                 "Camera" -> CameraListRoute()
             }

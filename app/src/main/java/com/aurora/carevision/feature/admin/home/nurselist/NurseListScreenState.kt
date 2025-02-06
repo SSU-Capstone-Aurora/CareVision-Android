@@ -1,7 +1,7 @@
 package com.aurora.carevision.feature.admin.home.nurselist
 
-import com.aurora.carevision.domain.admin.model.nurse.NurseList
+import com.aurora.carevision.domain.admin.model.nurse.NurseInfo
 
 data class NurseListScreenState(
-    val nurses: List<NurseList> = emptyList(),
+    val nurseList: List<NurseInfo> = emptyList(),
 )

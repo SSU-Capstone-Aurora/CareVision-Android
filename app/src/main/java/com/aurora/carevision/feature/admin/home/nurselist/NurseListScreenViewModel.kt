@@ -7,7 +7,6 @@ import com.aurora.carevision.domain.admin.repository.AdminNurseListRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,7 +26,7 @@ class NurseListScreenViewModel @Inject constructor(
             runCatching {
                 nurseListRepository.getNurseList()
             }.onSuccess {
-                _state.value = state.value.copy(nurses = it)
+                _state.value = state.value.copy(nurseList = it)
                 Log.d("NurseListViewModel", "getNurseList : ${it.size}")
                 _sideEffect.value = NurseListScreenSideEffect.GetNurseListSuccess
             }.onFailure {
