@@ -22,7 +22,7 @@ import com.aurora.carevision.core.component.AdminHospitalListItem
 import com.aurora.carevision.core.component.CVTabs
 import com.aurora.carevision.feature.admin.home.cameralist.CameraListRoute
 import com.aurora.carevision.feature.admin.home.nurselist.NurseListRoute
-import com.aurora.carevision.feature.admin.home.patientlist.PatientListScreen
+import com.aurora.carevision.feature.admin.home.patientlist.PatientListRoute
 
 
 @Composable
@@ -57,7 +57,7 @@ fun AdminListScreen() {
         ) {
             when (selectedTab) {
                 "Nurse" -> NurseListRoute()
-                "Patient" -> PatientListScreen()
+                "Patient" -> PatientListRoute()
                 "Camera" -> CameraListRoute()
             }
         }
