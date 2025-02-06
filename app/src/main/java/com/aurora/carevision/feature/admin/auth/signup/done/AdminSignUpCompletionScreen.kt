@@ -21,6 +21,7 @@ import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.feature.admin.auth.signup.AdminSignUpHospitalEntryViewModel
 
+// TODO: 이 화면이 현재 쓰이는 곳이 있는지 확인
 @Composable
 fun AdminSignUpCompletionScreen(
     viewModel: AdminSignUpHospitalEntryViewModel = hiltViewModel(),
@@ -38,7 +39,7 @@ fun AdminSignUpCompletionScreen(
             painter = painterResource(id = R.drawable.ic_signup_complete_icon),
             contentDescription = "Login Loading Image",
             modifier = Modifier
-                .size(150.dp) //TODO 이미지 크기 설정 다시 해야 함
+                .size(150.dp)
         )
 
         Text(
@@ -59,7 +60,7 @@ fun AdminSignUpCompletionScreenPreview(){
                 .background(White)
                 .fillMaxSize()
         ){
-            AdminSignUpCompletionScreen()
+            // AdminSignUpCompletionScreen()
         }
     }
 }
