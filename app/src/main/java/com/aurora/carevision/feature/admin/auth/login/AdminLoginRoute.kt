@@ -7,17 +7,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,6 +20,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.aurora.carevision.app.ui.theme.Black
 import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.Primary700
@@ -35,15 +30,16 @@ import com.aurora.carevision.core.component.CVBasicTextField
 import com.aurora.carevision.core.component.CVLongButton
 import com.aurora.carevision.core.component.CVPasswordTextField
 import com.aurora.carevision.core.component.TopAppBarLeft
+import com.google.firebase.annotations.concurrent.Background
 
 @Composable
-fun AdminLoginScreen(
+fun AdminLoginRoute(
     viewModel: AdminLoginViewModel = hiltViewModel(),
     navigateToHome: () ->Unit = {},
     navigateToSignUp: () -> Unit = {},
     navigateToBack: () -> Unit = {}
 ) {
-    val state by viewModel.state.collectAsState()
+    val state by viewModel.state.collectAsStateWithLifecycle()
     val context = LocalContext.current
 
     LaunchedEffect(Unit) {
@@ -66,13 +62,36 @@ fun AdminLoginScreen(
         }
     }
 
+    AdminLoginScreen(
+        navigateToBack = { navigateToBack() },
+        userId = state.userId,
+        password = state.password,
+        onUserIdChange = { viewModel.onUserIdChange(it) },
+        onPasswordChange = { viewModel.onPasswordChange(it) },
+        isLoginError = state.isLoginError,
+        onLoginClick = { userId, password -> viewModel.adminLogin(userId, password) },
+        onSignUpClick = { navigateToSignUp() }
+    )
+}
+
+@Composable
+fun AdminLoginScreen(
+    navigateToBack: () -> Unit = {},
+    userId: String = "",
+    password: String = "",
+    onUserIdChange: (String) -> Unit = {},
+    onPasswordChange: (String) -> Unit = {},
+    isLoginError: Boolean = false,
+    onLoginClick: (String, String) -> Unit = { _, _ -> },
+    onSignUpClick: () -> Unit = {}
+){
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(White)
     ){
         TopAppBarLeft(
-            onClick = {viewModel.sideEffect.value = AdminLoginSideEffect.OnBackClick},
+            onClick = { navigateToBack() },
         )
         Text(
             text = "안녕하세요 :) \n케어비전입니다",
@@ -82,29 +101,29 @@ fun AdminLoginScreen(
                 .padding(top=16.dp, start = 24.dp, bottom = 24.dp)
         )
         CVBasicTextField(
-            value = state.userId,
+            value = userId,
             placeholder = "아이디를 입력해주세요",
             label = "아이디",
-            onTextChanged = { viewModel.onUserIdChange(it)},
+            onTextChanged = { onUserIdChange(it)},
             onFocusChanged = {},
-            isError = state.isLoginError,
+            isError = isLoginError,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 24.dp, end = 24.dp)
 
         )
         CVPasswordTextField(
-            value = state.password,
+            value = password,
             placeholder = "비밀번호를 입력해주세요",
             label = "비밀번호",
-            onTextChanged = { viewModel.onPasswordChange(it) },
+            onTextChanged = { onPasswordChange(it) },
             onFocusChanged = {},
-            isError = state.isLoginError,
+            isError = isLoginError,
             modifier = Modifier
                 .padding(top = 24.dp, start = 24.dp, end = 24.dp)
                 .fillMaxWidth()
         )
-        if (state.isLoginError) {
+        if (isLoginError) {
             Text(
                 text = "*아이디 또는 비밀번호가 잘못되었습니다",
                 color = Red600,
@@ -117,8 +136,8 @@ fun AdminLoginScreen(
 
         CVLongButton(
             text = "로그인",
-            onClick = {viewModel.adminLogin(state.userId, state.password)},
-            enabled = state.userId.isNotBlank() && state.password.isNotBlank(),
+            onClick = { onLoginClick(userId, password) },
+            enabled = userId.isNotBlank() && password.isNotBlank(),
             modifier = Modifier
                 .padding(top = 24.dp)
         )
@@ -129,7 +148,7 @@ fun AdminLoginScreen(
             color = Primary700,
             modifier = Modifier
                 .padding(top = 24.dp)
-                .clickable { viewModel.sideEffect.value = AdminLoginSideEffect.OnSignUpClick }
+                .clickable { onSignUpClick() }
                 .align(Alignment.CenterHorizontally)
         )
     }
