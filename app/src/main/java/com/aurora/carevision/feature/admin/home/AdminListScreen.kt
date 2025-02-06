@@ -1,4 +1,3 @@
-// AdminListScreen.kt
 package com.aurora.carevision.feature.admin.home
 
 import androidx.compose.foundation.background
@@ -24,7 +23,7 @@ import com.aurora.carevision.feature.admin.home.cameralist.CameraListRoute
 import com.aurora.carevision.feature.admin.home.nurselist.NurseListRoute
 import com.aurora.carevision.feature.admin.home.patientlist.PatientListRoute
 
-
+// TOOD : Screen to Route
 @Composable
 fun AdminListScreen() {
     var selectedTab by rememberSaveable { mutableStateOf("Nurse") }

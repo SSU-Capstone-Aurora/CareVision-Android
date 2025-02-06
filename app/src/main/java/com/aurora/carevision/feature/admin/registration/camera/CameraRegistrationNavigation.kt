@@ -4,7 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.aurora.carevision.feature.admin.registration.camera.connection.CameraRegistAfterBarCodeScreen
+import com.aurora.carevision.feature.admin.registration.camera.connection.CameraRegisterAfterBarCodeRoute
 import com.aurora.carevision.feature.admin.registration.camera.connection.CameraRegistrationInfoScreen
 import com.aurora.carevision.feature.admin.registration.camera.connection.CameraRegistFinishScreen
 import kotlinx.serialization.Serializable
@@ -35,7 +35,7 @@ fun NavGraphBuilder.cameraRegistrationScreen(
     onFinish: () -> Unit
 ) {
     composable<CameraRegistAfterBarCode> {
-        CameraRegistAfterBarCodeScreen(
+        CameraRegisterAfterBarCodeRoute(
             navigateToInfo = navigateToCameraRegistrationInfo,
             navigateToBack = navigateToBack
         )
