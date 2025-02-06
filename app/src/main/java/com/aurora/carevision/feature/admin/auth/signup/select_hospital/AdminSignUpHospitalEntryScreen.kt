@@ -37,6 +37,7 @@ import com.aurora.carevision.core.component.TopAppBarLeft
 import com.aurora.carevision.feature.admin.auth.signup.AdminSignUpHospitalEntrySideEffect
 import com.aurora.carevision.feature.admin.auth.signup.AdminSignUpHospitalEntryViewModel
 
+// TODO : Screen to Route
 @Composable
 fun AdminSignUpHospitalEntryScreen(
     viewModel: AdminSignUpHospitalEntryViewModel = hiltViewModel(),
