@@ -12,18 +12,15 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.aurora.carevision.R
 import com.aurora.carevision.app.ui.theme.Black
 import com.aurora.carevision.app.ui.theme.CVTheme
@@ -37,14 +34,13 @@ import com.aurora.carevision.feature.admin.registration.camera.CameraRegistratio
 
 
 @Composable
-fun CameraRegistFinishScreen(
+fun CameraRegisterFinishRoute(
     viewModel: CameraRegistrationViewModel = hiltViewModel(),
     onFinish: () -> Unit = {},
     navigateToBack: () ->Unit= {},
 ){
 
-    val state by viewModel.state.collectAsState()
-    val context = LocalContext.current
+    val state = viewModel.state.collectAsStateWithLifecycle().value
 
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
@@ -55,6 +51,27 @@ fun CameraRegistFinishScreen(
             }
         }
     }
+
+    CameraRegisterFinishScreen(
+        navigateToBack = navigateToBack,
+        cameraSerialNumber = state.cameraSerialNumber,
+        wardNumber = state.wardNumber,
+        roomNumber = state.roomNumber,
+        bedNumber = state.bedNumber,
+        registerCamera = onFinish
+    )
+
+}
+
+@Composable
+fun CameraRegisterFinishScreen(
+    navigateToBack: () -> Unit = {},
+    cameraSerialNumber: String = "",
+    wardNumber: String? = "",
+    roomNumber: String? = "",
+    bedNumber: String? = "",
+    registerCamera: () -> Unit = {}
+) {
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -66,12 +83,13 @@ fun CameraRegistFinishScreen(
         )
 
         Text(
-            text = "      카메라와 베드를\n다음과 같이 연결합니다",
+            text = "카메라와 베드를\n다음과 같이 연결합니다",
             style = CVTheme.typography.headingPrimary,
             color = Black,
             modifier = Modifier
                 .padding(top = 92.dp, start = 24.dp, end = 24.dp)
-                .align(Alignment.CenterHorizontally)
+                .align(Alignment.CenterHorizontally),
+            textAlign = TextAlign.Center
         )
         Box(
             modifier = Modifier
@@ -87,13 +105,10 @@ fun CameraRegistFinishScreen(
                 contentAlignment = Alignment.Center
             ){
                 Text(
-                    text = """
-                        일련 번호   ${state.cameraSerialNumber}
-                        베드 정보    ${state.wardNumber}동 ${state.roomNumber}호 ${state.bedNumber}번
-                    """.trimIndent(),
-
+                    text = "일련 번호   ${cameraSerialNumber}\n베드 정보   ${wardNumber}동 ${roomNumber}호 ${bedNumber}번",
                     style = CVTheme.typography.textBody1Medium,
-                    color = Gray600
+                    color = Gray600,
+                    textAlign = TextAlign.Start
                 )
             }
             Image(
@@ -107,8 +122,7 @@ fun CameraRegistFinishScreen(
         CVLongButton(
             text = "확인",
             onClick = {
-                viewModel.submitToServer()
-                onFinish()
+                registerCamera()
             },
             modifier = Modifier
                 .padding(top = 100.dp)
@@ -120,14 +134,19 @@ fun CameraRegistFinishScreen(
 
 @Composable
 @Preview
-fun CameraRegistFinishScreenPreview(){
+fun CameraRegisterFinishScreenPreview(){
     CVTheme{
         Column(
             modifier = Modifier
                 .background(Black)
                 .fillMaxSize()
         ){
-            CameraRegistFinishScreen()
+            CameraRegisterFinishScreen(
+                cameraSerialNumber = "123456",
+                wardNumber = "121",
+                roomNumber = "22",
+                bedNumber = "19"
+            )
         }
     }
 }
