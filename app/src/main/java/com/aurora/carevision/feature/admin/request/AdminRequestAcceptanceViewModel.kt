@@ -28,7 +28,7 @@ class AdminRequestAcceptanceViewModel @Inject constructor(
                 adminNurseRequestRepository.getNurseRequests()
             }.onSuccess {
                 _state.value = _state.value.copy(requestCount = it.requestCount)
-                _state.value = _state.value.copy(requests = it.requests)
+                _state.value = _state.value.copy(nurseRequestList = it.requests)
                 Log.d("AdminRequestAcceptanceViewModel", "loadNurseRequestList : onSuccess ${it.requests}")
             }.onFailure {
                 Log.d("AdminRequestAcceptanceViewModel", "loadNurseRequestList : onSuccess ${it.message}")
@@ -59,7 +59,7 @@ class AdminRequestAcceptanceViewModel @Inject constructor(
         }
     }
     fun acceptNurseRequest(){
-        val nurseId = state.value.selectedNurseId
+        val nurseId = _state.value.selectedNurseId
         viewModelScope.launch {
             runCatching {
                 adminNurseRequestRepository.acceptNurseRequests(nurseId)

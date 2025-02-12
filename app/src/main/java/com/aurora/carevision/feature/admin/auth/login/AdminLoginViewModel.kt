@@ -31,7 +31,6 @@ class AdminLoginViewModel @Inject constructor(
 
     fun onPasswordChange(newPassword: String) {
         _state.value = _state.value.copy(password = newPassword)
-        Log.d("AdminLoginViewModel", "onPasswordChange: ${_state.value.password}")
     }
 
     fun adminLogin(userId: String, password: String) {
@@ -42,17 +41,8 @@ class AdminLoginViewModel @Inject constructor(
                 _sideEffect.value = AdminLoginSideEffect.LoginSuccess
                 tokenProvider.saveAccessToken(it.accessToken)
                 tokenProvider.saveRefreshToken(it.refreshToken)
-                Log.d(
-                    "AdminLoginViewModel",
-                    "adminLogin: ${_state.value.userId} ${_state.value.password}"
-                )
-                Log.d("AdminLoginViewModel", "Token: ${it.accessToken} ${it.refreshToken}")
             }.onFailure {
                 _sideEffect.value = AdminLoginSideEffect.ShowToast("로그인에 실패했습니다.\n다시 시도해주세요.")
-                Log.d(
-                    "AdminLoginViewModel",
-                    "adminLogin: ${_state.value.userId} ${_state.value.password}"
-                )
             }
         }
     }

@@ -5,9 +5,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.aurora.carevision.feature.admin.auth.signup.done.AdminSignUpCompletionScreen
-import com.aurora.carevision.feature.admin.auth.signup.info.AdminIDPasswordInfoScreen
-import com.aurora.carevision.feature.admin.auth.signup.info.AdminIDPasswordInfoScreenPreview
-import com.aurora.carevision.feature.admin.auth.signup.info.AdminNameInfoScreen
+import com.aurora.carevision.feature.admin.auth.signup.info.AdminIDPasswordInfoRoute
+import com.aurora.carevision.feature.admin.auth.signup.info.AdminNameInfoRoute
 import com.aurora.carevision.feature.admin.auth.signup.select_hospital.AdminSignUpHospitalEntryScreen
 import kotlinx.serialization.Serializable
 
@@ -48,14 +47,14 @@ fun NavGraphBuilder.adminSignUpHospitalScreen(
         )
     }
     composable<AdminSignUpName> {
-        AdminNameInfoScreen(
+        AdminNameInfoRoute(
             navigateToBack = navigateToAdminSignUpHospital,
             navigateToSignUpIdPwScreen = navigateToAdminSignUpIdPw,
             viewModel = viewModel
         )
     }
     composable<AdminSignUpIdPw> {
-        AdminIDPasswordInfoScreen(
+        AdminIDPasswordInfoRoute(
             navigateToBack = navigateToAdminSignUpName,
             navigateToAdminLogin =navigateToAdminLogin,
             viewModel = viewModel

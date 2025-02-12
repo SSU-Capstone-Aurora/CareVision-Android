@@ -7,41 +7,51 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.aurora.carevision.app.ui.theme.Black
 import com.aurora.carevision.app.ui.theme.CVTheme
+import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.AdminPatientListItem
 import com.aurora.carevision.core.component.CVHeadIconSearchBar
+import com.aurora.carevision.domain.admin.model.patient.Patient
 
 @Composable
-fun PatientListScreen(
+fun PatientListRoute(
     viewModel: PatientListViewModel = hiltViewModel()
 ) {
-    val state = viewModel.state.collectAsState().value
-    val context = LocalContext.current
-    //val dummyPatientList = listOf("강레오" to "2동 301호 3번 베드")
+    val state = viewModel.state.collectAsStateWithLifecycle().value
 
     LaunchedEffect(key1 = Unit) {
         viewModel.getAdminPatientList()
     }
 
+    PatientListScreen(
+        patientList = state.patientList
+    )
+
+}
+
+@Composable
+fun PatientListScreen(
+    patientList: List<Patient> = emptyList()
+){
+    Spacer(modifier = Modifier.height(8.dp))
     CVHeadIconSearchBar(
         value = "",
         onValueChange = {},
         placeholder = "환자 이름을 검색해주세요",
         modifier = Modifier.fillMaxWidth()
     )
-    Spacer(modifier = Modifier.height(8.dp))
+    Spacer(modifier = Modifier.height(15.dp))
 
     LazyColumn(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize().padding(horizontal = 12.dp)
     ) {
-        items(state.patientList) { patient ->
+        items(patientList) { patient ->
             AdminPatientListItem(
                 patientName = patient.patientName,
                 patientInfo = "${patient.inpatientWardNumber}동 ${patient.patientRoom}호 ${patient.bedNumber}번 베드",
@@ -58,12 +68,54 @@ fun PatientListScreen(
 fun PatientListScreenPreview(){
 
     CVTheme{
+        val dummyPatientList = listOf(
+            Patient(
+                code = "1",
+                patientName = "김철수",
+                inpatientWardNumber = 1,
+                patientRoom = 121,
+                bedNumber = 1
+            ),
+
+            Patient(
+                code = "1",
+                patientName = "김철수",
+                inpatientWardNumber = 1,
+                patientRoom = 121,
+                bedNumber = 1
+            ),
+
+            Patient(
+                code = "1",
+                patientName = "김철수",
+                inpatientWardNumber = 1,
+                patientRoom = 121,
+                bedNumber = 1
+            ),
+            Patient(
+                code = "1",
+                patientName = "김철수",
+                inpatientWardNumber = 1,
+                patientRoom = 121,
+                bedNumber = 1
+            ),
+            Patient(
+                code = "1",
+                patientName = "김철수",
+                inpatientWardNumber = 1,
+                patientRoom = 121,
+                bedNumber = 1
+            ),
+        )
+
         Column(
             modifier = Modifier
-                .background(Black)
+                .background(White)
                 .fillMaxSize()
         ){
-            PatientListScreen()
+            PatientListScreen(
+                patientList = dummyPatientList
+            )
         }
     }
 }

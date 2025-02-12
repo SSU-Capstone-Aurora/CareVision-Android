@@ -8,7 +8,7 @@ import com.aurora.carevision.feature.admin.registration.patient.screen.AdminCame
 import com.aurora.carevision.feature.admin.registration.patient.screen.AdminCheckCameraInfoScreen
 import com.aurora.carevision.feature.admin.registration.patient.screen.AdminCheckPatientNameScreen
 import com.aurora.carevision.feature.admin.registration.patient.screen.AdminEnterPatientNumberScreen
-import com.aurora.carevision.feature.admin.registration.patient.screen.AdminPatientRegistrationDone
+import com.aurora.carevision.feature.admin.registration.patient.screen.AdminPatientRegistrationDoneScreen
 import kotlinx.serialization.Serializable
 
 
@@ -116,7 +116,7 @@ fun NavGraphBuilder.adminPatientRegistrationScreen(
         )
     }
     composable<AdminPatientRegistrationDone> {
-        AdminPatientRegistrationDone(
+        AdminPatientRegistrationDoneScreen(
             navigateToPatientInfo = {
                 navigateToAdminHome()
             },

@@ -1,4 +1,3 @@
-// AdminListScreen.kt
 package com.aurora.carevision.feature.admin.home
 
 import androidx.compose.foundation.background
@@ -20,11 +19,11 @@ import com.aurora.carevision.app.ui.theme.Gray100
 import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.AdminHospitalListItem
 import com.aurora.carevision.core.component.CVTabs
-import com.aurora.carevision.feature.admin.home.cameralist.CameraListScreen
-import com.aurora.carevision.feature.admin.home.nurselist.NurseListScreen
-import com.aurora.carevision.feature.admin.home.patientlist.PatientListScreen
+import com.aurora.carevision.feature.admin.home.cameralist.CameraListRoute
+import com.aurora.carevision.feature.admin.home.nurselist.NurseListRoute
+import com.aurora.carevision.feature.admin.home.patientlist.PatientListRoute
 
-
+// TOOD : Screen to Route
 @Composable
 fun AdminListScreen() {
     var selectedTab by rememberSaveable { mutableStateOf("Nurse") }
@@ -56,9 +55,9 @@ fun AdminListScreen() {
                 .padding(top = 168.dp, start = 24.dp, end = 24.dp)
         ) {
             when (selectedTab) {
-                "Nurse" -> NurseListScreen()
-                "Patient" -> PatientListScreen()
-                "Camera" -> CameraListScreen()
+                "Nurse" -> NurseListRoute()
+                "Patient" -> PatientListRoute()
+                "Camera" -> CameraListRoute()
             }
         }
     }

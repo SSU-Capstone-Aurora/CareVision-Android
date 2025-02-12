@@ -17,7 +17,7 @@ fun NavGraphBuilder.adminLoginScreen(
     navigateToBack:() -> Unit
 ) {
     composable<AdminLogin> {
-        AdminLoginScreen(
+        AdminLoginRoute(
             navigateToHome = navigateToHome,
             navigateToSignUp = navigateToSignUp,
             navigateToBack = navigateToBack,

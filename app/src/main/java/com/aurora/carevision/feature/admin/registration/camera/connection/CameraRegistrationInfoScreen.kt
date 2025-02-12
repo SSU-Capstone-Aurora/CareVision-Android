@@ -10,16 +10,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.aurora.carevision.app.ui.theme.Black
 import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.Gray100
@@ -31,13 +28,12 @@ import com.aurora.carevision.feature.admin.registration.camera.CameraRegistratio
 import com.aurora.carevision.feature.admin.registration.camera.CameraRegistrationViewModel
 
 @Composable
-fun CameraRegistrationInfoScreen(
+fun CameraRegistrationInfoRoute(
     viewModel: CameraRegistrationViewModel = hiltViewModel(),
     navigateToFinish: () -> Unit = {},
-    navigateToScanningBarcode: () -> Unit = {},
     navigateToBack: () -> Unit = {},
 ) {
-    val state by viewModel.state.collectAsState()
+    val state = viewModel.state.collectAsStateWithLifecycle().value
 
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
@@ -48,6 +44,31 @@ fun CameraRegistrationInfoScreen(
             }
         }
     }
+
+    CameraRegistrationInfoScreen(
+        navigateToBack = navigateToBack,
+        navigateToFinish = navigateToFinish,
+        wardNumber = state.wardNumber,
+        roomNumber = state.roomNumber,
+        bedNumber = state.bedNumber,
+        updateWardNumber = { viewModel.updateWardNumber(it) },
+        updateRoomNumber = { viewModel.updateRoomNumber(it) },
+        updateBedNumber = { viewModel.updateBedNumber(it) }
+    )
+    
+}
+
+@Composable
+fun CameraRegistrationInfoScreen(
+    navigateToBack: () -> Unit = {},
+    navigateToFinish: () -> Unit = {},
+    wardNumber: String? = "",
+    roomNumber: String? = "",
+    bedNumber: String? = "",
+    updateWardNumber: (String) -> Unit = {},
+    updateRoomNumber: (String) -> Unit = {},
+    updateBedNumber: (String) -> Unit = {},
+){
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -63,48 +84,33 @@ fun CameraRegistrationInfoScreen(
             style = CVTheme.typography.headingPrimary,
             color = Color.Black,
             modifier = Modifier
-                .padding(top = 16.dp, start = 24.dp, bottom = 24.dp)
+                .padding(top = 16.dp, start = 24.dp, bottom = 24.dp),
+            textAlign = TextAlign.Start
         )
 
         CVBasicTextField(
-            value = state.wardNumber?: "",
+            value = wardNumber?: "",
             placeholder = "입원 병동 번호를 입력해주세요",
             label = "입원 병동",
-            onTextChanged = { newValue -> viewModel.updateWardNumber(newValue)},
+            onTextChanged = { newValue -> updateWardNumber(newValue)},
             onFocusChanged = {},
-            //trailingIcon = R.drawable.ic_patient_register_line,
-            //onClickTailingIcon = navigateToScanningBarcode,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 24.dp, end = 24.dp, bottom = 24.dp),
         )
-//        Box(modifier = Modifier.height(30.dp)) {
-//            if (state.wardNumber == null) {
-//                Text(
-//                    text = "잘못된 입력 형식입니다.",
-//                    color = Red600,
-//                    style = CVTheme.typography.captionRegular,
-//                    modifier = Modifier
-//                        .padding(horizontal = 24.dp, vertical = 8.dp)
-//                        .fillMaxWidth()
-//                )
-//            }
-//        }
 
         CVBasicTextField(
-            value = state.roomNumber?: "",
+            value = roomNumber?: "",
             placeholder = "입원실 번호를 입력해주세요",
             label = "입원실 번호",
-            onTextChanged = { newValue -> viewModel.updateRoomNumber(newValue)},
+            onTextChanged = { newValue -> updateRoomNumber(newValue)},
             onFocusChanged = {},
-            //trailingIcon = R.drawable.ic_patient_register_line,
-            //onClickTailingIcon = navigateToScanningBarcode,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 24.dp, end = 24.dp),
         )
         Box(modifier = Modifier.height(30.dp)) {
-            if (state.roomNumber == "") {
+            if (roomNumber.isNullOrBlank()) {
                 Text(
                     text = "*필수",
                     color = Red600,
@@ -117,19 +123,17 @@ fun CameraRegistrationInfoScreen(
         }
 
         CVBasicTextField(
-            value = state.bedNumber?: "",
+            value = bedNumber?: "",
             placeholder = "베드 번호를 입력해주세요",
             label = "베드 번호",
-            onTextChanged = { newValue -> viewModel.updateBedNumber(newValue)},
+            onTextChanged = { newValue -> updateBedNumber(newValue)},
             onFocusChanged = {},
-            //trailingIcon = R.drawable.ic_patient_register_line,
-            //onClickTailingIcon = navigateToScanningBarcode,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 24.dp, end = 24.dp),
         )
         Box(modifier = Modifier.height(30.dp)) {
-            if (state.bedNumber == "") {
+            if (bedNumber.isNullOrBlank()) {
                 Text(
                     text = "*필수",
                     color = Red600,
@@ -152,7 +156,7 @@ fun CameraRegistrationInfoScreen(
 
 @Composable
 @Preview
-fun LoginScreenPreview() {
+fun CameraRegistrationInfoScreenPreview() {
     CVTheme {
         Column(
             modifier = Modifier

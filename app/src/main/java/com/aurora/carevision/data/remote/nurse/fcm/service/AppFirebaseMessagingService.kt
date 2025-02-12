@@ -11,7 +11,6 @@ import com.aurora.carevision.R
 import com.aurora.carevision.app.MainActivity
 import com.aurora.carevision.data.local.auth.TokenProvider
 import com.aurora.carevision.data.remote.nurse.fcm.model.FCMRequestBody
-import com.aurora.carevision.data.remote.nurse.fcm.service.FirebaseTokenService
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import dagger.hilt.android.AndroidEntryPoint
@@ -60,7 +59,7 @@ class AppFirebaseMessagingService : FirebaseMessagingService() {
 
         // 알림 생성
         val title = "$patientName 환자 이상행동 감지"
-        val body = "${patientRoomNumber}병실 ${bedNumber}베드에서 이상행동 감지되었습니다.\n감지 시각: ${extractTime(time)}"
+        val body = "${patientRoomNumber}병실 ${bedNumber}베드에서 이상행동 감지되었습니다." //감지 시각: ${extractTime(time)}
         showNotification(title, body)
     }
 
@@ -114,12 +113,4 @@ class AppFirebaseMessagingService : FirebaseMessagingService() {
 
         notificationManager.notify(0, notification)
     }
-}
-
-private fun extractTime(input: String): String {
-    // "T"로 문자열을 분리하고 시간 부분만 추출
-    val timePart = input.split("T")[1]
-
-    // 초과 소수점 제거를 위해 "."로 분리하고 "시:분:초"만 가져옴
-    return timePart.split(".")[0]
 }

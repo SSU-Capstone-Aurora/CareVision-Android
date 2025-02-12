@@ -12,18 +12,15 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.aurora.carevision.R
 import com.aurora.carevision.app.ui.theme.Black
 import com.aurora.carevision.app.ui.theme.CVTheme
@@ -36,14 +33,13 @@ import com.aurora.carevision.feature.admin.registration.camera.CameraRegistratio
 
 
 @Composable
-fun CameraRegistAfterBarCodeScreen(
+fun CameraRegisterAfterBarCodeRoute(
     viewModel: CameraRegistrationViewModel = hiltViewModel(),
     navigateToInfo: () -> Unit,
     navigateToBack: () -> Unit
-){
-    val state by viewModel.state.collectAsState()
-    val context = LocalContext.current
-    val serialNumber = remember { mutableStateOf(state.cameraSerialNumber.ifEmpty { "" }) }
+) {
+    val state = viewModel.state.collectAsStateWithLifecycle().value
+
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
@@ -54,7 +50,23 @@ fun CameraRegistAfterBarCodeScreen(
         }
     }
 
-    Column (
+    CameraRegisterAfterBarCodeScreen(
+        navigateToBack = navigateToBack,
+        navigateToInfo = navigateToInfo,
+        serialNumber = state.cameraSerialNumber,
+        updateSerialNumber = { state.cameraSerialNumber = it }
+    )
+
+}
+
+@Composable
+fun CameraRegisterAfterBarCodeScreen(
+    navigateToBack: () -> Unit = {},
+    navigateToInfo: () -> Unit = {},
+    serialNumber: String = "",
+    updateSerialNumber: (String) -> Unit = {}
+) {
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Gray100)
@@ -70,13 +82,14 @@ fun CameraRegistAfterBarCodeScreen(
             color = Black,
             modifier = Modifier
                 .padding(top = 92.dp, start = 24.dp, end = 24.dp)
-                .align(Alignment.CenterHorizontally)
+                .align(Alignment.CenterHorizontally),
+            textAlign = TextAlign.Center
         )
         Box(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally),
             contentAlignment = Alignment.Center
-        ){
+        ) {
 
             Box(
                 modifier = Modifier
@@ -84,9 +97,9 @@ fun CameraRegistAfterBarCodeScreen(
                     .offset(y = 100.dp)
                     .background(Color.White, shape = RoundedCornerShape(16.dp)),
                 contentAlignment = Alignment.Center
-                ){
+            ) {
                 Text(
-                    text = serialNumber.value,
+                    text = serialNumber,
                     style = CVTheme.typography.textBody1Medium,
                     color = Gray600
                 )
@@ -102,9 +115,9 @@ fun CameraRegistAfterBarCodeScreen(
         CVLongButton(
             text = "다음",
             onClick = {
-                viewModel.updateSerialNumber(serialNumber.value)
+                updateSerialNumber(serialNumber)
                 navigateToInfo()
-                      },
+            },
             modifier = Modifier
                 .padding(top = 100.dp)
         )
@@ -112,19 +125,17 @@ fun CameraRegistAfterBarCodeScreen(
 }
 
 
-
 @Composable
 @Preview
-fun ListScreenPreview(){
-    CVTheme{
+fun ListScreenPreview() {
+    CVTheme {
         Column(
             modifier = Modifier
                 .background(Black)
                 .fillMaxSize()
-        ){
-            CameraRegistAfterBarCodeScreen(
-                navigateToBack = {},
-                navigateToInfo = {}
+        ) {
+            CameraRegisterAfterBarCodeScreen(
+                serialNumber = "A-123"
             )
         }
     }
