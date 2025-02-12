@@ -31,7 +31,7 @@ import com.aurora.carevision.core.component.CVPasswordTextField
 import com.aurora.carevision.core.component.TopAppBarLeft
 
 @Composable
-fun NurseLoginScreen(
+fun NurseLoginRoute(
     viewModel: NurseLoginViewModel = hiltViewModel(),
     navigateToHome: () -> Unit = {},
     navigateToSignUp: () -> Unit = {},
@@ -43,9 +43,6 @@ fun NurseLoginScreen(
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { sideEffect ->
             when (sideEffect) {
-                is NurseLoginSideEffect.OnSignUpClick -> navigateToSignUp()
-                is NurseLoginSideEffect.OnBackClick -> navigateToBack()
-                is NurseLoginSideEffect.NavigateToHome -> navigateToHome()
                 is NurseLoginSideEffect.ShowToast -> {
                     Toast.makeText(context, sideEffect.text, Toast.LENGTH_SHORT).show()
                 }
@@ -58,6 +55,30 @@ fun NurseLoginScreen(
         }
     }
 
+    NurseLoginScreen(
+        userId = state.userId,
+        password = state.password,
+        isLoginError = state.isLoginError,
+        navigateToBack = { navigateToBack() },
+        onSignUpClick = { navigateToSignUp() },
+        onUserIdChange = { viewModel.onUserIdChange(it) },
+        onPasswordChange = { viewModel.onPasswordChange(it) },
+        nurseLogin = { userId, password -> viewModel.nurseLogin(userId, password) }
+    )
+    
+}
+
+@Composable
+fun NurseLoginScreen(
+    userId: String = "",
+    password: String = "",
+    isLoginError: Boolean = false,
+    navigateToBack: () -> Unit = {},
+    onSignUpClick: () -> Unit = {},
+    onUserIdChange: (String) -> Unit = {},
+    onPasswordChange: (String) -> Unit = {},
+    nurseLogin: (String, String) -> Unit = { _, _ -> },
+){
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -65,7 +86,7 @@ fun NurseLoginScreen(
     ){
 
         TopAppBarLeft(
-            onClick = { viewModel.sideEffect.value = NurseLoginSideEffect.OnBackClick },
+            onClick = navigateToBack,
         )
 
         Text(
@@ -76,10 +97,10 @@ fun NurseLoginScreen(
                 .padding(top=16.dp, start = 24.dp, bottom = 24.dp)
         )
         CVBasicTextField(
-            value = state.userId,
+            value = userId,
             placeholder = "아이디를 입력해주세요",
             label = "아이디",
-            onTextChanged = { viewModel.onUserIdChange(it) },
+            onTextChanged = { onUserIdChange(it) },
             onFocusChanged = {},
             modifier = Modifier
                 .fillMaxWidth()
@@ -87,10 +108,10 @@ fun NurseLoginScreen(
 
         )
         CVPasswordTextField(
-            value = state.password,
+            value = password,
             placeholder = "비밀번호를 입력해주세요",
             label = "비밀번호",
-            onTextChanged = { viewModel.onPasswordChange(it) },
+            onTextChanged = { onPasswordChange(it) },
             onFocusChanged = {},
             modifier = Modifier
                 .padding(top = 24.dp, start = 24.dp, end = 24.dp)
@@ -98,7 +119,7 @@ fun NurseLoginScreen(
         )
 
 
-        if(state.isLoginError){
+        if(isLoginError){
             Text(
                 text = "*아이디 또는 비밀번호가 잘못되었습니다",
                 color = Red600,
@@ -112,9 +133,9 @@ fun NurseLoginScreen(
         CVLongButton(
             text = "로그인",
             onClick = {
-                viewModel.nurseLogin(state.userId, state.password)
-                      },
-            enabled = state.userId.isNotBlank() && state.password.isNotBlank(),
+                nurseLogin(userId, password)
+            },
+            enabled = userId.isNotBlank() && password.isNotBlank(),
             modifier = Modifier
                 .padding(top = 24.dp)
         )
@@ -126,7 +147,7 @@ fun NurseLoginScreen(
             modifier = Modifier
                 .padding(top = 24.dp)
                 .align(Alignment.CenterHorizontally)
-                .clickable { viewModel.sideEffect.value = NurseLoginSideEffect.OnSignUpClick }
+                .clickable { onSignUpClick() }
         )
     }
 }
