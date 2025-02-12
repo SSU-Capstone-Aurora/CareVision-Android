@@ -4,7 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.aurora.carevision.feature.nurse.auth.signup.done.NurseSignUpWaitingScreen
+import com.aurora.carevision.feature.nurse.auth.signup.done.NurseSignUpWaitingRoute
 import com.aurora.carevision.feature.nurse.auth.signup.info.NurseSignUpIdPwScreen
 import com.aurora.carevision.feature.nurse.auth.signup.info.NurseSignUpNameScreen
 import com.aurora.carevision.feature.nurse.auth.signup.select_hospital.NurseSignUpScreen
@@ -64,7 +64,7 @@ fun NavGraphBuilder.nurseSignUpScreen(
     }
 
     composable<NurseSignUpWaiting> {
-        NurseSignUpWaitingScreen(
+        NurseSignUpWaitingRoute(
             navigateToHome = navigateToHome,
             viewModel = viewModel
         )
