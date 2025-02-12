@@ -31,6 +31,7 @@ import com.aurora.carevision.core.component.TopAppBarLeft
 import com.aurora.carevision.domain.nurse.model.Camera
 import com.aurora.carevision.feature.nurse.patient.registration.barcode.SelfRegistrationViewModel
 
+// TODO: refact screen to route
 @Composable
 fun CameraListScreen(
     onClickCheckFinishInfo: () -> Unit = {},

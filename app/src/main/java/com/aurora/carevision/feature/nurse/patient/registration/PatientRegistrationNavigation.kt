@@ -7,7 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.aurora.carevision.feature.nurse.patient.registration.barcode.SelfRegistrationViewModel
 import com.aurora.carevision.feature.nurse.patient.registration.barcode.screen.CameraListScreen
-import com.aurora.carevision.feature.nurse.patient.registration.barcode.screen.CheckCameraInfoScreen
+import com.aurora.carevision.feature.nurse.patient.registration.barcode.screen.CheckCameraInfoRoute
 import com.aurora.carevision.feature.nurse.patient.registration.barcode.screen.CheckPatientNameScreen
 import com.aurora.carevision.feature.nurse.patient.registration.barcode.screen.EnterPatientNumberScreen
 import com.aurora.carevision.feature.nurse.patient.registration.barcode.screen.ScanningBarcodeScreen
@@ -144,7 +144,7 @@ fun NavGraphBuilder.patientRegistrationScreen(
     }
 
     composable<CheckCameraInfo> {
-        CheckCameraInfoScreen(
+        CheckCameraInfoRoute(
             navigateToDone = {
                 navigateToPatientRegistration()
             },
