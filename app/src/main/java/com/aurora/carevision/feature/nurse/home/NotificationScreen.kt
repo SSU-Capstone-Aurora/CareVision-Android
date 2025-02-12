@@ -35,7 +35,7 @@ import com.aurora.carevision.domain.nurse.model.notification.Notification
 import com.aurora.carevision.feature.nurse.home.home.HomeViewModel
 
 @Composable
-fun NotificationScreen(
+fun NotificationRoute(
     onBackClick: () -> Unit = {},
     navigateToSpecificPatientStreaming: () -> Unit = {},
     viewModel: HomeViewModel = hiltViewModel()
@@ -43,6 +43,22 @@ fun NotificationScreen(
 
     val state = viewModel.state.collectAsStateWithLifecycle().value
 
+    NotificationScreen(
+        onBackClick = onBackClick,
+        navigateToSpecificPatientStreaming = navigateToSpecificPatientStreaming,
+        updateClickedPatientId = { viewModel.updateClickedPatientId(it) },
+        notificationList = state.notificationList
+    )
+
+}
+
+@Composable
+fun NotificationScreen(
+    onBackClick: () -> Unit = {},
+    navigateToSpecificPatientStreaming: () -> Unit = {},
+    updateClickedPatientId: (Int) -> Unit = {},
+    notificationList: List<Notification> = emptyList()
+){
     Column(
         modifier = Modifier
             .background(White)
@@ -50,11 +66,11 @@ fun NotificationScreen(
     ) {
         TopAppBarLeft(title = stringResource(R.string.tv_notification), onClick = onBackClick)
 
-        if(state.notificationList.isNotEmpty()) {
+        if(notificationList.isNotEmpty()) {
             LazyColumn(
                 modifier = Modifier.fillMaxSize()
             ) {
-                items(state.notificationList) { notification ->
+                items(notificationList) { notification ->
                     NotificationList(
                         patientName = notification.patientName,
                         notificationTime = notification.notificationTime,
@@ -64,7 +80,7 @@ fun NotificationScreen(
                         isChecked = notification.isChecked,
                         navigateToSpecificPatientStreaming = navigateToSpecificPatientStreaming,
                         onClickItem = {
-                            viewModel.updateClickedPatientId(notification.patientId)
+                            updateClickedPatientId(notification.patientId)
                         }
                     )
                 }
@@ -126,8 +142,22 @@ fun NotificationList(
 
 @Composable
 @Preview
-fun NotificationScreenPreview() {
+fun NotificationScreenEmyptyPreview() {
     CVTheme {
         NotificationScreen()
+    }
+}
+
+@Composable
+@Preview
+fun NotificationScreenPreview() {
+    CVTheme {
+        val notificationList = listOf(
+            Notification("1", 1, "1", 101, 1, 212, "2021-09-01 12:00:00", false),
+            Notification("2", 2, "2", 102, 2, 213, "2021-09-01 12:00:00", true),
+            Notification("3", 3, "3", 103, 3, 214, "2021-09-01 12:00:00", false),
+            Notification("4", 4, "4", 104, 4, 215, "2021-09-01 12:00:00", true),
+        )
+        NotificationScreen(notificationList = notificationList)
     }
 }

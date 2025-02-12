@@ -5,7 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.aurora.carevision.feature.nurse.home.LiveStreamingScreen
-import com.aurora.carevision.feature.nurse.home.NotificationScreen
+import com.aurora.carevision.feature.nurse.home.NotificationRoute
 import com.aurora.carevision.feature.nurse.home.SavedVideoScreen
 import com.aurora.carevision.feature.nurse.home.home.HomeRoute
 import com.aurora.carevision.feature.nurse.home.home.HomeViewModel
@@ -59,7 +59,7 @@ fun NavGraphBuilder.nurseHomeScreen(
     }
 
     composable<NurseNotificationList> {
-        NotificationScreen(
+        NotificationRoute(
             onBackClick = onBackClick,
             navigateToSpecificPatientStreaming = navigateToSpecificPatientStreamingScreen,
             viewModel = viewModel
