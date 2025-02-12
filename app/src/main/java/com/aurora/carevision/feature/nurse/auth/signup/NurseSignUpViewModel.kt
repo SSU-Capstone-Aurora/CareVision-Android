@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.aurora.carevision.domain.nurse.model.auth.NurseUser
 import com.aurora.carevision.domain.nurse.repository.NurseAuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,8 +19,8 @@ class NurseSignUpViewModel @Inject constructor(
     val _state: MutableStateFlow<NurseSignUpState> = MutableStateFlow(NurseSignUpState())
     val state: MutableStateFlow<NurseSignUpState> = _state
 
-    val _sideEffect: MutableStateFlow<NurseSignUpSideEffect?> = MutableStateFlow(null)
-    val sideEffect: MutableStateFlow<NurseSignUpSideEffect?> = _sideEffect
+    val _sideEffect: MutableSharedFlow<NurseSignUpSideEffect?> = MutableSharedFlow()
+    val sideEffect: MutableSharedFlow<NurseSignUpSideEffect?> = _sideEffect
 
     fun updateSelectedHospital(newHospitalName: String, newHospitalId: Int) {
         _state.value = _state.value.copy(
@@ -110,10 +111,10 @@ class NurseSignUpViewModel @Inject constructor(
                     )
                 )
             }.onSuccess {
-                _sideEffect.value = NurseSignUpSideEffect.SignUpSuccess
+                _sideEffect.emit(NurseSignUpSideEffect.SignUpSuccess)
                 Log.d("NurseSignUpViewModel", "requestSignUp : onSuccess")
             }.onFailure {
-                _sideEffect.value = NurseSignUpSideEffect.ShowToast("회원가입에 실패했습니다.\n다시 시도해주세요.")
+                _sideEffect.emit(NurseSignUpSideEffect.ShowToast(it.message ?: "회원가입 실패"))
                 Log.d("NurseSignUpViewModel", "requestSignUp : onFailure : ${it.message}")
             }
         }

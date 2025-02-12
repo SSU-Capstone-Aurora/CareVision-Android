@@ -16,7 +16,7 @@ fun NavGraphBuilder.patientInfoScreen(
     navigateToPatientRegistration: () -> Unit
 ) {
     composable<PatientInfo> {
-        PatientInfoScreen(
+        PatientInfoRoute(
             onClickNavigateToPatientRegistration = navigateToPatientRegistration
         )
     }

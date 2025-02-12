@@ -1,6 +1,5 @@
 package com.aurora.carevision.feature.nurse.auth.signup.select_hospital
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -25,11 +24,13 @@ import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.CVLongButton
 import com.aurora.carevision.core.component.ReviewDropdownMenu
 import com.aurora.carevision.core.component.TopAppBarLeft
+import com.aurora.carevision.domain.nurse.model.auth.DepartmentList
+import com.aurora.carevision.domain.nurse.model.auth.HospitalList
 import com.aurora.carevision.feature.nurse.auth.signup.NurseSignUpSideEffect
 import com.aurora.carevision.feature.nurse.auth.signup.NurseSignUpViewModel
 
 @Composable
-fun NurseSignUpScreen(
+fun NurseSignUpRoute(
     viewModel: NurseSignUpViewModel = hiltViewModel(),
     navigateToBack: () -> Unit = {},
     navigateToSignUpNameScreen: () -> Unit = {},
@@ -56,6 +57,31 @@ fun NurseSignUpScreen(
         }
     }
 
+    NurseSignUpScreen(
+        navigateToBack = navigateToBack,
+        navigateToSignUpNameScreen = navigateToSignUpNameScreen,
+        hospitalList = state.hospitalList,
+        departmentList = state.departmentList,
+        selectedHospitalName = state.selectedHospitalName,
+        selectedDepartmentName = state.selectedDepartmentName,
+        updateSelectedHospital = viewModel::updateSelectedHospital,
+        updateSelectedDepartment = viewModel::updateSelectedDepartment,
+        loadDepartmentList = viewModel::loadDepartmentList,
+    )
+}
+
+@Composable
+fun NurseSignUpScreen(
+    navigateToBack: () -> Unit = {},
+    navigateToSignUpNameScreen: () -> Unit = {},
+    hospitalList: List<HospitalList.Hospital> = emptyList(),
+    departmentList: List<DepartmentList.Department> = emptyList(),
+    selectedHospitalName: String = "",
+    selectedDepartmentName: String = "",
+    updateSelectedHospital: (String, Int) -> Unit = { _, _ -> },
+    updateSelectedDepartment: (String, Int) -> Unit = { _, _ -> },
+    loadDepartmentList: (Int) -> Unit = {},
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -76,14 +102,13 @@ fun NurseSignUpScreen(
 
         ReviewDropdownMenu(
             placeholder = "병원 이름을 입력하세요",
-            menuItems = state.hospitalList.map { it.name },
-            selectedItem = state.selectedHospitalName.ifEmpty { "병원을 선택해주세요" },
+            menuItems = hospitalList.map { it.name },
+            selectedItem = selectedHospitalName.ifEmpty { "병원을 선택해주세요" },
             onMenuItemClick = { selected ->
-                val selectedHospital = state.hospitalList.find { it.name == selected }
+                val selectedHospital = hospitalList.find { it.name == selected }
                 if (selectedHospital != null) {
-                    viewModel.updateSelectedHospital(selectedHospital.name, selectedHospital.id)
-                    viewModel.loadDepartmentList(selectedHospital.id)
-                    Log.d("NurseSignUpScreen1", "departmentList : ${state.departmentList}")
+                    updateSelectedHospital(selectedHospital.name, selectedHospital.id)
+                    loadDepartmentList(selectedHospital.id)
                 }
             }
         )
@@ -91,15 +116,14 @@ fun NurseSignUpScreen(
         Spacer(modifier = Modifier.height(24.dp))
 
 
-        Log.d("NurseSignUpScreen2", "departmentList : ${state.departmentList}")
         ReviewDropdownMenu(
             placeholder = "과를 선택해주세요",
-            menuItems = (state.departmentList.map { it.name }),
-            selectedItem = state.selectedDepartmentName.ifEmpty { "과를 선택해주세요" },
+            menuItems = (departmentList.map { it.name }),
+            selectedItem = selectedDepartmentName.ifEmpty { "과를 선택해주세요" },
             onMenuItemClick = { selected ->
-                val selectedDepartment = state.departmentList.find { it.name == selected }
+                val selectedDepartment = departmentList.find { it.name == selected }
                 if (selectedDepartment != null) {
-                    viewModel.updateSelectedDepartment(
+                    updateSelectedDepartment(
                         selectedDepartment.name,
                         selectedDepartment.id
                     )
@@ -110,13 +134,14 @@ fun NurseSignUpScreen(
         CVLongButton(
             text = "다음",
             onClick = navigateToSignUpNameScreen,
-            enabled = state.selectedHospitalName.isNotEmpty() && state.selectedDepartmentName.isNotEmpty(),
+            enabled = selectedHospitalName.isNotEmpty() && selectedDepartmentName.isNotEmpty(),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 24.dp)
         )
     }
 }
+
 
 @Composable
 @Preview

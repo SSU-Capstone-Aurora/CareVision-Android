@@ -17,7 +17,7 @@ fun NavGraphBuilder.nurseLoginScreen(
     navigateToBack: () -> Unit,
 ) {
     composable<NurseLogin> {
-        NurseLoginScreen(
+        NurseLoginRoute(
             navigateToHome = navigateToHome,
             navigateToSignUp = navigateToSignUp,
             navigateToBack = navigateToBack,

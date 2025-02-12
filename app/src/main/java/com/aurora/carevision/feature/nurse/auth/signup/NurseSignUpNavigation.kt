@@ -4,10 +4,10 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.aurora.carevision.feature.nurse.auth.signup.done.NurseSignUpWaitingScreen
-import com.aurora.carevision.feature.nurse.auth.signup.info.NurseSignUpIdPwScreen
+import com.aurora.carevision.feature.nurse.auth.signup.done.NurseSignUpWaitingRoute
+import com.aurora.carevision.feature.nurse.auth.signup.info.NurseSignUpIdPwRoute
 import com.aurora.carevision.feature.nurse.auth.signup.info.NurseSignUpNameScreen
-import com.aurora.carevision.feature.nurse.auth.signup.select_hospital.NurseSignUpScreen
+import com.aurora.carevision.feature.nurse.auth.signup.select_hospital.NurseSignUpRoute
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -39,7 +39,7 @@ fun NavGraphBuilder.nurseSignUpScreen(
     navigateToLogin: () -> Unit
 ) {
     composable<NurseSignUp> {
-        NurseSignUpScreen(
+        NurseSignUpRoute(
             navigateToBack = navigateToIntro,
             navigateToSignUpNameScreen = navigateToNurseSignUpName,
             viewModel = viewModel
@@ -55,7 +55,7 @@ fun NavGraphBuilder.nurseSignUpScreen(
     }
 
     composable<NurseSignUpIdPw> {
-        NurseSignUpIdPwScreen(
+        NurseSignUpIdPwRoute(
             navigateToBack = navigateToNurseSignUpName,
             navigateToSignUpWaitingScreen = navigateToNurseSignUpWaiting,
             viewModel = viewModel,
@@ -64,7 +64,7 @@ fun NavGraphBuilder.nurseSignUpScreen(
     }
 
     composable<NurseSignUpWaiting> {
-        NurseSignUpWaitingScreen(
+        NurseSignUpWaitingRoute(
             navigateToHome = navigateToHome,
             viewModel = viewModel
         )

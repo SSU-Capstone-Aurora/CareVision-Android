@@ -19,6 +19,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.aurora.carevision.app.ui.theme.Black
 import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.Red600
@@ -31,14 +32,14 @@ import com.aurora.carevision.feature.nurse.auth.signup.NurseSignUpSideEffect
 import com.aurora.carevision.feature.nurse.auth.signup.NurseSignUpViewModel
 
 @Composable
-fun NurseSignUpIdPwScreen(
+fun NurseSignUpIdPwRoute(
     viewModel: NurseSignUpViewModel = hiltViewModel(),
     navigateToBack: () -> Unit = {},
     navigateToSignUpWaitingScreen: () -> Unit = {},
     navigateToLogin: () -> Unit = {}
 ) {
 
-    val state = viewModel.state.collectAsState()
+    val state = viewModel.state.collectAsStateWithLifecycle().value
     val context = LocalContext.current
 
     LaunchedEffect(Unit) {
@@ -69,7 +70,36 @@ fun NurseSignUpIdPwScreen(
             }
         }
     }
+    NurseSignUpIdPwScreen(
+        navigateToBack = navigateToBack,
+        userId = state.userId,
+        updateUserId = { viewModel.updateUserId(it) },
+        password = state.password,
+        updatePassword = { viewModel.updatePassword(it) },
+        checkIdValidation = { viewModel.checkIdValidation() },
+        nameDuplicate = state.nameDuplicate,
+        doCheckNameDuplicate = state.doCheckNameDuplicate,
+        updateDoCheckNameDuplicate = { viewModel.updateDoCheckNameDuplicate(it) },
+        checkPwValidation = { viewModel.checkPwValidation() },
+        requestSignUp = { viewModel.requestSignUp() }
+    )
 
+}
+
+@Composable
+fun NurseSignUpIdPwScreen(
+    navigateToBack: () -> Unit = {},
+    userId: String = "",
+    updateUserId: (String) -> Unit = {},
+    password: String = "",
+    updatePassword: (String) -> Unit = {},
+    checkIdValidation: () -> Unit = {},
+    nameDuplicate: Boolean = false,
+    doCheckNameDuplicate: Boolean = false,
+    updateDoCheckNameDuplicate: (Boolean) -> Unit = {},
+    checkPwValidation: () -> Boolean = { false },
+    requestSignUp: () -> Unit = {}
+){
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -88,20 +118,20 @@ fun NurseSignUpIdPwScreen(
                 .padding(top = 16.dp, start = 24.dp, end = 24.dp, bottom = 24.dp)
         )
         CVDuplicateCheckTextField(
-            value = state.value.userId,
+            value = userId,
             placeholder = "아이디를 입력해주세요",
             label = "아이디",
             onTextChanged = {
-                viewModel.updateUserId(it)
-                viewModel.updateDoCheckNameDuplicate(false)
+                updateUserId(it)
+                updateDoCheckNameDuplicate(false)
             },
             onFocusChanged = { },
-            onDuplicateCheck = { viewModel.checkIdValidation() },
+            onDuplicateCheck = { checkIdValidation() },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 24.dp, end = 24.dp, bottom = 4.dp)
         )
-        if (!state.value.nameDuplicate) {
+        if (!nameDuplicate) {
             Text(
                 text = "* 아이디가 중복됩니다.",
                 color = Red600,
@@ -114,18 +144,18 @@ fun NurseSignUpIdPwScreen(
 
         Spacer(modifier = Modifier.height(24.dp))
         CVSignInPasswordTextField(
-            value = state.value.password,
+            value = password,
             isError = false,
             placeholder = "비밀번호를 입력해주세요",
             label = "비밀번호",
-            onTextChanged = { viewModel.updatePassword(it) },
+            onTextChanged = { updatePassword(it) },
             onFocusChanged = {},
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 24.dp, end = 24.dp)
         )
 
-        if ((state.value.password.isNotEmpty() && state.value.password.length < 8)) {
+        if ((password.isNotEmpty() && password.length < 8)) {
             Text(
                 text = "* 8글자 이상이어야 합니다",
                 color = Red600,
@@ -136,7 +166,7 @@ fun NurseSignUpIdPwScreen(
             )
         }
 
-        if (!viewModel.checkPwValidation()) {
+        if (!checkPwValidation()) {
             Text(
                 text = "* 영문과 숫자가 포함되어야 합니다",
                 color = Red600,
@@ -150,9 +180,9 @@ fun NurseSignUpIdPwScreen(
         CVLongButton(
             text = "완료",
             onClick = {
-                viewModel.requestSignUp()
+                requestSignUp()
             },
-            enabled = (state.value.userId.isNotEmpty() && state.value.password.isNotEmpty() && state.value.password.length >= 8 && viewModel.checkPwValidation() && state.value.nameDuplicate && state.value.doCheckNameDuplicate),
+            enabled = (userId.isNotEmpty() && password.isNotEmpty() && password.length >= 8 && checkPwValidation() && nameDuplicate && doCheckNameDuplicate),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 24.dp)

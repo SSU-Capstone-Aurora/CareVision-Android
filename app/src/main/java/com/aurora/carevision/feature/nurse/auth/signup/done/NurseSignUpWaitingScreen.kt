@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,12 +30,38 @@ import com.aurora.carevision.app.ui.theme.Gray500
 import com.aurora.carevision.app.ui.theme.Gray700
 import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.CVLongButton
+import com.aurora.carevision.feature.nurse.auth.signup.NurseSignUpSideEffect
 import com.aurora.carevision.feature.nurse.auth.signup.NurseSignUpViewModel
 
 @Composable
-fun NurseSignUpWaitingScreen(
+fun NurseSignUpWaitingRoute(
     viewModel: NurseSignUpViewModel = hiltViewModel(),
     navigateToHome: () -> Unit = {}
+) {
+
+    LaunchedEffect(Unit) {
+        viewModel.sideEffect.collect { sideEffect ->
+            when (sideEffect) {
+                is NurseSignUpSideEffect.SignUpSuccess -> {
+                    navigateToHome()
+                }
+
+                else -> {
+                }
+            }
+        }
+    }
+
+    NurseSignUpWaitingScreen(
+        requestSignUp = {
+            viewModel.requestSignUp()
+        }
+    )
+}
+
+@Composable
+fun NurseSignUpWaitingScreen(
+    requestSignUp: () -> Unit = {}
 ) {
     Column(
         modifier = Modifier
@@ -71,9 +98,8 @@ fun NurseSignUpWaitingScreen(
         CVLongButton(
             text = "다시 요청하기",
             onClick = {
-                viewModel.requestSignUp()
-                navigateToHome() //TODO : 성공 시 navigate
-                      },
+                requestSignUp()
+            },
             backgroundColor = White,
             textColor = Gray700,
             modifier = Modifier

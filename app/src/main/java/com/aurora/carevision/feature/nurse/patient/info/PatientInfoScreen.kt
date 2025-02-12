@@ -42,7 +42,7 @@ import com.aurora.carevision.core.component.CVShortDropDownMenu
 import com.aurora.carevision.domain.nurse.model.Patient
 
 @Composable
-fun PatientInfoScreen(
+fun PatientInfoRoute(
     onClickNavigateToPatientRegistration: () -> Unit = {},
     viewModel: PatientInfoViewModel = hiltViewModel()
 ) {
@@ -52,20 +52,23 @@ fun PatientInfoScreen(
         viewModel.getPatientList()
     }
 
+    PatientInfoScreen(
+        patientInfoList = state.patientInfoList,
+        onClickNavigateToPatientRegistration = onClickNavigateToPatientRegistration
+    )
+}
+
+@Composable
+fun PatientInfoScreen(
+    patientInfoList: List<Patient> = emptyList(),
+    onClickNavigateToPatientRegistration: () -> Unit = {}
+){
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Gray100),
     ) {
         Spacer(modifier = Modifier.height(20.dp))
-//        Text(
-//            text = username,
-//            color = Gray500,
-//            style = CVTheme.typography.textBody2Importance,
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(horizontal = 24.dp, vertical = 4.dp)
-//        )
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
@@ -103,7 +106,7 @@ fun PatientInfoScreen(
                 .fillMaxSize()
                 .padding(horizontal = 24.dp),
         ) {
-            items(state.patientInfoList) { patient ->
+            items(patientInfoList) { patient ->
                 MyPatientListItem(
                     patientName = patient.patientName,
                     patientNum = patient.patientCode,
@@ -217,7 +220,13 @@ fun MyPatientListItem(
 @Preview
 fun PatientInfoScreenPreview() {
     CVTheme {
-        PatientInfoScreen()
+        val patientList = listOf(
+            Patient(1, "오로라", "07-FJw144", "2동", 101, 4, 121),
+            Patient(2, "오로라", "07-FJw144", "2동", 101, 4, 121),
+            Patient(3, "오로라", "07-FJw144", "2동", 101, 4, 121),
+            Patient(4, "오로라", "07-FJw144", "2동", 101, 4, 121),
+        )
+        PatientInfoScreen(patientList)
     }
 }
 

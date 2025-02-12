@@ -21,6 +21,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.Gray100
@@ -30,17 +31,16 @@ import com.aurora.carevision.app.ui.theme.Gray700
 import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.CVLongButton
 import com.aurora.carevision.core.component.TopAppBarLeft
-import com.aurora.carevision.domain.nurse.model.Camera
 import com.aurora.carevision.feature.nurse.patient.registration.barcode.SelfRegistrationSideEffect
 import com.aurora.carevision.feature.nurse.patient.registration.barcode.SelfRegistrationViewModel
 
 @Composable
-fun CheckCameraInfoScreen(
+fun CheckCameraInfoRoute(
     navigateToDone: () -> Unit = {},
     onClickBack: () -> Unit = {},
     viewModel: SelfRegistrationViewModel = viewModel()
 ) {
-    val state = viewModel.state.collectAsState().value
+    val state = viewModel.state.collectAsStateWithLifecycle().value
     val context = LocalContext.current
 
     LaunchedEffect(key1 = Unit) {
@@ -56,6 +56,30 @@ fun CheckCameraInfoScreen(
             }
         }
     }
+
+    CheckCameraInfoScreen(
+        onClickBack = onClickBack,
+        postNewPatient = {
+            viewModel.postNewPatient()
+        },
+        patientName = state.patientName,
+        selectedInpatientWardNumber = state.selectedInpatientWardNumber,
+        selectedPatientRoomNumber = state.selectedPatientRoomNumber,
+        selectedBedNumber = state.selectedBedNumber,
+        selectedCameraCode = state.selectedCameraCode
+    )
+}
+
+@Composable
+fun CheckCameraInfoScreen(
+    onClickBack: () -> Unit = {},
+    postNewPatient: () -> Unit = {},
+    patientName: String = "",
+    selectedInpatientWardNumber: Int = 0,
+    selectedPatientRoomNumber: Int = 0,
+    selectedBedNumber: Int = 0,
+    selectedCameraCode: String = ""
+){
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -101,7 +125,7 @@ fun CheckCameraInfoScreen(
                 )
 
                 Text(
-                    text = "${state.patientName}",
+                    text = "${patientName}",
                     style = CVTheme.typography.textBody1Medium,
                     color = Gray600,
                 )
@@ -120,7 +144,7 @@ fun CheckCameraInfoScreen(
                 )
 
                 Text(
-                    text = "${state.selectedInpatientWardNumber}동 ${state.selectedPatientRoomNumber}호 ${state.selectedBedNumber}베드",
+                    text = "${selectedInpatientWardNumber}동 ${selectedPatientRoomNumber}호 ${selectedBedNumber}베드",
                     style = CVTheme.typography.textBody1Medium,
                     color = Gray600,
                 )
@@ -140,7 +164,7 @@ fun CheckCameraInfoScreen(
                 )
 
                 Text(
-                    text = "${state.selectedCameraCode}",
+                    text = "${selectedCameraCode}",
                     style = CVTheme.typography.textBody1Medium,
                     color = Gray600,
                     modifier = Modifier
@@ -153,7 +177,7 @@ fun CheckCameraInfoScreen(
         CVLongButton(
             text = "확인",
             onClick = {
-                viewModel.postNewPatient()
+                postNewPatient()
             },
             modifier = Modifier.fillMaxWidth()
         )
@@ -168,7 +192,15 @@ fun CheckCameraInfoScreen(
 @Preview
 fun CheckCameraInfoScreenPreview(){
     CVTheme{
-        CheckCameraInfoScreen()
+        CheckCameraInfoScreen(
+            onClickBack = {},
+            postNewPatient = {},
+            patientName = "김철수",
+            selectedInpatientWardNumber = 1,
+            selectedPatientRoomNumber = 101,
+            selectedBedNumber = 1,
+            selectedCameraCode = "CAM001"
+        )
     }
 }
 

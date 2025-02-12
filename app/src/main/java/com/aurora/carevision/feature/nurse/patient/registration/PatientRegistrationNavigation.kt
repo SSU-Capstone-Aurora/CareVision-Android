@@ -7,11 +7,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.aurora.carevision.feature.nurse.patient.registration.barcode.SelfRegistrationViewModel
 import com.aurora.carevision.feature.nurse.patient.registration.barcode.screen.CameraListScreen
-import com.aurora.carevision.feature.nurse.patient.registration.barcode.screen.CheckCameraInfoScreen
-import com.aurora.carevision.feature.nurse.patient.registration.barcode.screen.CheckPatientNameScreen
-import com.aurora.carevision.feature.nurse.patient.registration.barcode.screen.EnterPatientNumberScreen
+import com.aurora.carevision.feature.nurse.patient.registration.barcode.screen.CheckCameraInfoRoute
+import com.aurora.carevision.feature.nurse.patient.registration.barcode.screen.CheckPatientNameRoute
+import com.aurora.carevision.feature.nurse.patient.registration.barcode.screen.EnterPatientNumberRoute
 import com.aurora.carevision.feature.nurse.patient.registration.barcode.screen.ScanningBarcodeScreen
-import com.aurora.carevision.feature.nurse.patient.registration.search.PatientRegistrationDone
+import com.aurora.carevision.feature.nurse.patient.registration.search.PatientRegistrationDoneRoute
 import com.aurora.carevision.feature.nurse.patient.registration.search.PatientRegistrationScreen
 import com.aurora.carevision.feature.nurse.patient.registration.search.PatientRegistrationViewModel
 import kotlinx.serialization.Serializable
@@ -90,7 +90,7 @@ fun NavGraphBuilder.patientRegistrationScreen(
     }
 
     composable<PatientRegistrationDone> {
-        PatientRegistrationDone(
+        PatientRegistrationDoneRoute(
             navigateToPatientInfo = {
                 navigateToPatientInfo()
             },
@@ -104,7 +104,7 @@ fun NavGraphBuilder.patientRegistrationScreen(
 
     composable<ScanningBarcode.ScanningBarcodeRoute.EnterPatientNumber> {
         val args = it.toRoute<ScanningBarcode.ScanningBarcodeRoute.EnterPatientNumber>()
-        EnterPatientNumberScreen(
+        EnterPatientNumberRoute(
             viewModel = selfRegistrationViewModel,
             navigateToCheckPatientInfo = {
                 navigateToCheckPatientName()
@@ -120,7 +120,7 @@ fun NavGraphBuilder.patientRegistrationScreen(
     }
 
     composable<CheckPatientName> {
-        CheckPatientNameScreen(
+        CheckPatientNameRoute(
             navigateToCameraListInfo = {
                 navigateToCameraListInfo()
             },
@@ -144,7 +144,7 @@ fun NavGraphBuilder.patientRegistrationScreen(
     }
 
     composable<CheckCameraInfo> {
-        CheckCameraInfoScreen(
+        CheckCameraInfoRoute(
             navigateToDone = {
                 navigateToPatientRegistration()
             },

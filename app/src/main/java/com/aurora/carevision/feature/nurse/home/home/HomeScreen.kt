@@ -1,9 +1,6 @@
 package com.aurora.carevision.feature.nurse.home.home
 
 import android.util.Log
-import android.widget.Toast
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -26,7 +23,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -39,28 +35,17 @@ import com.aurora.carevision.app.ui.theme.Gray100
 import com.aurora.carevision.app.ui.theme.Gray500
 import com.aurora.carevision.app.ui.theme.Gray600
 import com.aurora.carevision.app.ui.theme.White
-import kotlinx.coroutines.flow.collect
+import com.aurora.carevision.domain.nurse.model.Patient
+import com.aurora.carevision.domain.nurse.model.notification.Notification
+import com.aurora.carevision.domain.nurse.model.streaming.PatientStreamingInfo
 
 @Composable
-fun HomeScreen(
-    modifier: Modifier = Modifier,
+fun HomeRoute(
     navigateToSpecificPatientStreaming: () -> Unit = {},
     navigateToNotificationList: () -> Unit = {},
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.collectAsState().value
-    val context = LocalContext.current
-
-    // 알림 권한 요청
-    val requestPermissionLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
-        if (isGranted) {
-            Toast.makeText(context, "알림 권한이 허용되었습니다.", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(context, "알림 권한이 거부되었습니다.", Toast.LENGTH_SHORT).show()
-        }
-    }
 
     LaunchedEffect(key1 = Unit) {
         viewModel.getPatientStreamingList()
@@ -82,6 +67,25 @@ fun HomeScreen(
         }
     }
 
+    NurseHomeScreen(
+        navigateToSpecificPatientStreaming = navigateToSpecificPatientStreaming,
+        navigateToNotificationList = navigateToNotificationList,
+        notificationList = state.notificationList,
+        patientStreamingList = state.patientStreamingList,
+        updateClickedPatientInfo = viewModel::updateClickedPatientInfo
+    )
+   
+}
+
+@Composable
+fun NurseHomeScreen(
+    modifier: Modifier = Modifier,
+    navigateToSpecificPatientStreaming: () -> Unit = {},
+    navigateToNotificationList: () -> Unit = {},
+    updateClickedPatientInfo: (PatientStreamingInfo) -> Unit = {},
+    notificationList: List<Notification> = emptyList(),
+    patientStreamingList: List<PatientStreamingInfo> = emptyList()
+){
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -99,7 +103,7 @@ fun HomeScreen(
         ) {
             Text(text = "환자 영상", style = CVTheme.typography.headingDisplay, color = Black)
             Image(
-                painter = painterResource(id = if (state.notificationList.isNotEmpty()) R.drawable.ic_alarm_active else R.drawable.ic_alarm),
+                painter = painterResource(id = if (notificationList.isNotEmpty()) R.drawable.ic_alarm_active else R.drawable.ic_alarm),
                 contentDescription = "Alarm",
                 modifier = modifier.clickable {
                     navigateToNotificationList()
@@ -113,17 +117,17 @@ fun HomeScreen(
             columns = GridCells.Fixed(2),
             modifier = modifier.fillMaxSize(),
         ) {
-            items(state.patientStreamingList.size) {
+            items(patientStreamingList.size) {
                 VideoCardView(
                     onClickCard = {
                         navigateToSpecificPatientStreaming()
-                        viewModel.updateClickedPatientInfo(state.patientStreamingList[it])
-                                  },
-                    patientName = state.patientStreamingList[it].patientName,
-                    imageUrl = state.patientStreamingList[it].thumbnailImage,
-                    inpatientWardNumber = state.patientStreamingList[it].inpatientWardNumber.toString(),
-                    patientRoomNumber = state.patientStreamingList[it].patientRoomNumber.toString(),
-                    bedNumber = state.patientStreamingList[it].bedNumber.toString()
+                        updateClickedPatientInfo(patientStreamingList[it])
+                    },
+                    patientName = patientStreamingList[it].patientName,
+                    imageUrl = patientStreamingList[it].thumbnailImage,
+                    inpatientWardNumber = patientStreamingList[it].inpatientWardNumber.toString(),
+                    patientRoomNumber = patientStreamingList[it].patientRoomNumber.toString(),
+                    bedNumber = patientStreamingList[it].bedNumber.toString()
                 )
             }
         }
@@ -192,7 +196,7 @@ fun VideoCardView(
 @Preview
 private fun HomeScreenPreview() {
     CVTheme {
-        HomeScreen()
+        NurseHomeScreen()
     }
 }
 
