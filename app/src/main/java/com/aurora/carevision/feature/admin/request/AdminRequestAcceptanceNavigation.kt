@@ -19,6 +19,6 @@ fun NavGraphBuilder.adminRequestAcceptanceScreen(
 
 ) {
     composable<AdminRequestAcceptance> {
-        AdminRequestAcceptanceScreen()
+        AdminRequestAcceptanceRoute()
     }
 }

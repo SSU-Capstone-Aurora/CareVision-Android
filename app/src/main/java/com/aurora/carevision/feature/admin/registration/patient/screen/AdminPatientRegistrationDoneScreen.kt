@@ -24,7 +24,7 @@ import com.aurora.carevision.core.component.CVLongButton
 import com.aurora.carevision.core.component.TopAppBarLeft
 
 @Composable
-fun AdminPatientRegistrationDone(
+fun AdminPatientRegistrationDoneScreen(
     navigateToPatientInfo: () -> Unit = {},
     onClickBack: () -> Unit = {}
 ) {
@@ -68,7 +68,7 @@ fun AdminPatientRegistrationDone(
 @Preview
 fun PatientRegistrationDonePreview(){
     CVTheme{
-        AdminPatientRegistrationDone()
+        AdminPatientRegistrationDoneScreen()
     }
 }
 
