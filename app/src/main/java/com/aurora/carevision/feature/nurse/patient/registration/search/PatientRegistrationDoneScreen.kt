@@ -24,32 +24,55 @@ import com.aurora.carevision.app.ui.theme.Gray700
 import com.aurora.carevision.app.ui.theme.White
 import com.aurora.carevision.core.component.CVLongButton
 import com.aurora.carevision.core.component.TopAppBarLeft
+import com.aurora.carevision.domain.nurse.model.Patient
 
 @Composable
-fun PatientRegistrationDone(
+fun PatientRegistrationDoneRoute(
     navigateToPatientInfo: () -> Unit = {},
     onClickBack: () -> Unit = {},
     viewModel: PatientRegistrationViewModel = hiltViewModel(),
 ) {
     val state = viewModel.state.collectAsState().value
 
+    PatientRegistrationDoneScreen(
+        onClickBack = onClickBack,
+        selectedPatient = state.selectedPatient,
+        postAlreadyPatient = viewModel::postAlreadyPatient,
+        navigateToPatientInfo = navigateToPatientInfo,
+    )
+
+}
+
+@Composable
+fun PatientRegistrationDoneScreen(
+    onClickBack: () -> Unit = {},
+    selectedPatient: Patient? = null,
+    postAlreadyPatient: () -> Unit = {},
+    navigateToPatientInfo: () -> Unit = {},
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(White),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
-    ){
+    ) {
 
         TopAppBarLeft("환자 등록", onClick = onClickBack)
 
-        Spacer(modifier = Modifier
-            .height(24.dp)
-            .weight(1f))
-        Image(painter = painterResource(id = R.drawable.img_patient_register_done), contentDescription = "Patient Registration Done", modifier = Modifier.size(170.dp))
+        Spacer(
+            modifier = Modifier
+                .height(24.dp)
+                .weight(1f)
+        )
+        Image(
+            painter = painterResource(id = R.drawable.img_patient_register_done),
+            contentDescription = "Patient Registration Done",
+            modifier = Modifier.size(170.dp)
+        )
         Spacer(modifier = Modifier.height(24.dp))
         Text(
-            text = "${state.selectedPatient?.patientName ?: "오로라"} 환자를 연결합니다.",
+            text = "${selectedPatient?.patientName ?: "오로라"} 환자를 연결합니다.",
             style = CVTheme.typography.headingPrimary,
             color = Gray700,
         )
@@ -60,22 +83,24 @@ fun PatientRegistrationDone(
             text = "확인",
             onClick = {
                 navigateToPatientInfo()
-                viewModel.postAlreadyPatient()
+                postAlreadyPatient()
 
             },
             modifier = Modifier.fillMaxWidth()
         )
-        Spacer(modifier = Modifier
-            .height(24.dp)
-            .weight(1f))
+        Spacer(
+            modifier = Modifier
+                .height(24.dp)
+                .weight(1f)
+        )
     }
 }
 
 @Composable
 @Preview
-fun PatientRegistrationDonePreview(){
-    CVTheme{
-        PatientRegistrationDone()
+fun PatientRegistrationScreenPreview() {
+    CVTheme {
+        PatientRegistrationDoneScreen()
     }
 }
 

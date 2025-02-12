@@ -11,7 +11,7 @@ import com.aurora.carevision.feature.nurse.patient.registration.barcode.screen.C
 import com.aurora.carevision.feature.nurse.patient.registration.barcode.screen.CheckPatientNameRoute
 import com.aurora.carevision.feature.nurse.patient.registration.barcode.screen.EnterPatientNumberRoute
 import com.aurora.carevision.feature.nurse.patient.registration.barcode.screen.ScanningBarcodeScreen
-import com.aurora.carevision.feature.nurse.patient.registration.search.PatientRegistrationDone
+import com.aurora.carevision.feature.nurse.patient.registration.search.PatientRegistrationDoneRoute
 import com.aurora.carevision.feature.nurse.patient.registration.search.PatientRegistrationScreen
 import com.aurora.carevision.feature.nurse.patient.registration.search.PatientRegistrationViewModel
 import kotlinx.serialization.Serializable
@@ -90,7 +90,7 @@ fun NavGraphBuilder.patientRegistrationScreen(
     }
 
     composable<PatientRegistrationDone> {
-        PatientRegistrationDone(
+        PatientRegistrationDoneRoute(
             navigateToPatientInfo = {
                 navigateToPatientInfo()
             },
