@@ -1,6 +1,5 @@
 package com.aurora.carevision.feature.nurse.mypage
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -18,7 +17,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,6 +25,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.aurora.carevision.R
 import com.aurora.carevision.app.ui.theme.CVTheme
 import com.aurora.carevision.app.ui.theme.Gray100
@@ -34,15 +33,14 @@ import com.aurora.carevision.app.ui.theme.Gray500
 import com.aurora.carevision.app.ui.theme.Gray700
 import com.aurora.carevision.app.ui.theme.Primary600
 import com.aurora.carevision.app.ui.theme.White
-import kotlinx.coroutines.flow.collect
 
 @Composable
-fun MypageScreen(
+fun NurseMypageRoute(
     onClickLogout: () -> Unit = {},
     viewModel: MypageViewModel = hiltViewModel()
 ) {
 
-    val state = viewModel.state.collectAsState().value
+    val state = viewModel.state.collectAsStateWithLifecycle().value
     val context = LocalContext.current
 
     LaunchedEffect(key1 = Unit) {
@@ -58,6 +56,25 @@ fun MypageScreen(
             }
         }
     }
+
+    NurseMypageScreen(
+        nurseName = state.nurseName,
+        onClickLogout = onClickLogout,
+        registeredAt = state.registeredAt,
+        hospitalName = state.hospitalName,
+        department = state.department
+    )
+    
+}
+
+@Composable
+fun NurseMypageScreen(
+    nurseName: String = "",
+    onClickLogout: () -> Unit = {},
+    registeredAt: String? = "",
+    hospitalName: String = "",
+    department: String = ""
+){
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -71,7 +88,7 @@ fun MypageScreen(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = state.nurseName, style = CVTheme.typography.headingPrimary, color = Gray700)
+            Text(text = nurseName, style = CVTheme.typography.headingPrimary, color = Gray700)
             Text(
                 text = "로그아웃",
                 style = CVTheme.typography.captionImportance,
@@ -84,8 +101,8 @@ fun MypageScreen(
             )
         }
 
-        if(!state.registeredAt.isNullOrBlank()) {
-            Text(text = "${state.registeredAt} 가입", style = CVTheme.typography.textBody1Medium, color = Gray500, modifier = Modifier.padding(top = 4.dp))
+        if(!registeredAt.isNullOrBlank()) {
+            Text(text = "${registeredAt} 가입", style = CVTheme.typography.textBody1Medium, color = Gray500, modifier = Modifier.padding(top = 4.dp))
         }
 
         Spacer(modifier = Modifier.padding(top = 24.dp))
@@ -103,19 +120,23 @@ fun MypageScreen(
                 Image(painter = painterResource(id = R.drawable.ic_hopital_icon), contentDescription = "hospital image")
                 Spacer(modifier = Modifier.width(12.dp))
                 Column {
-                    Text(text = state.hospitalName, style = CVTheme.typography.textBody1Importance, color = White)
-                    Text(text = state.department, style = CVTheme.typography.textBody2Medium, color = White)
+                    Text(text = hospitalName, style = CVTheme.typography.textBody1Importance, color = White)
+                    Text(text = department, style = CVTheme.typography.textBody2Medium, color = White)
                 }
             }
         }
     }
-
 }
 
 @Composable
 @Preview
 fun MypageScreenPreview() {
     CVTheme {
-        MypageScreen()
+        NurseMypageScreen(
+            nurseName = "김유진",
+            registeredAt = "2021.09.01",
+            hospitalName = "서울대학교병원",
+            department = "내과"
+        )
     }
 }

@@ -16,7 +16,7 @@ fun NavGraphBuilder.nurseMypageScreen(
     navigateToNurseLogin: () -> Unit,
 ) {
     composable<NurseMypage> {
-        MypageScreen(
+        NurseMypageRoute(
             onClickLogout = navigateToNurseLogin,
         )
     }
