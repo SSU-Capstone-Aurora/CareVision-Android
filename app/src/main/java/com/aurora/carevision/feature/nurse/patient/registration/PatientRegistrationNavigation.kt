@@ -9,7 +9,7 @@ import com.aurora.carevision.feature.nurse.patient.registration.barcode.SelfRegi
 import com.aurora.carevision.feature.nurse.patient.registration.barcode.screen.CameraListScreen
 import com.aurora.carevision.feature.nurse.patient.registration.barcode.screen.CheckCameraInfoRoute
 import com.aurora.carevision.feature.nurse.patient.registration.barcode.screen.CheckPatientNameRoute
-import com.aurora.carevision.feature.nurse.patient.registration.barcode.screen.EnterPatientNumberScreen
+import com.aurora.carevision.feature.nurse.patient.registration.barcode.screen.EnterPatientNumberRoute
 import com.aurora.carevision.feature.nurse.patient.registration.barcode.screen.ScanningBarcodeScreen
 import com.aurora.carevision.feature.nurse.patient.registration.search.PatientRegistrationDone
 import com.aurora.carevision.feature.nurse.patient.registration.search.PatientRegistrationScreen
@@ -104,7 +104,7 @@ fun NavGraphBuilder.patientRegistrationScreen(
 
     composable<ScanningBarcode.ScanningBarcodeRoute.EnterPatientNumber> {
         val args = it.toRoute<ScanningBarcode.ScanningBarcodeRoute.EnterPatientNumber>()
-        EnterPatientNumberScreen(
+        EnterPatientNumberRoute(
             viewModel = selfRegistrationViewModel,
             navigateToCheckPatientInfo = {
                 navigateToCheckPatientName()
