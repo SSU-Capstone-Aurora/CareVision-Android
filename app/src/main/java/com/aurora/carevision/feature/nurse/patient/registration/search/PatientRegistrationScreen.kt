@@ -41,6 +41,8 @@ import com.aurora.carevision.core.component.CVLongButton
 import com.aurora.carevision.core.component.TopAppBarLeft
 import com.aurora.carevision.domain.nurse.model.Patient
 
+// TODO : refact screen to route
+
 @Composable
 fun PatientRegistrationScreen(
     onClickNavigateToSelfRegistration: () -> Unit = {},
