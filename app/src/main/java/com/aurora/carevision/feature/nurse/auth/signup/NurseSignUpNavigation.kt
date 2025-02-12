@@ -7,7 +7,7 @@ import androidx.navigation.compose.composable
 import com.aurora.carevision.feature.nurse.auth.signup.done.NurseSignUpWaitingRoute
 import com.aurora.carevision.feature.nurse.auth.signup.info.NurseSignUpIdPwRoute
 import com.aurora.carevision.feature.nurse.auth.signup.info.NurseSignUpNameScreen
-import com.aurora.carevision.feature.nurse.auth.signup.select_hospital.NurseSignUpScreen
+import com.aurora.carevision.feature.nurse.auth.signup.select_hospital.NurseSignUpRoute
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -39,7 +39,7 @@ fun NavGraphBuilder.nurseSignUpScreen(
     navigateToLogin: () -> Unit
 ) {
     composable<NurseSignUp> {
-        NurseSignUpScreen(
+        NurseSignUpRoute(
             navigateToBack = navigateToIntro,
             navigateToSignUpNameScreen = navigateToNurseSignUpName,
             viewModel = viewModel
