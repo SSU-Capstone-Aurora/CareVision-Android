@@ -24,7 +24,7 @@ class PatientListViewModel @Inject constructor(
     fun getAdminPatientList(){
         viewModelScope.launch {
             runCatching {
-                adminPatientListRepository.getAdminPatientList()
+                adminPatientListRepository.getAdminPatientList(size = 1, lastIdx = 1) // TODO paging
             }.onSuccess {
                 _state.value = state.value.copy(patientList = it)
                 Log.d("PatientListViewModel", "getAdminPatientList : ${it.size}")

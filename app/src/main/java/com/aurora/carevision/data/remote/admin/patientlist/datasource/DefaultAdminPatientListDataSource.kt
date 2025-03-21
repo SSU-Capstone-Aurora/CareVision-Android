@@ -8,7 +8,7 @@ import javax.inject.Inject
 class DefaultAdminPatientListDataSource @Inject constructor(
     private val adminPatientListService: AdminPatientListService
 ):AdminPatientListDataSource{
-    override suspend fun getAdminPatientList(): BaseResponse<AdminPatientListResponse> {
-        return adminPatientListService.getAdminPatientList()
+    override suspend fun getAdminPatientList(size: Int, lastIdx: Int): BaseResponse<AdminPatientListResponse> {
+        return adminPatientListService.getAdminPatientList(size, lastIdx)
     }
 }

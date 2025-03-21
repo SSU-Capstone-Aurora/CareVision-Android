@@ -9,7 +9,7 @@ import javax.inject.Inject
 class DefaultAdminPatientListRepository @Inject constructor(
     private val adminPatientListDataSource: AdminPatientListDataSource
 ): AdminPatientListRepository {
-    override suspend fun getAdminPatientList(): List<Patient> {
-        return adminPatientListDataSource.getAdminPatientList().result.toDomainModel()
+    override suspend fun getAdminPatientList(size: Int, lastIdx: Int): List<Patient> {
+        return adminPatientListDataSource.getAdminPatientList(size, lastIdx).result.toDomainModel()
     }
 }

@@ -9,8 +9,10 @@ import kotlinx.serialization.Serializable
 data class AdminPatientListResponse(
     @SerialName("patientList")
     val patientList: List<Patient> = emptyList(),
-    @SerialName("count")
-    val count: Int = 0
+    @SerialName("hasNext")
+    val hasNext: Boolean,
+    @SerialName("nextCursor")
+    val nextCursor: Int
 ) {
     @Serializable
     data class Patient(
